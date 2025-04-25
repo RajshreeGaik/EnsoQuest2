@@ -7,7 +7,7 @@
     <h1 class="display-5 fw-bold my-2">EnsoQuest</h1>
     <p class="fs-3">#making better happen</p>
     <div class="d-inline-flex gap-2 mb-5">
-      <a href="./all-test.html" class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 ">
+      <a href="{% url 'all_quiz' %}" class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 ">
         Take Test
       </a>
       {% if not request.user.is_authenticated %}
