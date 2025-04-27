@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from account.models import Profile
@@ -7,7 +7,7 @@ from django.db.models import Q
 
 # Create your views here.
 @login_required(login_url='login')
-def all_quize_view(request, category=None):
+def all_quiz_view(request, category=None):
 
     user_object = User.objects.get(username=request.user)
     user_profile = Profile.objects.get(user=user_object)
@@ -44,3 +44,16 @@ def search_view(request, category):
 
     context = {"user_profile": user_profile, "quizzes": quizzes, "categories": categories}
     return render(request, 'all-test.html', context)
+
+@login_required(login_url='login')
+def quiz_view(request, quiz_id):
+
+   user_object = User.objects.get(username=request.user)
+   user_profile = Profile.objects.get(user=user_object)
+
+   quiz = Quiz.objects.filter(id=quiz_id).first()
+   if quiz != None :
+      context={"user_profile": user_profile, "quiz":quiz}
+   else:
+      return redirect('all_quiz')
+   return render(request,'test.html',context)
