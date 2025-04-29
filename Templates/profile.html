@@ -43,27 +43,15 @@
                       </tr>
                     </thead>
                     <tbody>
+                      {% for submission in submissions %}
                       <tr>
-                        <th scope="row">1</th>
-                        <td>JCL</td>
-                        <td>19/20</td>
-                        <td>January 15, 2025</td>
-                        <td>10:00 am</td>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{submission.quiz.title|truncatewords:4}}</td>
+                        <td>{{submission.score}}/{{submission.quiz.question_set.all|length}}</td>
+                        <td>{{ submission.submitted_at|date:"F j, Y" }}</td>
+                        <td>{{submission.submitted_at|timesince}}</td>
                       </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>RACF</td>
-                        <td>18/20</td>
-                        <td>february 15, 2025</td>
-                        <td>11:00 am</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td>REXX</td>
-                        <td>16/20</td>
-                        <td>March 15, 2025</td>
-                        <td>10:30 am</td> 
-                      </tr>
+                      {% endfor %}
                     </tbody>
                   </table>  
             </div>
