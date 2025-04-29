@@ -1,0 +1,166 @@
+/* General Reset */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* Gradient Text Styling */
+.gradient-text {
+    font-size: 3rem;
+    font-weight: bold;
+    background: linear-gradient(90deg, #007bff, #6610f2);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    margin: 2rem 0;
+}
+
+/* Tagline Text Styling */
+.tagline-text {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #2c3e50;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 8px;
+}
+
+.tagline-text::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60%;
+    height: 3px;
+    background: #007bff;
+    border-radius: 2px;
+    animation: slideIn 1s ease-out forwards;
+}
+
+@keyframes slideIn {
+    from { width: 0; }
+    to { width: 60%; }
+}
+
+/* Highlight Text */
+.highlight {
+    background: linear-gradient(90deg, #007bff, #00c6ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Glass Card */
+.glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Buttons */
+.btn-outline-primary {
+    border-radius: 25px;
+    padding: 0.5rem 1.5rem;
+    transition: 0.3s ease-in-out;
+}
+
+.btn-outline-primary:hover {
+    background-color: #007bff;
+    color: white;
+    box-shadow: 0 0 10px #007bff;
+}
+
+/* Rounded Profile Images */
+.rounded-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Headings */
+h2 {
+    font-weight: 600;
+    color: #343a40;
+}
+
+/* Section Spacing */
+section {
+    padding: 2rem 0;
+}
+
+/* List Checkmarks */
+.list-style-check li::before {
+    content: '✔️ ';
+    margin-right: 0.5rem;
+    color: #28a745;
+}
+
+/* About Section (Main Description) */
+.app-description {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #333;
+}
+
+/* How It Works List */
+.how-it-works ul.list-group {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+/* Team Section Styling */
+.our-team .row {
+    justify-content: center;
+}
+
+/* Story Section */
+.our-story .glass-card {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.our-story .glass-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.our-story img {
+    border: 4px solid white;
+    border-radius: 16px;
+}
+
+/* Animation for Story Section */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+section {
+    animation: fadeInUp 0.7s ease both;
+}

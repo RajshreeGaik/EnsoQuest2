@@ -19,9 +19,11 @@
           </div>
           <div class="col" div style= 'text-align:left'>
            <h2>{{user_profile2.full_name|default:'Full name not available'}} {{user_profile2.full_name}}</h2>
-           <p class="fs-5"><i class="bi bi-envelope-at-fill "></i> {{user_profile2.email_address|default:'Email not available'}} </p>
            <p class="fs-5"><i class="bi bi-person-circle"></i> {{user_profile2.position|default:'Position not available'}} </p>
            <p class="fs-5"><i class="bi bi-info-square-fill"></i> {{user_profile2.bio|default:'Bio not available'}} </p>
+          {% if request.user.is_superuser %}
+           <p class="fs-5"><i class="bi bi-envelope-fill"></i><a href="mailto:{{user_profile2.user.email}}"> {{user_profile2.user.email|default:'Email not available'}} </a> </p>
+          {% endif %}
           </div>
         </div>
       </div>

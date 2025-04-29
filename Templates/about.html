@@ -1,0 +1,102 @@
+{% extends 'index.html' %}
+
+{% block title %} About Us - EnsoQuest {% endblock title %}
+
+{% block content %}
+  {% load static %}
+  
+  <!-- Link to External CSS File Specific to About Us Page -->
+  <link rel="stylesheet" href="{% static 'css/about-style.css' %}">
+
+  <h1 class="display-4 text-center my-5">About Us</h1>
+
+  <main>
+      <div class="container col-lg-10 col-sm-12">
+          
+          <!-- Welcome Section -->
+          <section class="app-description mb-5">
+              <h2>Welcome to EnsoQuest</h2>
+              <p class="lead">
+                  <strong>EnsoQuest</strong> is Ensono’s platform for trainee assessments — designed to make weekly tests simple, secure, and effective. With smart tools for test-taking, performance tracking, and study resources, it keeps learning on track.
+              </p>
+              <div class="tagline text-center mt-3">
+                  <h3 class="tagline-text">EnsoQuest — <span class="highlight">Making Better Happen.</span></h3>
+              </div>
+          </section>
+
+          <!-- How It Works -->
+          <section class="how-it-works mb-5">
+              <h2>How It Works</h2>
+              <p>We make assessments streamlined and stress-free:</p>
+              <ul class="list-group list-style-check mb-3">
+                  <li class="list-group-item bg-transparent border-0">Sign up and create your personalized account.</li>
+                  <li class="list-group-item bg-transparent border-0">Access scheduled assessments.</li>
+                  <li class="list-group-item bg-transparent border-0">Download study materials and resources.</li>
+                  <li class="list-group-item bg-transparent border-0">Take weekly tests through a secure and user-friendly interface.</li>
+                  <li class="list-group-item bg-transparent border-0">Get instant results and track your performance over time.</li>
+                  <li class="list-group-item bg-transparent border-0">Share weekly feedback to improve your experience.</li>
+                  <li class="list-group-item bg-transparent border-0">Stay informed with notifications and updates.</li>
+              </ul>
+          </section>
+
+          <!-- Our Team -->
+          <section class="our-team my-5">
+              <h2 class="mb-4 text-center">Meet Our Team</h2>
+              <div class="row justify-content-center">
+                  <!-- Rajshree -->
+                  <div class="col-md-5 mx-3 mb-4">
+                      <div class="glass-card text-center p-4 h-100">
+                          <img src="{% static 'images/rajshree_photo.jpg' %}" alt="Rajshree" class="rounded-image mb-3 mx-auto">
+                          <h4 class="text-primary mb-2">Rajshree Gaikwad</h4>
+                          <p>
+                              Mainframe Intern | MCA Final Year | Passionate about mainframe systems and learning technologies that power enterprise computing.
+                          </p>
+                          <a href="https://www.linkedin.com/in/rajshreegaikwad" target="_blank" class="btn btn-outline-primary">LinkedIn</a>
+                      </div>
+                  </div>
+
+                  <!-- Anuja -->
+                  <div class="col-md-5 mx-3 mb-4">
+                      <div class="glass-card text-center p-4 h-100">
+                          <img src="{% static 'images/anuja_photo.jpg' %}" alt="Anuja" class="rounded-image mb-3 mx-auto">
+                          <h4 class="text-primary mb-2">Anuja</h4>
+                          <p>
+                              Trainee at Ensono | Hands-on with Mainframe Systems | MCA Student | Driven and curious software enthusiast.
+                          </p>
+                          <a href="https://www.linkedin.com/in/anuja-gote-77938426b" target="_blank" class="btn btn-outline-primary">LinkedIn</a>
+                      </div>
+                  </div>
+              </div>
+          </section>
+
+          <!-- Our Story -->
+          <section class="our-story my-5">
+              <h2 class="text-center mb-4">Our Story</h2>
+              <div class="row align-items-center">
+                  <div class="col-md-6 mb-4 mb-md-0">
+                      <img src="{% static 'images/our_story.jpg' %}" alt="EnsoQuest Story" class="img-fluid rounded shadow-lg w-100" style="max-height: 400px; object-fit: cover;">
+                      <p><em>Our batch with our trainer, Mr. Burhan Malik, the inspiration behind our journey to create this platform.</em></p>
+                  </div>
+
+                  <div class="col-md-6">
+                      <div class="glass-card p-4">
+                          <p class="lead">
+                              <strong>It all began with a simple need and a shared vision</strong>
+                          </p>
+                          <p>
+                            We are Anuja and Rajshree,  good friends and college mates who were fortunate to be placed in the same company. During our training, we realized the need for a unified platform to streamline the test-taking process. This platform would allow users to take tests, track their results and performance, access resources, receive important notices and notifications, and provide valuable feedback.             </p>
+                          <p>
+                            Inspired and encouraged by our trainer, Mr. Burhan Malik, we decided to turn this idea into reality, and that's how this test application came to life.
+                          </p>
+                          <p class="mb-0">
+                             EnsoQuest is more than just a tool. It's a journey of collaboration, creativity, and commitment to making learning better for everyone.
+                          </p>
+                      </div>
+                  </div>
+              </div>
+          </section>
+
+      </div>
+  </main>
+
+{% endblock content %}
