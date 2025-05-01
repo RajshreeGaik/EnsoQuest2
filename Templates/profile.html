@@ -3,6 +3,11 @@
 {% block title %}@{{user_profile2.user.username}}'s Profile - EnsoQuest {% endblock title %}
 {% block content %}
     <h1 class="display-4 text-center my-4">@{{user_profile2.user.username}}'s Profile</h1>
+    <div class="mb-3">
+      {% for message in messages %}
+      <h5 class="text-{{message.level_tag}}text-center">{{message}}</h5>
+      {% endfor %}
+    </div>
     <div class="container text-center">
       {% if request.user.username == user_profile2.user.username %}  
       <div class="btn-group" role="group" aria-label="Basic example">
