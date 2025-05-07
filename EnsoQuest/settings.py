@@ -73,6 +73,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'EnsoQuest.wsgi.application'
 
+LOGIN_URL = 'login'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -134,3 +135,7 @@ CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+

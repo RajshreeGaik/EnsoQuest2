@@ -29,7 +29,8 @@
       {% else %}
       {% for rank in leaderboard_users %}
       <div class="col-lg-4 position-relative mb-4">
-        <img src="{{rank.user.profile.profile_img.url}}" class="img-fluid" width="150" height="150" alt="user-profile">
+        <!-- <img src="{{rank.user.profile.profile_img.url}}" class="img-fluid rounded-circle" width="150" height="150" alt="user-profile"> -->
+        <img src="{{ rank.user.profile.profile_img.url }}" class="img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover;" alt="user-profile">
         <span class="position-absolute top-0 start-90 translate-middle badge rounded-pill bg-success">
           {{ forloop.counter}}
         </span>

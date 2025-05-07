@@ -5,7 +5,7 @@
     <h1 class="display-4 text-center my-4">@{{user_profile2.user.username}}'s Profile</h1>
     <div class="mb-3">
       {% for message in messages %}
-      <h5 class="text-{{message.level_tag}}text-center">{{message}}</h5>
+      <h5 class="text-{{message.level_tag}} text-center text-success">{{message}}</h5>
       {% endfor %}
     </div>
     <div class="container text-center">
@@ -47,6 +47,7 @@
                         <th scope="col">Marks</th>
                         <th scope="col">Date</th>
                         <th scope="col">Time</th>
+                        <th scope="col">Details</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -57,6 +58,9 @@
                         <td>{{submission.score}}/{{submission.quiz.question_set.all|length}}</td>
                         <td>{{ submission.submitted_at|date:"F j, Y" }}</td>
                         <td>{{submission.submitted_at|timesince}}</td>
+                        <td>
+                          <a href="{% url 'quiz_result' submission.id  %}"> Detail</a>
+                        </td>
                       </tr>
                       {% endfor %}
                     </tbody>

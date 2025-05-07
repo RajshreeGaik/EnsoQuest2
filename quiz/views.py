@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from account.models import Profile
@@ -8,24 +8,18 @@ from quiz.models import QuizSubmission
 from django.contrib import messages
 
 # Create your views here.
-@login_required(login_url='login')
+@login_required
 def all_quiz_view(request, category=None):
-
-    user_object = User.objects.get(username=request.user)
-    user_profile = Profile.objects.get(user=user_object)
 
     quizzes = Quiz.objects.order_by('-created_at')
     categories = Category.objects.all()
 
-    context = {"user_profile": user_profile, "quizzes": quizzes, "categories": categories}
+    context = {"quizzes": quizzes, "categories": categories}
     return render(request, 'all-test.html', context)
 
 
-@login_required(login_url='login')
+@login_required
 def search_view(request, category):
-
-    user_object = User.objects.get(username=request.user)
-    user_profile = Profile.objects.get(user=user_object)
 
     #search by searchbar
     if request.GET.get('q') != None:
@@ -44,39 +38,34 @@ def search_view(request, category):
 
     categories = Category.objects.all()
 
-    context = {"user_profile": user_profile, "quizzes": quizzes, "categories": categories}
+    context = {"quizzes": quizzes, "categories": categories}
     return render(request, 'all-test.html', context)
 
-@login_required(login_url='login')
+@login_required
 def quiz_view(request, quiz_id):
 
-   user_object = User.objects.get(username=request.user)
-   user_profile = Profile.objects.get(user=user_object)
 
-   quiz = Quiz.objects.filter(id=quiz_id).first()
+   quiz = get_object_or_404(Quiz, pk=quiz_id)
 
-   total_question = quiz.question_set.all().count()
 
    if request.method == "POST":
       
       # get the score
       score = int(request.POST.get('score', 0))
 
-      # check if the user has alredy submitted the quiz
-      if QuizSubmission.objects.filter(user=request.user, quiz=quiz).exists():
-         messages.success(request, f"This time you got {score} out of {total_question}")
-         return redirect('quiz', quiz_id)
       # save the new quiz submission 
       submission = QuizSubmission(user=request.user, quiz=quiz, score=score)
       submission.save()
+      return redirect('quiz_result', submission_id = submission.id)
 
-      # show the result in msg
-      messages.success(request,f"Test submitted Successfully. You got {score} out of {total_question}")
-      return redirect('quiz', quiz_id)
+  
+   return render(request,'test.html',{'quiz':quiz})
 
+@login_required
+def quiz_result_view(request,submission_id):
 
-   if quiz != None :
-      context={"user_profile": user_profile, "quiz":quiz}
-   else:
-      return redirect('all_quiz')
-   return render(request,'test.html',context)
+   submission = get_object_or_404(QuizSubmission, pk=submission_id)
+
+   context ={'submission': submission}
+   return render(request, 'test-result.html', context)
+
