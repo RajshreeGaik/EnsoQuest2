@@ -1,70 +1,104 @@
 {% extends 'index.html' %}
 
 {% block title %}@{{request.user.username}}'s Profile Edit - EnsoQuest {% endblock title %}
+
 {% block content %}
- 
-   <h1 class="display-4 text-center my-5 title">Edit Profile</h1>
- 
- 
-   <div class="container">
-     <div class="row row-cols-sm-1 row-cols-lg-3 container">
-       <div class="col-12">
-       </div>
-       <div class="col-12">
- 
-         
- 
-         <form action="" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-             <div class="mb-3 d-flex justify-content-center">
-                 <img src="{{user_profile.profile_img.url}}" alt="profile-pic" width="150" height="150" class="rounded-circle">
-             </div>
-             <div class="mb-3">
-                {% for message in messages %}
-                <h5 class="text-danger">{{message}}</h5>
-                {% endfor %}
-              </div>
-           <div class="mb-3">
-             <label for="exampleInputImage" class="form-label visually-hidden">Profile Image</label>
-             <input type="file" name="profile_img" class="form-control" id="exampleInputImage">
-           </div>
-           <div class="mb-3">
-             <label for="exampleInputFirstName" class="form-label visually-hidden">First Name</label>
-             <input type="text" name="firstname" value="{{user_profile.user.first_name}}" class="form-control" id="exampleInputFirstName" placeholder="First Name" required>
-           </div>
-           <div class="mb-3">
-             <label for="exampleInputLastName" class="form-label visually-hidden">Last Name</label>
-             <input type="text" name="lastname" value="{{user_profile.user.last_name}}" class="form-control" id="exampleInputLastName" placeholder="Last Name" required>
-           </div>
-           <div class="mb-3">
-             <label for="exampleInputEmail2" class="form-label visually-hidden">Email</label>
-             <input type="email" name="email" value="{{user_profile.user.email}}" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp"
-               placeholder="Email" required>
-           </div>
-           <div class="mb-3">
-             <label for="exampleInputUsername1" class="form-label visually-hidden">Username</label>
-             <input type="text" name="username" value="{{user_profile.user.username}}" class="form-control" id="exampleInputUsername1" aria-describedby="emailHelp"
-               placeholder="Username" required>
-           </div>
-           <div class="mb-3">
-             <label for="exampleInputPosition" class="form-label visually-hidden">Position</label>
-             <input type="text" name="position" value="{{user_profile.position}}" class="form-control" id="exampleInputPosition" placeholder="Position" required>
-           </div>
-           
- 
-           <div class="mb-3">
-             <label for="exampleFormControlTextarea1" class="form-label visually-hidden">Your Bio</label>
-             <textarea class="form-control" name="bio" id="exampleFormControlTextarea1" rows="3" placeholder="Your Bio" required>{{user_profile.bio}}</textarea>
-           </div>
-           
-           <button type="submit" class="btn btn-success">Save Profile</button>
-         </form>
-       </div>
-       <div class="col-12">
-       </div>
-     </div>
-   </div>
- 
- {% endblock content %}
- 
-   
+<style>
+  .glass-card {
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(8px);
+    padding: 2rem;
+  }
+
+  .glass-card input:focus,
+  .glass-card textarea:focus {
+    border-color: #4c8bf5;
+    box-shadow: 0 0 0 0.2rem rgba(76, 139, 245, 0.25);
+  }
+
+  .gradient-btn {
+    background: linear-gradient(135deg, #4c8bf5, #6c63ff);
+    color: #fff;
+    border: none;
+    transition: 0.3s ease-in-out;
+  }
+
+  .gradient-btn:hover {
+    background: linear-gradient(135deg, #6c63ff, #4c8bf5);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(76, 139, 245, 0.4);
+  }
+
+  .profile-img {
+    border: 4px solid #ffffff;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+</style>
+
+<h1 class="display-5 text-center my-5 title">Edit Your Profile</h1>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+      <div class="glass-card">
+
+        <form action="" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+
+          <div class="text-center mb-4">
+            <img src="{{user_profile.profile_img.url}}" alt="profile-pic" class="rounded-circle profile-img" width="130" height="130">
+          </div>
+
+          {% for message in messages %}
+          <div class="alert alert-danger text-center py-1">{{ message }}</div>
+          {% endfor %}
+
+          <div class="form-floating mb-3">
+            <input type="file" name="profile_img" class="form-control" id="floatingImage">
+            <label for="floatingImage">Upload New Image</label>
+          </div>
+
+          <div class="form-floating mb-3">
+            <input type="text" name="firstname" value="{{user_profile.user.first_name}}" class="form-control" id="floatingFirstName" placeholder="First Name" required>
+            <label for="floatingFirstName">First Name</label>
+          </div>
+
+          <div class="form-floating mb-3">
+            <input type="text" name="lastname" value="{{user_profile.user.last_name}}" class="form-control" id="floatingLastName" placeholder="Last Name" required>
+            <label for="floatingLastName">Last Name</label>
+          </div>
+
+          <div class="form-floating mb-3">
+            <input type="email" name="email" value="{{user_profile.user.email}}" class="form-control" id="floatingEmail" placeholder="Email" required>
+            <label for="floatingEmail">Email</label>
+          </div>
+
+          <div class="form-floating mb-3">
+            <input type="text" name="username" value="{{user_profile.user.username}}" class="form-control" id="floatingUsername" placeholder="Username" required>
+            <label for="floatingUsername">Username</label>
+          </div>
+
+          <div class="form-floating mb-3">
+            <input type="text" name="position" value="{{user_profile.position}}" class="form-control" id="floatingPosition" placeholder="Position" required>
+            <label for="floatingPosition">Position</label>
+          </div>
+
+          <div class="form-floating mb-4">
+            <textarea class="form-control" name="bio" id="floatingBio" placeholder="Your Bio" style="height: 100px;" required>{{user_profile.bio}}</textarea>
+            <label for="floatingBio">Your Bio</label>
+          </div>
+
+          <div class="d-grid">
+            <button type="submit" class="btn gradient-btn btn-lg rounded-pill">Save Profile</button>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

@@ -1,26 +1,33 @@
-{% extends 'index.html' %} 
+{% extends 'index.html' %}
 {% block title %}Blogs - EnsoQuest{% endblock title %}
 
 {% block content %}
+<div class="container my-5">
+  <h1 class="text-center fw-bold display-5 mb-5" style="color: #2c3e50;">📚 Explore Blogs</h1>
 
-<h1 class="display-4 text-center my-5 title">Blogs</h1>
+  <div class="col-lg-8 mx-auto">
+    {% for year_count in year_blog_count %}
+    <section class="mb-5">
+      <h4 class="mb-4 border-bottom pb-2" style="color: #34495e;">
+        {{ year_count.year }} <span class="text-muted fs-6">({{ year_count.count }} blogs)</span>
+      </h4>
 
-<main>
-    <div class="container col-md-6 col-sm-12">
-        {% for year_count in year_blog_count %}
-        <h3>{{year_count.year}} - ({{year_count.count}} blogs) </h3>
-        <ul class="list mb-4 p-3">
-            {% for blog in blogs %}
-            {% if blog.created_at|date:"Y" == year_count.year|stringformat:"s" %}
-            <li class="d-flex justify-content-between mb-2">
-                <a href="{% url 'blog' blog.id %}">{{blog.title}}</a>
-                <span  class="text-secondary">{{blog.created_at}}</span>
-            </li>
-            {% endif %}
-            {% endfor %}
-        </ul>
+      <div class="list-group shadow-sm rounded">
+        {% for blog in blogs %}
+        {% if blog.created_at|date:"Y" == year_count.year|stringformat:"s" %}
+        <a href="{% url 'blog' blog.id %}" 
+           class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 px-4"
+           style="transition: 0.3s ease; border-left: 4px solid #3498db;">
+          <div class="fw-semibold" style="color: #2c3e50;">
+            {{ blog.title }}
+          </div>
+          <small class="text-muted">{{ blog.created_at|date:"M d, Y" }}</small>
+        </a>
+        {% endif %}
         {% endfor %}
-    </div>
-</main>
-
+      </div>
+    </section>
+    {% endfor %}
+  </div>
+</div>
 {% endblock content %}

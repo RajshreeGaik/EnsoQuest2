@@ -1,76 +1,129 @@
 {% extends 'index.html' %}
 
 {% block title %}@{{user_profile2.user.username}}'s Profile - EnsoQuest {% endblock title %}
+
 {% block content %}
-    <h1 class="display-4 text-center my-4 title">@{{user_profile2.user.username}}'s Profile</h1>
-    <div class="mb-3">
-      {% for message in messages %}
-      <h5 class="text-{{message.level_tag}} text-center text-success">{{message}}</h5>
-      {% endfor %}
-    </div>
-    <div class="container text-center">
-      {% if request.user.username == user_profile2.user.username %}  
-      <div class="btn-group" role="group" aria-label="Basic example">
-        <a href="{% url 'edit_profile' %}" type="button" class="btn btn-outline-primary">Edit</a>
-        <a href="{% url 'delete_profile' %}" type="button" class="btn btn-outline-primary">Delete</a>
-      </div>
-      {% endif %}
-      <div class="container text-center my-5">
-        <div class="row">
-          <div class="col">
-            <img src="{{user_profile2.profile_img.url}}" alt="user-profile" class="rounded-circle" width="150" height="150">
+<style>
+  .profile-card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(6px);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  }
 
-            <h2 class="fs-3">@{{user_profile2.user.username}}</h2>
+  .btn-gradient {
+    background: linear-gradient(135deg, #4c8bf5, #6c63ff);
+    color: white;
+    border: none;
+  }
+
+  .btn-gradient:hover {
+    background: linear-gradient(135deg, #6c63ff, #4c8bf5);
+    box-shadow: 0 6px 16px rgba(100, 100, 255, 0.3);
+  }
+
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f8f9fa;
+  }
+
+  .title {
+    font-weight: 700;
+    color: #3f3f3f;
+  }
+
+  .icon {
+    margin-right: 8px;
+    color: #4c8bf5;
+  }
+
+  .user-meta p {
+    margin: 0.5rem 0;
+  }
+</style>
+
+<h1 class="display-5 text-center my-5 title">@{{user_profile2.user.username}}'s Profile</h1>
+
+<div class="mb-3">
+  {% for message in messages %}
+    <h5 class="text-{{message.level_tag}} text-center text-success">{{message}}</h5>
+  {% endfor %}
+</div>
+
+<div class="container text-center">
+  {% if request.user.username == user_profile2.user.username %}  
+    <div class="mb-4">
+      <a href="{% url 'edit_profile' %}" class="btn btn-gradient rounded-pill me-2">Edit Profile</a>
+      <a href="{% url 'delete_profile' %}" class="btn btn-outline-danger rounded-pill">Delete Profile</a>
+    </div>
+  {% endif %}
+
+  <div class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        <div class="profile-card text-start d-flex flex-column flex-md-row align-items-center gap-4">
+          
+          <div class="text-center">
+            <img src="{{user_profile2.profile_img.url}}" alt="user-profile" class="rounded-circle border border-3 border-light shadow-sm" width="150" height="150">
+            <h3 class="mt-3 fw-bold text-primary">@{{user_profile2.user.username}}</h3>
           </div>
-          <div class="col" div style= 'text-align:left'>
-           <h2>{{user_profile2.user.first_name|default:'Full name not available'}} {{user_profile2.user.last_name}}</h2>
-           <p class="fs-5"><i class="bi bi-person-circle"></i> {{user_profile2.position|default:'Position not available'}} </p>
-           <p class="fs-5"><i class="bi bi-info-square-fill"></i> {{user_profile2.bio|default:'Bio not available'}} </p>
-          {% if request.user.is_superuser %}
-           <p class="fs-5"><i class="bi bi-envelope-fill"></i><a href="mailto:{{user_profile2.user.email}}"> {{user_profile2.user.email|default:'Email not available'}} </a> </p>
-          {% endif %}
+
+          <div class="user-meta ps-md-4">
+            <h4>{{user_profile2.user.first_name|default:"Full name not available"}} {{user_profile2.user.last_name}}</h4>
+            <p><i class="bi bi-person-badge-fill icon"></i><strong>Position:</strong> {{user_profile2.position|default:"Not available"}}</p>
+            <p><i class="bi bi-info-circle-fill icon"></i><strong>Bio:</strong> {{user_profile2.bio|default:"No bio available"}}</p>
+            {% if request.user.is_superuser %}
+            <p><i class="bi bi-envelope-fill icon"></i><strong>Email:</strong> 
+              <a href="mailto:{{user_profile2.user.email}}">{{user_profile2.user.email|default:"Email not available"}}</a>
+            </p>
+            {% endif %}
           </div>
+
         </div>
       </div>
+    </div>
+  </div>
 
-      <hr class="my-5">
+  <hr class="my-5">
 
-      <div class="container">
-        <div class="row">
-            <div class="col">
-                <h3>Test attended by @{{user_profile2.user.username}}</h3>
-                <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Test</th>
-                        <th scope="col">Marks</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Time</th>
-                        <th scope="col">Details</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {% for submission in submissions %}
-                      <tr>
-                        <th scope="row">{{forloop.counter}}</th>
-                        <td>{{submission.quiz.title|truncatewords:4}}</td>
-                        <td>{{submission.score}}/{{submission.quiz.question_set.all|length}}</td>
-                        <td>{{ submission.submitted_at|date:"F j, Y" }}</td>
-                        <td>{{submission.submitted_at|timesince}}</td>
-                        <td>
-                          <a href="{% url 'quiz_result' submission.id  %}"> Detail</a>
-                        </td>
-                      </tr>
-                      {% endfor %}
-                    </tbody>
-                  </table>  
-            </div>
-            <!-- <div class="col">
-             <h3>@{{user_profile2.user.username}}'s Performance</h3>
-            </div> -->
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <h3 class="text-start mb-3">Tests Attended by @{{user_profile2.user.username}}</h3>
+        <div class="table-responsive">
+          <table class="table table-hover table-striped align-middle">
+            <thead class="table-primary">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Test</th>
+                <th scope="col">Marks</th>
+                <th scope="col">Date</th>
+                <th scope="col">Time Ago</th>
+                <th scope="col">Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for submission in submissions %}
+              <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{submission.quiz.title|truncatewords:4}}</td>
+                <td>{{submission.score}}/{{submission.quiz.question_set.all|length}}</td>
+                <td>{{submission.submitted_at|date:"F j, Y"}}</td>
+                <td>{{submission.submitted_at|timesince}}</td>
+                <td>
+                  <a href="{% url 'quiz_result' submission.id %}" class="btn btn-sm btn-outline-secondary">View</a>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="6" class="text-center text-muted">No test submissions yet.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
-
-{% endblock content %}  
+  </div>
+</div>
+{% endblock content %}
