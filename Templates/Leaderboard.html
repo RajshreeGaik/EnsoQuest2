@@ -1,25 +1,28 @@
 {% extends 'index.html' %}
 {% block title %}Leaderboard-EnsoQuest {% endblock title%}
-
 {% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/leaderboard-style.css' %}">
+  <div class="container text-center">
+    
+    <h1 class="display-4 text-center my-5 title ">Leaderboard</h1>
 
- <div class="container text-center">
-    <h1 class="display-4 text-center my-5">Leaderboard</h1>
+    <div class="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4  gx-3 gy-4 mx-3 ">
+     
 
-    <div class="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mx-3">
       {% if leaderboard_users|length == 0 %}
       <div class="col-lg-4 position-relative mb-4">
         <h4 class="text-center text-danger"> No User Available on Leaderboard</h4>
       </div>
       {% else %}
       {% for rank in leaderboard_users %}
-      <div class="col-lg-4 position-relative mb-4">
-        <img src="{{rank.user.profile.profile_img.url}}" class=" rounded-circle rounded-circleTemplates/Leaderboard.html" width="150" height="150" alt="user-profile">
-        <span class="position-absolute top-0 start-90 translate-middle badge rounded-pill bg-success">
+      <div class="col-lg-4 position-relative mb-4 leaderboard-card">
+        <img src="{{rank.user.profile.profile_img.url}}" class="leaderboard-img rounded-circle alt=user-profile">
+        <span class=" position-absolute top-0 start-90 translate-middle badge rounded-pill modern-badge ">
           {{ forloop.counter}}
         </span>
-        <h2 class="fw-normal">@{{rank.user.username}}</h2>
-        <p>{{rank.user.profile.bio|truncatewords:5}}</p>
+        <h2 class="fw-normal username">@{{rank.user.username}}</h2>
+        <p class="card-bio">{{rank.user.profile.bio}}</p>
         <p><a class="btn btn-secondary " href="{% url 'profile' rank.user.username %}">View Profile »</a></p>
       </div>
       {% endfor %}

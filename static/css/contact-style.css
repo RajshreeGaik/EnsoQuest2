@@ -1,0 +1,47 @@
+/* contact-style.css */
+
+/* General Styles */
+body {
+    background-color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Form Enhancement */
+.contact-form {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease;
+}
+
+.contact-form:hover {
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+}
+
+.contact-form label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+    color: #333;
+}
+
+.contact-form .form-control {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 12px 15px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-form .form-control:focus {
+    border-color: #9b51e0;
+    box-shadow: 0 0 0 0.2rem rgba(155, 81, 224, 0.25);
+    outline: none;
+}
+
+/* Button Hover Effect */
+.btn-primary:hover {
+    background-color: #6a2dbf;
+    box-shadow: 0 6px 16px rgba(106, 45, 191, 0.4);
+}

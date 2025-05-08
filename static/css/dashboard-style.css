@@ -1,0 +1,83 @@
+/* dashboard-style.css */
+
+/* General Styles */
+body {
+    background-color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.title {
+    color: #9b51e0;
+    font-weight: 700;
+}
+
+/* Card Styles */
+.card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+    background-color: #fff;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-title {
+    font-size: 2.5rem;
+    color: #000;
+    font-weight: bold;
+}
+
+.card-text {
+    color: #373a3d;
+    font-size: 1.1rem;
+    margin-top: 10px;
+}
+
+/* List Group Styles */
+.list-group-item {
+    border: none;
+    font-size: 1.00 rem;
+    background-color: transparent;
+    padding: 12px 20px;
+    border-top: 1px solid #dee2e6; 
+    border-bottom: 1px solid #dee2e6;
+}
+
+.badge.bg-primary {
+    background-color: #9b51e0 !important;
+}
+
+/* Table Styles */
+table.table {
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+thead tr {
+    background-color: #9b51e0;
+    color: white;
+}
+
+.table-active {
+    background-color: #f1f0fd !important;
+}
+
+.table td a {
+    color: #9b51e0;
+    text-decoration: none;
+}
+
+.table td a:hover {
+    text-decoration: underline;
+}
+
+/* Inbox Header */
+h2 {
+    font-weight: bold;
+    color: #000;
+}

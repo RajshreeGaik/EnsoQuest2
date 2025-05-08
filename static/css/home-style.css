@@ -1,0 +1,207 @@
+body {
+    background-color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+.card-bio {
+    display: block;                /* Makes the <p> a block element */
+    white-space: nowrap;           /* Prevents the text from wrapping to a new line */
+    overflow: hidden;              /* Hides any content that exceeds the container */
+    text-overflow: ellipsis;       /* Adds "..." when the text is truncated */
+    width: 100%;                   /* Ensures the text takes up the full width of the parent */
+  }
+  
+  .leaderboard-card {
+    background: rgba(255, 255, 255, 0.1); /* Transparent with slight white tint */
+    border-radius: 12px;
+    padding: 16px;
+    margin: 15px; /* Space between cards */
+    backdrop-filter: blur(8px); /* Glass effect */
+    -webkit-backdrop-filter: blur(8px); /* For Safari */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle glass border */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4); /* Slight shadow for depth */
+    max-width: 280px; /* Increased card width */
+    min-height: 280px; /* Ensure height is consistent */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
+  }
+  
+  /* Hover animation */
+  .leaderboard-card:hover {
+    transform: scale(1.05); /* Slightly scale up on hover */
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6); /* More intense shadow on hover */
+  }
+  
+  /* Background change on hover */
+  .leaderboard-card:hover {
+    background: rgba(255, 255, 255, 0.2); /* Lighter background on hover */
+  }
+  
+  .leaderboard-card img {
+    width: 150px; /* Fixed width for the image */
+    height: 150px; /* Fixed height for the image */
+    object-fit: cover; /* Ensure the image covers the specified area */
+    border-radius: 50%; /* If you want the image to be circular */
+    margin-bottom: 10px; /* Add some space between the image and username */
+  }
+  
+  .leaderboard-card .username {
+    font-size: 20px; /* Reduced font size for username */
+    font-weight: bold; /* Optional: Make username bold */
+    text-align: center; /* Center the text */
+    margin-top: 10px; /* Space between image and username */
+  }
+  
+  .leaderboard-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
+    gap: 20px; /* Space between the cards */
+    justify-items: center; /* Center the cards horizontally */
+    padding: 20px;
+  }
+
+  .modern-badge {
+    background: linear-gradient(45deg, #9b51e0, #6a2dbf); /* Gradient background */
+    color: white; /* White text */
+    padding: 12px; /* Equal padding for a circular shape */
+    font-size: 14px; /* Adjust font size */
+    font-weight: 600; /* Semi-bold text for a clean, modern look */
+    border-radius: 50%; /* Circular shape */
+    width: 30px; /* Fixed width for the badge */
+    height: 30px; /* Fixed height for the badge */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    text-transform: uppercase; /* Uppercase letters for style */
+    letter-spacing: 1px; /* Slight spacing between letters for a modern touch */
+    text-align: center; /* Center the badge content */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Hover effect */
+  .modern-badge:hover {
+    transform: scale(1.1); /* Slightly enlarge on hover */
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2); /* More intense shadow on hover */
+    background: linear-gradient(45deg, #6a2dbf, #9b51e0); /* Reverse gradient for hover effect */
+  }
+  
+  /* Positioning adjustments */
+  .position-absolute {
+    position: absolute;
+  }
+  
+  .top-0 {
+    top: 0;
+  }
+  
+  .start-90 {
+    left: 90%;
+  }
+  
+  .translate-middle {
+    transform: translate(-50%, -50%);
+  }
+
+  .leaderboard-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.3); /* subtle border */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);   /* soft shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  /* Hover effect for profile image */
+  .leaderboard-card:hover .leaderboard-img {
+    transform: scale(1.05); /* Slight zoom */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Deeper shadow on hover */
+  }
+  
+  /* Responsive sizing */
+  @media (max-width: 768px) {
+    .leaderboard-img {
+      width: 120px;
+      height: 120px;
+    }
+  }
+  
+  /* General Styling */
+body {
+    background-color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Main Title - EnsoQuest */
+  .title {
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: #9b51e0;
+    margin-bottom: 0.5rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.08);
+  }
+  
+  /* Tagline */
+  .tagline-text {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #6a2dbf;
+    font-style: italic;
+    margin-top: 1.5rem ;
+    margin-bottom: 2.5rem;
+  }
+  
+  
+  .btn-primary:hover {
+    background-color: #6a2dbf;
+    box-shadow: 0 6px 16px rgba(106, 45, 191, 0.4);
+  }
+  
+  .btn-outline-secondary {
+    border: 2px solid #6a2dbf;
+    color: #6a2dbf;
+    padding: 12px 24px;
+    box-shadow: 0 2px 6px rgba(106, 45, 191, 0.1);
+  }
+  
+  .btn-outline-secondary:hover {
+    background-color: #6a2dbf;
+    color: #fff;
+    box-shadow: 0 6px 16px rgba(106, 45, 191, 0.3);
+  }
+  
+  .leaderboard-heading {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #7f3ccf;
+    text-align: center;
+    margin: 70px auto 50px;
+    position: relative;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.08);
+    letter-spacing: 1px;
+  }
+
+  
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .title {
+      font-size: 2.3rem;
+    }
+  
+    .tagline-text {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+  
+    .leaderboard-heading {
+      font-size: 2rem;
+      margin: 40px auto 30px;
+    }
+  }
+  

@@ -2,7 +2,7 @@
 
 {% block title %}@{{user_profile2.user.username}}'s Profile - EnsoQuest {% endblock title %}
 {% block content %}
-    <h1 class="display-4 text-center my-4">@{{user_profile2.user.username}}'s Profile</h1>
+    <h1 class="display-4 text-center my-4 title">@{{user_profile2.user.username}}'s Profile</h1>
     <div class="mb-3">
       {% for message in messages %}
       <h5 class="text-{{message.level_tag}} text-center text-success">{{message}}</h5>

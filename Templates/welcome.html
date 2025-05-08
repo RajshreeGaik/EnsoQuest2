@@ -1,11 +1,11 @@
 {% extends "index.html" %}
-{% load static %}
 
 {% block content %}
-
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/home-style.css' %}">
   <div class="container text-center my-5">
-    <h1 class="display-5 fw-bold my-2">EnsoQuest</h1>
-    <p class="fs-3">#making better happen</p>
+    <h1 class="display-5 fw-bold my-2 title">EnsoQuest</h1>
+    <h2 class="fs-3 tagline-text ">#making better happen</h2>
     <div class="d-inline-flex gap-2 mb-5">
       <a href="{% url 'all_quiz' %}" class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 ">
         Take Test
@@ -19,7 +19,7 @@
   </div>
 
   <div class="container text-center">
-    <h1 class="display-4 text-center my-5">Leaderboard</h1>
+    <h1 class="display-4 text-center my-5 leaderboard-heading">Leaderboard</h1>
 
     <div class="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mx-3">
       {% if leaderboard_users|length == 0 %}
@@ -28,14 +28,15 @@
       </div>
       {% else %}
       {% for rank in leaderboard_users %}
-      <div class="col-lg-4 position-relative mb-4">
+      <div class="col-lg-4 position-relative mb-4  leaderboard-card">
         <!-- <img src="{{rank.user.profile.profile_img.url}}" class="img-fluid rounded-circle" width="150" height="150" alt="user-profile"> -->
-        <img src="{{ rank.user.profile.profile_img.url }}" class="img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover;" alt="user-profile">
-        <span class="position-absolute top-0 start-90 translate-middle badge rounded-pill bg-success">
+        <!-- <img src="{{ rank.user.profile.profile_img.url }}" class="leaderboard-img img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover;" alt="user-profile"> -->
+        <img src="{{rank.user.profile.profile_img.url}}" class="leaderboard-img rounded-circle alt=user-profile">
+        <span class="position-absolute top-0 start-90 translate-middle badge rounded-pill modern-badge ">
           {{ forloop.counter}}
         </span>
-        <h2 class="fw-normal">@{{rank.user.username}}</h2>
-        <p>{{rank.user.profile.bio|truncatewords:5}}</p>
+        <h2 class="fw-normal username">@{{rank.user.username}}</h2>
+        <p class="card-bio">{{rank.user.profile.bio}}</p>
         <p><a class="btn btn-secondary" href="{% url 'profile' rank.user.username %}">View Profile »</a></p>
       </div>
       {% endfor %}
