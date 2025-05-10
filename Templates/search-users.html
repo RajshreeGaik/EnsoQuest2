@@ -4,9 +4,74 @@
 
 {% block content %}
 
+<style>
+ 
   
+  .user-card {
+      background-color: #f9f9f9;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease-in-out;
+  }
+  
+  .user-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+
+  .user-username {
+      color: #333;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+  }
+  
+  .user-bio {
+      color: #777;
+      font-size: 1rem;
+      margin-bottom: 15px;
+  }
+  
+  .btn-secondary {
+      background-color: #9b51e0;
+      border-color: #9b51e0;
+      transition: all 0.2s;
+  }
+  
+  .btn-secondary:hover {
+      background-color: #7b3da2;
+      border-color: #7b3da2;
+  }
+  
+  .btn-primary {
+      background-color: #0062cc;
+      border-color: #005cbf;
+      padding: 12px 25px;
+      border-radius: 50px;
+      font-size: 1.2rem;
+  }
+  
+  .btn-primary:hover {
+      background-color: #005cbf;
+      border-color: #0056b3;
+  }
+  
+  /* Responsive Design for smaller screens */
+  @media (max-width: 768px) {
+      .user-profile-img {
+          width: 120px;
+          height: 120px;
+      }
+  
+      .user-username {
+          font-size: 1.3rem;
+      }
+  }
+  </style> 
   <div class="container text-center">
-    <h1 class="display-4 text-center my-5">Search result for query "{{query}}"</h1>
+    <h1 class="display-4 text-center my-5 title">Search result for query "{{query}}"</h1>
 
     <div class="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mx-3">
       {% if users|length == 0 %}
@@ -16,11 +81,13 @@
       {% else %}
       {% for user in users %}
       <div class="col-lg-4 position-relative mb-4">
-        <img src="{{user.profile.profile_img.url}}" class="rounded-circleTemplates/Leaderboard.html" width="150" height="150" alt="user-profile">
-        <h2 class="fw-normal">@{{user.username}}</h2>
-        <p>{{user.profile.bio|truncatewords:5}}</p>
+        <div class="user-card">
+        <img src="{{user.profile.profile_img.url}}" class=" rounded-circle " width="150" height="150" alt="user-profile">
+        <h2 class="fw-normal user-username">@{{user.username}}</h2>
+        <p class="user-bio">{{user.profile.bio|truncatewords:5}}</p>
         <p><a class="btn btn-secondary" href="{% url 'profile' user.username %}">View Profile »</a></p>
       </div>
+    </div>
       {% endfor %}
       {% endif %}
     </div>

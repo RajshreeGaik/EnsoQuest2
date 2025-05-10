@@ -11,7 +11,7 @@
       <div class="d-flex flex-wrap">
         <a href="{% url 'all_quiz' %}" class="btn btn-sm btn-light m-1">All Tests</a>
         {% for category in categories %}
-        <a href="{% url 'search' category.name %}" class="btn btn-sm btn-light m-1">{{category.name}}</a>
+        <a href="{% url 'search' category.name %}" class="btn btn-sm btn-secondary m-1">{{category.name}}</a>
         <link rel="stylesheet" href="{% static 'css/alltest-style.css' %}">
         {% endfor %}
       </div>

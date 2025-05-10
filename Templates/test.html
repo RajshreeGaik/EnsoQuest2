@@ -8,22 +8,79 @@
      .questions {
             user-select: none;
         }
+       
+     body{
+      background-color: #f9f9f9;
+    }
+
+  #timer {
+    position: fixed;
+    top: 80px;             /* Adjust distance below the navbar */
+    right: 30px;           /* Distance from the right edge */
+    background: linear-gradient(135deg, #9b51e0, #7f41c5); /* Purple gradient background */
+    color: white;          /* White text for contrast */
+    padding: 12px 30px;    /* Slightly larger padding for a spacious look */
+    font-size: 1.2rem;     /* Slightly larger font */
+    font-weight: 500;      /* Medium boldness for readability */
+    border-radius: 40px;   /* Large rounded corners for a smooth, modern feel */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+    z-index: 1000;         /* Keep it on top of other elements */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern, clean font */
+    transition: all 0.3s ease; /* Smooth transition for changes */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 120px;       /* Ensuring consistent width for the timer */
+    text-align: center;
+    letter-spacing: 1px;    /* Slight letter spacing for a professional look */
+    animation: fadeIn 0.5s ease-out; /* Animation for smooth visibility */
+  }
+
+  #timer::before {
+    content: "⏱️"; /* Timer icon for visual appeal */
+    margin-right: 10px; /* Space between the icon and timer text */
+    font-size: 1.4rem;   /* Slightly larger icon */
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: 576px) {
+    #timer {
+      top: 15px;           /* Adjust distance on smaller screens */
+      right: 10px;
+      font-size: 1rem;     /* Slightly smaller font for mobile */
+      padding: 8px 18px;   /* Adjust padding for smaller screens */
+    }
+  }
 </style>
-    <h1 class="display-4 text-center my-4 title">{{quiz.title}} - ({{quiz.question_set.all|length}})</h1>
-    <p class="fs-4 text-center container">{{quiz.description}}</p>
+   
+
+<span class="fs-5" id="timer">10:00</span>
+
+  <div class="container">
+      <h1 class="display-4 text-center my-4 title">{{quiz.title}} - ({{quiz.question_set.all|length}})</h1>
+      <p class="fs-4 text-center container">{{quiz.description}}</p>
+  </div>
     
     <div class="container">
-        <div class="d-flex justify-content-between">
+     <div class="d-flex justify-content-between">
         <span>{{quiz.created_at}}</span>
-        <span class="fs-5" id="timer">10:00</span>
-        </div>
+     </div>
+   
 
         {%  for message in messages %}
          <div id="message-div">
-        <h4 class="text-center text-success">{{message}}</h4>
-      </div>
+         <h4 class="text-center text-success">{{message}}</h4>
+         </div>
         {% endfor %}
-
+  
 
         <div class="questions my-4">
           {% for question in  quiz.question_set.all %}
@@ -149,7 +206,7 @@
   options.forEach(option => {
     option.disabled = true;
   });
-}
+ }
 
 
   // Attach Event listener to submit the button

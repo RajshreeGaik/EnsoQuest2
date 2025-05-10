@@ -68,13 +68,21 @@ thead tr {
 }
 
 .table td a {
-    color: #9b51e0;
+    color: #4b0082;  /* Dark indigo for better contrast on white */
     text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 5px;
+    display: inline-block;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .table td a:hover {
-    text-decoration: underline;
+    color: #fff;
+    background-color: #9b51e0;
+    text-decoration: none;
 }
+
+
 
 /* Inbox Header */
 h2 {

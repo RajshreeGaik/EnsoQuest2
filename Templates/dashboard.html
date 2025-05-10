@@ -106,7 +106,7 @@
                             <td><a href="{% url 'profile' message.user.username %}">@{{message.user.username}}</a></td>
                             <td>{{message.subject}}</td>
                             <td>{{message.created_at}}</td>
-                            <td><a href="{% url 'message' message.id%}" class="btn btn-sm btn-primary">Open</a></td>
+                            <td><a href="{% url 'message' message.id%}" class="btn btn-sm btn-outline-secondary">Open</a></td>
                         </tr>
                         {% endfor %}
                     </tbody>
