@@ -1,51 +1,117 @@
 {% extends 'index.html' %}
 {% block title %}Register - EnsoQuest {% endblock title %}
 {% block content %}
+{% load static %}
 <style>
-  body{
-    background-color: #f9f9f9;
+
+  body {
+    background-image: url("{% static 'images/EnsoQuest.jpg' %}");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
   }
+
+  .glass-container {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  form .form-control {
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    font-size: 0.95rem;
+  }
+
+  .btn-primary {
+    padding: 0.5rem 1.5rem;
+    font-weight: 500;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+
+  .form-check-label a {
+    text-decoration: underline;
+    color: #9b51e0;
+  }
+
+  .form-check-label a:hover {
+    color: #7a3dcf;
+  }
+
+  .glass-container h5 {
+    margin-bottom: 1rem;
+  }
+
+  @keyframes fadeSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.glass-container {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  max-width: 480px;
+  margin: 0 auto;
+  
+  /* Animation */
+  animation: fadeSlideUp 0.6s ease-out;
+}
+
+
+/* Hover Animation */
+.glass-container:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
 </style>
-      <h1 class="display-4 text-center my-5 fw-bold title">Register</h1>
-      <div class="container my-5">
-          <div class="row row-cols-sm-1 row-cols-lg-3 container">
-            <div class="col-12">
-            </div>
-            <div class="col-12">
-              <div>
-                {% for message in messages %}
-                <h5 class="text-danger">{{message}}</h5>
-                {% endfor %}
-              </div>
-              <form method="POST" action="">
-                {% csrf_token %}
-                <div class="mb-3">
-                  <label for="exampleInputEmail1" class="form-label visually-hidden">Username</label>
-                  <input type="text" name='username' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Username" required>
-                </div>
-                <div class="mb-3">
-                  <label for="exampleInputEmail1" class="form-label visually-hidden">Email</label>
-                  <input type="Email" name='email' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email" required>
-                </div>
-                <div class="mb-3">
-                  <label for="exampleInputPassword1" class="form-label visually-hidden">Password</label>
-                  <input type="password" name='password' class="form-control" id="exampleInputPassword1" placeholder="Password" required>
-                </div>
-                <div class="mb-3">
-                  <label for="exampleInputPassword2" class="form-label visually-hidden">Re-enter Password</label>
-                  <input type="password" name='password2' class="form-control" id="exampleInputPassword2" placeholder="Re-enter Password" required>
-                </div>
-                <div class="mb-3 form-check">
-                  <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
-                  <label class="form-check-label" for="exampleCheck1"><a href="{%url 'terms_conditions' %}">Terms and Conditions</a></label>
-                </div>
-                <button type="submit" class="btn btn-primary">Register</button>
-                <p>Already a user ? <a href="{% url 'login' %}">Login</a></p>
-              </form>
-            </div>
-            <div class="col-12">
-            </div>
-          </div>
-        </div> 
-        
+
+<h1 class="display-4 text-center my-4 fw-bold title">Register</h1>
+
+<div class="container my-4">
+  <div class="glass-container">
+    {% for message in messages %}
+      <h5 class="text-danger">{{ message }}</h5>
+    {% endfor %}
+    <form method="POST" action="">
+      {% csrf_token %}
+      <div class="mb-3">
+        <input type="text" name="username" class="form-control" placeholder="Username" required>
+      </div>
+      <div class="mb-3">
+        <input type="email" name="email" class="form-control" placeholder="Email" required>
+      </div>
+      <div class="mb-3">
+        <input type="password" name="password" class="form-control" placeholder="Password" required>
+      </div>
+      <div class="mb-3">
+        <input type="password" name="password2" class="form-control" placeholder="Re-enter Password" required>
+      </div>
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
+        <label class="form-check-label" for="exampleCheck1">
+          <a href="{% url 'terms_conditions' %}">Terms and Conditions</a>
+        </label>
+      </div>
+      <button type="submit" class="btn btn-primary">Register</button>
+      <p class="mt-3">Already a user? <a href="{% url 'login' %}">Login</a></p>
+    </form>
+  </div>
+</div>
+
 {% endblock content %}

@@ -134,6 +134,7 @@
             <p><i class="bi bi-person-badge-fill icon"></i><strong>Position:</strong> {{user_profile2.position|default:"Not available"}}</p>
             <p><i class="bi bi-info-circle-fill icon"></i><strong>Bio:</strong> {{user_profile2.bio|default:"No bio available"}}</p>
             {% if request.user.is_superuser %}
+            
             <p><i class="bi bi-envelope-fill icon"></i><strong>Email:</strong> 
               <a href="mailto:{{user_profile2.user.email}}">{{user_profile2.user.email|default:"Email not available"}}</a>
             </p>
