@@ -27,3 +27,24 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.title
+    
+
+
+RATING_CHOICES = [
+    (1, '1 - Poor'),
+    (2, '2 - Fair'),
+    (3, '3 - Good'),
+    (4, '4 - Very Good'),
+    (5, '5 - Excellent'),
+]
+
+class Feedback(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField(blank=True)
+    rating = models.IntegerField(choices=RATING_CHOICES)
+    expectations_met = models.TextField()
+    improvement_suggestions = models.TextField()
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Feedback from {self.name}"

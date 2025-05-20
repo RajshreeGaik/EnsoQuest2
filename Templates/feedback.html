@@ -1,0 +1,52 @@
+{% extends 'index.html' %}
+{% block title %}EnsoQuest- Feedback{% endblock title %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/feedback-style.css' %}">
+<div class="container mt-4">
+    <h2 class="mb-4">Feedback Form</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>Name:</label>
+            <input type="text" name="name" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label>Email:</label>
+            <input type="email" name="email" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label>Rating:</label>
+            <select name="rating" class="form-control" required>
+                <option value="" disabled selected>Select your rating</option>
+                <option value="1">1 - Poor</option>
+                <option value="2">2 - Fair</option>
+                <option value="3">3 - Good</option>
+                <option value="4">4 - Very Good</option>
+                <option value="5">5 - Excellent</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>What did you expect from the platform?</label>
+            <textarea name="expectation" class="form-control" rows="3" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>What can we improve?</label>
+            <textarea name="improvement" class="form-control" rows="3" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Submit Feedback</button>
+    </form>
+</div>
+{% endblock %}

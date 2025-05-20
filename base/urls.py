@@ -2,6 +2,7 @@ from django.urls import path
 from django.conf.urls import handler404
 from . import  views
 
+
 handler404 = views.custom_404 
 
 urlpatterns =[
@@ -16,4 +17,5 @@ urlpatterns =[
     path('blogs', views.blogs_view, name='blogs'),
     path('blogs/<str:blog_id>', views.blog_view, name='blog'),
     path('search/users', views.search_users_view, name='search_users'),
+    path('feedback', views.feedback_view, name='feedback'),
 ]

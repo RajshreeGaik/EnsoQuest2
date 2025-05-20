@@ -1,0 +1,62 @@
+/* Customize container */
+.container.mt-4 {
+    max-width: 600px;
+    background: #f8f9fa;  /* light gray background */
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Heading */
+h2.mb-4 {
+    text-align: center;
+    font-weight: 700;
+    color: #343a40; /* dark grey */
+}
+
+/* Form group spacing */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Inputs and selects */
+.form-control {
+    border: 1.5px solid #ced4da;
+    border-radius: 8px;
+    padding: 12px 15px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+/* Textareas */
+textarea.form-control {
+    resize: vertical;
+}
+
+/* Submit button */
+.btn.btn-primary.mt-3 {
+    width: 100%;
+    padding: 14px 0;
+    font-size: 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.btn.btn-primary.mt-3:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+/* Optional: labels bold */
+label {
+    font-weight: 600;
+    color: #495057;
+}

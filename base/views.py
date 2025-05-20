@@ -9,6 +9,7 @@ from .models import Message, Blog
 from django.db.models import Count, Q
 import math
 from django.db.models.functions import ExtractYear
+from .models import Feedback
 
 
 # Create your views here.
@@ -159,6 +160,31 @@ def search_users_view(request):
  
     context={"query": query, "users":users}
     return render (request, "search-users.html", context)
+
+
+
+@login_required
+def feedback_view(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        rating = int(request.POST.get('rating'))
+        expectations_met = request.POST.get('expectation')  # from form field
+        improvement_suggestions = request.POST.get('improvement')  # from form field
+
+        Feedback.objects.create(
+            name=name,
+            email=email,
+            rating=rating,
+            expectations_met=expectations_met,
+            improvement_suggestions=improvement_suggestions,
+        )
+        # Add a success message
+        messages.success(request, "Thank you for your feedback 😊🎉🙏!")
+        # Redirect to feedback page to avoid form resubmission
+        return redirect('feedback')  # Make sure 'feedback' is the name of your url pattern
+    return render(request, "feedback.html")
+
 
 def custom_404(request, exception):
     return render(request, '404.html', status=404)
