@@ -188,4 +188,22 @@ def feedback_view(request):
 
 def custom_404(request, exception):
     return render(request, '404.html', status=404)
-    
+
+from quiz.models import Quiz
+
+def search_view(request):
+    query = request.GET.get('q', '')
+    if query:
+        quizzes = Quiz.objects.filter(title__icontains=query)
+    else:
+        quizzes = Quiz.objects.none()  # or all() if you want everything to show by default
+
+    context = {
+        'quizzes': quizzes,
+        'search_query': query,
+    }
+
+    return render(request, 'search_results.html', context)
+
+
+

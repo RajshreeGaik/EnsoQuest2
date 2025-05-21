@@ -17,5 +17,7 @@ urlpatterns =[
     path('blogs', views.blogs_view, name='blogs'),
     path('blogs/<str:blog_id>', views.blog_view, name='blog'),
     path('search/users', views.search_users_view, name='search_users'),
+    path('search/', views.search_view, name='search'),  # Search without category
+    path('search/<str:category>/', views.search_view, name='search_category'),  # Search with category
     path('feedback', views.feedback_view, name='feedback'),
 ]
