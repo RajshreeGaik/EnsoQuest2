@@ -1,45 +1,44 @@
 {% extends 'index.html' %}
 
-{% block title %}{{quiz.title}} - EnsoQuest{% endblock title %}
-
+{% block title %}{{ quiz.title }} - EnsoQuest{% endblock title %}
 
 {% block content %}
-<style> 
-     .questions {
-            user-select: none;
-        }
-       
-     body{
-      background-color: #f9f9f9;
-    }
+<style>
+  .questions {
+    user-select: none;
+  }
+
+  body {
+    background-color: #f9f9f9;
+  }
 
   #timer {
     position: fixed;
-    top: 80px;             /* Adjust distance below the navbar */
-    right: 30px;           /* Distance from the right edge */
-    background: linear-gradient(135deg, #9b51e0, #7f41c5); /* Purple gradient background */
-    color: white;          /* White text for contrast */
-    padding: 12px 30px;    /* Slightly larger padding for a spacious look */
-    font-size: 1.2rem;     /* Slightly larger font */
-    font-weight: 500;      /* Medium boldness for readability */
-    border-radius: 40px;   /* Large rounded corners for a smooth, modern feel */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
-    z-index: 1000;         /* Keep it on top of other elements */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern, clean font */
-    transition: all 0.3s ease; /* Smooth transition for changes */
+    top: 80px;
+    right: 30px;
+    background: linear-gradient(135deg, #9b51e0, #7f41c5);
+    color: white;
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    border-radius: 40px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: all 0.3s ease;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-width: 120px;       /* Ensuring consistent width for the timer */
+    min-width: 120px;
     text-align: center;
-    letter-spacing: 1px;    /* Slight letter spacing for a professional look */
-    animation: fadeIn 0.5s ease-out; /* Animation for smooth visibility */
+    letter-spacing: 1px;
+    animation: fadeIn 0.5s ease-out;
   }
 
   #timer::before {
-    content: "⏱️"; /* Timer icon for visual appeal */
-    margin-right: 10px; /* Space between the icon and timer text */
-    font-size: 1.4rem;   /* Slightly larger icon */
+    content: "⏱️";
+    margin-right: 10px;
+    font-size: 1.4rem;
   }
 
   @keyframes fadeIn {
@@ -53,167 +52,139 @@
 
   @media (max-width: 576px) {
     #timer {
-      top: 15px;           /* Adjust distance on smaller screens */
+      top: 15px;
       right: 10px;
-      font-size: 1rem;     /* Slightly smaller font for mobile */
-      padding: 8px 18px;   /* Adjust padding for smaller screens */
+      font-size: 1rem;
+      padding: 8px 18px;
     }
   }
 </style>
-   
 
 <span class="fs-5" id="timer">10:00</span>
 
-  <div class="container">
-      <h1 class="display-4 text-center my-4 title">{{quiz.title}} - ({{quiz.question_set.all|length}})</h1>
-      <p class="fs-4 text-center container">{{quiz.description}}</p>
+<div class="container">
+  <h1 class="display-4 text-center my-4 title">{{ quiz.title }} - ({{ quiz.question_set.all|length }})</h1>
+  <p class="fs-4 text-center container">{{ quiz.description }}</p>
+</div>
+
+<div class="container">
+  <div class="d-flex justify-content-between">
+    <span>{{ quiz.created_at }}</span>
   </div>
-    
-    <div class="container">
-     <div class="d-flex justify-content-between">
-        <span>{{quiz.created_at}}</span>
-     </div>
-   
 
-        {%  for message in messages %}
-         <div id="message-div">
-         <h4 class="text-center text-success">{{message}}</h4>
-         </div>
-        {% endfor %}
-  
+  {% for message in messages %}
+  <div id="message-div">
+    <h4 class="text-center text-success">{{ message }}</h4>
+  </div>
+  {% endfor %}
 
-        <div class="questions my-4">
-          {% for question in  quiz.question_set.all %}
-          <div class="card mb-2 question" >
-                <div class="card-header fw-bold">
-                  Question {{forloop.counter}}
-                </div>
-                <div class="card-body">
-                  <p class="card-text">{{question.text}}</p>
-                  {% for option in question.choice_set.all %}
-                  <div class="form-check">
-                    <input class="form-check-input" value="{{option.text}}" type="radio" name="{{option.question.id}}" id="{{option.id}}">
-                    
-                    <label class="form-check-label" for="{{option.id}}">
-                    {{option.text}}
-                    </label>
-                    {% if option.is_correct %}
-                    <span class="visually-hidden correct-answer">{{option.text}}</span>
-                    {% endif %}
-                  </div>
-                  {% endfor %}
-                </div>
-            </div>
+  <form action="" method="post" id="quiz-form">
+    {% csrf_token %}
+
+    <div class="questions my-4">
+      {% for question in quiz.question_set.all %}
+      <div class="card mb-2 question">
+        <div class="card-header fw-bold">
+          Question {{ forloop.counter }}
+        </div>
+        <div class="card-body">
+          <p class="card-text">{{ question.text }}</p>
+          {% for option in question.choice_set.all %}
+          <div class="form-check">
+            <input class="form-check-input"
+                   value="{{ option.id }}"
+                   type="radio"
+                   name="{{ question.id }}"
+                   id="option-{{ option.id }}">
+
+            <label class="form-check-label" for="option-{{ option.id }}">
+              {{ option.text }}
+            </label>
+
+            {% if option.is_correct %}
+            <span class="visually-hidden correct-answer">{{ option.text }}</span>
+            {% endif %}
+          </div>
           {% endfor %}
         </div>
-
-        <form action="" method="post" id="quiz-form">
-          {% csrf_token %}
-          <!-- hidden input filed for score-->
-           <input type="hidden" name="score" value="0" id="user-score">
-
-          <!--submit button-->
-          <button type="submit" class="btn btn-primary" id="submit-button">Submit</button>
-        </form>
-        
+      </div>
+      {% endfor %}
     </div>
+
+    <!-- Hidden input for score -->
+    <input type="hidden" name="score" value="0" id="user-score">
+
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-primary" id="submit-button">Submit</button>
+  </form>
+</div>
+
 <script>
-   //Element 
-    var submitButton = document.getElementById("submit-button");
-    var timerSpan = document.getElementById("timer");
-    var quizForm = document.getElementById("quiz-form");
-    var questions = document.querySelectorAll(".question");
-    var userScoreInput = document.getElementById("user-score");
+  var submitButton = document.getElementById("submit-button");
+  var timerSpan = document.getElementById("timer");
+  var quizForm = document.getElementById("quiz-form");
+  var questions = document.querySelectorAll(".question");
+  var userScoreInput = document.getElementById("user-score");
 
-    quizDuration = (questions.length) * 60 ;//CONVERT IN SEC
-  // Update Timer
+  quizDuration = questions.length * 60;
+
   function updateTimer() {
-      var minutes = Math.floor(quizDuration / 60);
-      var seconds = quizDuration % 60;
+    var minutes = Math.floor(quizDuration / 60);
+    var seconds = quizDuration % 60;
+    timerSpan.innerText = minutes + "m" + seconds + "s";
 
-      timerSpan.innerText = minutes + "m" + seconds + "s";
-      //chek if time ended 
-      if (quizDuration <= 0){
-        // automatically submit the quiz
-        clearTimeout(quizTimerId);
-        submitQuiz();
-      }
-      else if (document.getElementById('message-div')) {
-        clearTimeout(quizTimerId);
-        highlightCorrectAnswers();
-      }
-      else{
-        //decrement the timer by value 1s
-        quizDuration--;
-      }
-
-
+    if (quizDuration <= 0) {
+      clearTimeout(quizTimerId);
+      submitQuiz();
+    } else if (document.getElementById('message-div')) {
+      clearTimeout(quizTimerId);
+      highlightCorrectAnswers();
+    } else {
+      quizDuration--;
+    }
   }
 
-  //function to submit the quiz
-  function submitQuiz(){
-    //calicuate the score
+  function submitQuiz() {
     calculateScore();
-
-    //sunmit the quiz
-      quizForm.submit();
+    quizForm.submit();
   }
 
-  // check right answer and calculate the score
-  function calculateScore(){
+  function calculateScore() {
     var score = 0;
-
-    // loop through each question
     questions.forEach(question => {
       var selectedInput = question.querySelector('input:checked');
       var correctAnswer = question.querySelector(".correct-answer").innerText;
-
-      //check ans is corect or not
-      if (selectedInput && selectedInput.value === correctAnswer){
-        score +=1;
+      if (selectedInput && selectedInput.nextElementSibling.innerText === correctAnswer) {
+        score += 1;
       }
-
     });
-     // update the hidden input field with score in form 
-     userScoreInput.value = score;
-    
+    userScoreInput.value = score;
   }
 
-  //highlight coreect ans while showing result
   function highlightCorrectAnswers() {
-  questions.forEach(question => {
-    var correctAnswerSpan = question.querySelector(".correct-answer");
-
-    if (correctAnswerSpan) {
-      // Get the form-check div containing the correct answer
-      var formCheckDiv = correctAnswerSpan.closest(".form-check");
-
-      if (formCheckDiv) {
-        var inputElement = formCheckDiv.querySelector("input");
-
-        if (inputElement) {
-          inputElement.classList.add("bg-success");
+    questions.forEach(question => {
+      var correctAnswerSpan = question.querySelector(".correct-answer");
+      if (correctAnswerSpan) {
+        var formCheckDiv = correctAnswerSpan.closest(".form-check");
+        if (formCheckDiv) {
+          var inputElement = formCheckDiv.querySelector("input");
+          if (inputElement) {
+            inputElement.classList.add("bg-success");
+          }
         }
       }
-    }
-  });
+    });
 
-  // Disable submit button
-  submitButton.disabled = true;
+    submitButton.disabled = true;
 
-  // Disable all options
-  var options = document.querySelectorAll(".form-check-input");
-  options.forEach(option => {
-    option.disabled = true;
-  });
- }
+    var options = document.querySelectorAll(".form-check-input");
+    options.forEach(option => {
+      option.disabled = true;
+    });
+  }
 
-
-  // Attach Event listener to submit the button
   submitButton.addEventListener("click", submitQuiz);
-  // timer interval 
   quizTimerId = setInterval(updateTimer, 1000);
-
 </script>
 
 {% endblock content %}

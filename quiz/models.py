@@ -134,6 +134,10 @@ def update_leaderboard():
 
         rank += 1
 
+class QuizAnswer(models.Model):
+    submission = models.ForeignKey(QuizSubmission, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    selected_choice = models.ForeignKey(Choice, on_delete=models.CASCADE, null=True, blank=True)
 
 
 

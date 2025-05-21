@@ -1,18 +1,16 @@
+/* General Styles */
+body {
+    background-color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 /* Customize container */
 .container.mt-4 {
     max-width: 600px;
-    background: #f8f9fa;  /* light gray background */
+    background: #ffffff;  /* light gray background */
     padding: 30px 40px;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-/* Heading */
-h2.mb-4 {
-    text-align: center;
-    font-weight: 700;
-    color: #343a40; /* dark grey */
 }
 
 /* Form group spacing */

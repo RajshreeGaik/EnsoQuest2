@@ -6,6 +6,8 @@ from .models import Quiz, Category
 from django.db.models import Q
 from quiz.models import QuizSubmission
 from django.contrib import messages
+from quiz.models import Quiz, Category, QuizSubmission, Choice, QuizAnswer
+
 
 # Create your views here.
 @login_required
@@ -43,29 +45,54 @@ def search_view(request, category):
 
 @login_required
 def quiz_view(request, quiz_id):
+    quiz = get_object_or_404(Quiz, pk=quiz_id)
 
+    if request.method == "POST":
+        score = 0
+        submission = QuizSubmission.objects.create(user=request.user, quiz=quiz, score=0)
 
-   quiz = get_object_or_404(Quiz, pk=quiz_id)
+        for question in quiz.question_set.all():
+            selected_id = request.POST.get(str(question.id))
+            if selected_id:
+                try:
+                    selected_choice = Choice.objects.get(id=int(selected_id), question=question)
+                except Choice.DoesNotExist:
+                    selected_choice = None
 
+                if selected_choice:
+                    if selected_choice.is_correct:
+                        score += 1
+                    QuizAnswer.objects.create(
+                        submission=submission,
+                        question=question,
+                        selected_choice=selected_choice
+                    )
+                else:
+                    # No valid selected choice found — you can handle this if you want
+                    pass
 
-   if request.method == "POST":
-      
-      # get the score
-      score = int(request.POST.get('score', 0))
+        submission.score = score
+        submission.save()
+        return redirect('quiz_result', submission_id=submission.id)
 
-      # save the new quiz submission 
-      submission = QuizSubmission(user=request.user, quiz=quiz, score=score)
-      submission.save()
-      return redirect('quiz_result', submission_id = submission.id)
+    return render(request, 'test.html', {'quiz': quiz})
 
-  
-   return render(request,'test.html',{'quiz':quiz})
+def quiz_result_view(request, submission_id):
+    submission = get_object_or_404(QuizSubmission, id=submission_id)
 
-@login_required
-def quiz_result_view(request,submission_id):
+    total_questions = submission.quiz.question_set.count()
+    correct_answers = QuizAnswer.objects.filter(
+        submission=submission,
+        selected_choice__is_correct=True
+    ).count()
 
-   submission = get_object_or_404(QuizSubmission, pk=submission_id)
+    all_answers = QuizAnswer.objects.filter(submission=submission)
 
-   context ={'submission': submission}
-   return render(request, 'test-result.html', context)
+    context = {
+        'submission': submission,
+        'total_questions': total_questions,
+        'correct_answers': correct_answers,
+        'answers': all_answers,
+    }
 
+    return render(request, 'test-result.html', context)
