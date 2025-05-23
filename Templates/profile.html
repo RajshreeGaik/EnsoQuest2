@@ -15,6 +15,10 @@
     padding: 2.5rem;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
     animation: fadeSlideUp 1s ease-out;
+    height: 100%;
+    min-height: 300px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   @keyframes fadeSlideUp {
@@ -64,6 +68,9 @@
     transform: translateX(50px);
     animation: fadeInRight 1.2s ease forwards;
     animation-delay: 0.4s;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
   }
 
   @keyframes fadeInRight {
@@ -92,15 +99,67 @@
     transform: scale(1.2);
     color: #6c63ff;
   }
+
   .profile-card img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;  /* keeps aspect ratio while filling the box */
+  border-radius: 50%;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
-.profile-card img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(76, 139, 245, 0.3);
-}
 
+  .profile-card img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(76, 139, 245, 0.3);
+  }
+
+  /* ===========================
+     Enhanced Graph Styles
+  ============================ */
+
+  .graph-container {
+    background-color: #f9f9f9;
+    padding: 1rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(76, 139, 245, 0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    animation: fadeScaleIn 1s ease forwards;
+    height: 100%;
+    min-height: 300px;
+  }
+
+  @keyframes fadeScaleIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.85);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .graph-container img {
+    border-radius: 12px;
+    box-shadow: 0 8px 18px rgba(76, 139, 245, 0.3);
+    max-width: 100%;
+    height: auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .graph-container img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 30px rgba(76, 139, 245, 0.5);
+  }
+
+  /* Force the row to stretch children vertically */
+  .row.align-items-stretch {
+    align-items: stretch !important;
+  }
 </style>
 
 <h1 class="display-5 text-center my-5 title">@{{user_profile2.user.username}}'s Profile</h1>
@@ -112,38 +171,39 @@
 </div>
 
 <div class="container text-center">
-  {% if request.user.username == user_profile2.user.username %}  
+  {% if request.user.username == user_profile2.user.username %}
     <div class="mb-4">
       <a href="{% url 'edit_profile' %}" class="btn btn-gradient rounded-pill me-2">Edit Profile</a>
       <a href="{% url 'delete_profile' %}" class="btn btn-outline-danger rounded-pill">Delete Profile</a>
     </div>
   {% endif %}
 
+  <!-- Profile info and graph side by side -->
   <div class="container my-5">
-    <div class="row justify-content-center">
-      <div class="col-md-10">
-        <div class="profile-card text-start row align-items-center">
-
-          <div class="col-md-4 text-center">
-            <img src="{{user_profile2.profile_img.url}}" class="rounded-circle border border-3 border-light shadow-sm" width="150" height="150">
+    <div class="row justify-content-center align-items-stretch">
+      <div class="col-md-6 d-flex">
+        <div class="profile-card text-start d-flex flex-column flex-md-row align-items-center align-items-md-start flex-grow-1">
+          <div class="text-center text-md-start me-md-4">
+            <img src="{{user_profile2.profile_img.url}}" class="rounded-circle border border-3 border-light shadow-sm" width="150" height="150" alt="Profile Image">
             <h3 class="mt-3 fw-bold text-primary">@{{user_profile2.user.username}}</h3>
           </div>
-        
-          <div class="col-md-8 user-meta ps-md-5 text-end text-md-start ms-md-auto">
+          <div class="user-meta ps-md-3 mt-4 mt-md-0">
             <h4>{{user_profile2.user.first_name|default:"Full name not available"}} {{user_profile2.user.last_name}}</h4>
             <p><i class="bi bi-person-badge-fill icon"></i><strong>Position:</strong> {{user_profile2.position|default:"Not available"}}</p>
             <p><i class="bi bi-info-circle-fill icon"></i><strong>Bio:</strong> {{user_profile2.bio|default:"No bio available"}}</p>
             {% if request.user.is_superuser %}
-            
-            <p><i class="bi bi-envelope-fill icon"></i><strong>Email:</strong> 
-              <a href="mailto:{{user_profile2.user.email}}">{{user_profile2.user.email|default:"Email not available"}}</a>
-            </p>
+              <p><i class="bi bi-envelope-fill icon"></i><strong>Email:</strong>
+                <a href="mailto:{{user_profile2.user.email}}">{{user_profile2.user.email|default:"Email not available"}}</a>
+              </p>
             {% endif %}
           </div>
-        
         </div>
-        
-        
+      </div>
+
+      <div class="col-md-6 d-flex">
+        <div class="graph-container flex-grow-1 d-flex justify-content-center align-items-center">
+          <canvas id="performanceChart" style="width: 100%; height: 100%;"></canvas>
+        </div>
       </div>
     </div>
   </div>
@@ -190,4 +250,70 @@
     </div>
   </div>
 </div>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  // Get context of canvas
+  const ctx = document.getElementById('performanceChart').getContext('2d');
+
+  // Load data from Django context (safe escaping for JS)
+  const graphData = JSON.parse('{{ graph_data_json|escapejs }}');
+
+  // Create the chart
+  const performanceChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: graphData.labels,
+      datasets: [{
+        label: 'Test Scores',
+        data: graphData.scores,
+        backgroundColor: 'rgba(76, 139, 245, 0.3)',
+        borderColor: '#4c8bf5',
+        borderWidth: 2,
+        fill: true,
+        tension: 0.3,
+        pointRadius: 5,
+        pointHoverRadius: 7,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: {
+        mode: 'nearest',
+        intersect: false,
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          max: 100,
+          title: {
+            display: true,
+            text: 'Score (%)'
+          }
+        },
+        x: {
+          title: {
+            display: true,
+            text: 'Tests / Weeks'
+          }
+        }
+      },
+      plugins: {
+        tooltip: {
+          enabled: true,
+          mode: 'nearest'
+        },
+        legend: {
+          display: true,
+          position: 'top',
+        }
+      }
+    }
+  });
+</script>
+
 {% endblock content %}
+;

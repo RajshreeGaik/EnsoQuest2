@@ -4,7 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, auth
 from.models import Profile
 from quiz.models import QuizSubmission
-# Create your views here.
+import json 
+
 
 def register(request):
     if request.user.is_authenticated:
@@ -45,17 +46,6 @@ def register(request):
     context = {}
     return render(request,"register.html", context)
 
-@login_required
-def profile(request, username):
-
-#profile user
-    user_object2 = get_object_or_404(User,username=username)
-    user_profile2 =get_object_or_404(Profile,user=user_object2)
-
-    submissions = QuizSubmission.objects.filter(user=user_object2)
-
-    context = { "user_profile2": user_profile2, "submissions":submissions}
-    return render(request,"profile.html", context)
 
 @login_required
 def editProfile(request):
@@ -105,9 +95,6 @@ def editProfile(request):
 
        return redirect('profile',user_object.username)
        
-
-    
-
     context ={"user_profile":user_profile}
     return render(request, "profile-edit.html",context)
 
@@ -143,9 +130,34 @@ def login(request):
             return redirect('login')
         
     return render(request, "login.html")
+
 @login_required
 
 def logout(request):
     auth.logout(request)
     return redirect('login')
 
+@login_required
+def profile_view(request, username):
+    user_profile2 = get_object_or_404(Profile, user__username=username)
+    submissions = QuizSubmission.objects.filter(user=user_profile2.user).order_by('submitted_at')
+
+    labels = []
+    scores = []
+
+    for submission in submissions[:6]:
+        labels.append(submission.quiz.title[:15])  # truncate for better chart display
+        scores.append(submission.score)
+
+    graph_data = {
+        'labels': labels,
+        'scores': scores,
+    }
+
+    context = {
+        'user_profile2': user_profile2,
+        'submissions': submissions,
+        'graph_data_json': json.dumps(graph_data),
+    }
+
+    return render(request, 'profile.html', context)
