@@ -24,6 +24,9 @@ urlpatterns = [
     path('',include('base.urls')),
     path('user/',include('account.urls')),
     path('quiz/',include('quiz.urls')),
+    path('library/',include('library.urls')),    # ✅ Correct: use your actual app name
+  
+
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

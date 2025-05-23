@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'base',
     'quiz',
     'ckeditor',
+    'library',
 ]
 
 MIDDLEWARE = [
@@ -58,7 +59,7 @@ ROOT_URLCONF = 'EnsoQuest.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR,'Templates'],
+        'DIRS': [BASE_DIR /'Templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,7 +128,7 @@ STATICFILES_DIRS =[
     BASE_DIR / 'static' #folder location
 ]
 
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"

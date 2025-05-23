@@ -1,0 +1,244 @@
+MEMBER NAME  JCLERR01 
+                                                  
+//TRAIN00A JOB 01992,'JCL ERRORS'                                        
+//             MSGCLASS=X,CLASS=A,NOTIFY=TRAIN00                         
+//S1     EXEC  PGM=IEBGENER                                             
+//SYSIN    DD  DUMMY                                                     
+//SYSPRINT DD  SYSOUT=*,OUTLIM=1000                                      
+//SYSUT2   DD  SYSOUT=*,OUTLIM=1000                                    
+//SYSUT1   DD  DSN=TRAIN00.SEQ.DATA,DISP=SHR                           
+------------------------------------------------------------------------------------------                                                                         
+MEMBER NAME  JCLERR02                                                    
+//TRAIN00A JOB 01992,'JCL ERRORS',                                         
+//              MSGCLASS=X,CLASS=A,NOTIFY=TRAIN00                        
+//S1     EXEC  PGM=IEBGENER                                              
+//SYSIN    DD  DUMMY                                                     
+//SYSPRINT DD  SYSOUT=*,OUTLIM=1000                                     
+//SYSUT2   DD  SYSOUT=*,OUTLIM=1000                                     
+//SYSUT1   DD  DSN=TRAIN00.SEQ.DATA,DISP=SHR   
+-----------------------------------------------------------------------------------------                          
+                                                                         
+MEMBER NAME  JCLERR03                                                   
+//TRAIN00A JOB 01992,'JCL ERRORS',                                         
+//             MSGCLASS=X,CLASS=A,NOTIFY=TRAIN00                        
+//S1     EXEC  PGM=IEBGENER                                              
+//SYSIN    DD  DUMMY                                                     
+//SYSPRINT DD  SYSOUT=*,OUTLIM=1000                                     
+//SYSUT2   DD  SYSOUT=*,OUTLIM=1000                                      
+//SYSUT1   DD  DSN=TRAIN00.SEQ.DATE,DISP=SHR                            
+------------------------------------------------------------------------------------------
+MEMBER NAME  JCLERR04                                                    
+//TRAIN00A JOB 01992,'JCL ERRORS',                                          
+//             MSGCLASS=X,CLASS=A,NOTIFY=TRAIN00                        
+//S1     EXEC  PGM=IEBGENER                                              
+//SYSIN    DD  DUMMY                                                    
+//SYSPRINT DD  SYS0UT=*,OUTLIM=1000                                      
+//SYSUT2   DD  SYSOUT=*,OUTLIM=1000                                      
+//SYSUT1   DD  DNS=TRAIN00.SEQ.DATA,DISP=SHR 
+------------------------------------------------------------------------------------------                                                                                                 
+ MEMBER NAME  JCLERR05                                                   
+// TRAIN00A JOB 01992,'JCL ERRORS',                                         
+//             MSGCLASS=X,CLASS=A,NOTIFY=TRAIN00                        
+//S1     EXEC  PGM=IEBGENER                                              
+//SYSIN    DD  DUMMY                                                     
+//SYSPRINT DD  SYSOUT=*,OUTLIM=1000                                     
+//SYSUT2   DD  SYSOUT=*,OUTLIM=1000                                      
+//SYSUT1   DD  DSN=TRAIN00.SEQ.DATA,DISP=SHR                             
+-----------------------------------------------------------------------------------------                                                                         
+MEMBER NAME  JCLERR06                                                    
+//TRAIN00A JOB 01992,'JCL ERRORS',                                          
+//             MSGCLASS=X,CLASS=A,NOTIFY=TRAIN00                         
+//S1     EXEC  PGM=IEBGENER                                             
+//SYSIN    DD  DMUMY                                                      
+//SYSPRINT DD  SYSOUT=*,OUTLIM=1000                                      
+//SYSUT2   DD  SYSOUT=*,OUTLIM=1000                                      
+//SYSUT1   DD  DSN=TRAIN00.SEQ.DATA,DISP=SHR                             
+-------------------------------------------------------------------------------------------                                                                        
+MEMBER NAME  JCLERR07                                                    
+//TRAIN00A JOB 01992,'JCL ERRORS',                                         
+//             MSGCLASS=X,CLASS=A,NOTIFY=TRAIN00                         
+//S1     EXEC  PGM=IEBGENER                                              
+//SYSIN    DD  DUMMY                                                     
+//SYSPRINT DD  SYSOUT=*,OUTLIM=1000                                      
+//SYSUT    DD  SYSOUT=*,OUTLIM=1000                                      
+//SYSUT1   DD  DSN=TRAIN00.SEQ.DATA,DISP=SHR  
+--------------------------------------------------------------------------------------------                                                                                
+MEMBER NAME  JCLERR08                                                   
+//TRAIN00A JOB 01992,'JCL ERRORS',                                         
+//             MSGCLASS=X,CLASS=A,NOTIFY=TRAIN00                        
+//S1     EXEC  PGM=IEBGENER                                              
+//SYSIN    DD  DUMMY                                                     
+//SYSPRINT DD  SYSOUT=*,OUTLIM=1000                                     
+//SYSUT2   DD  SYSOUT=*,OUTLIM=1000                                     
+//SYSUT1   DD  DSN=TRAIN00.SEQ.DATA DISP=SHR      
+-------------------------------------------------------------------------------------------                                                                                            
+MEMBER NAME  JCLERR09                                                   
+//TRAIN00A JOB 01992,'JCL ERRORS',                                         
+//             MSGCLASS=X,CLASS=A,NOTIFY=TRAIN00                         
+//S1     EXEC  PGM=IEBGENER                                             
+//SYSIN    DD  DUMMY                                                   
+//SYSPRINT DD  SYSOUT=*,OUTLIM=1000                                      
+//SYSUT2   DD  SYSOUT=*,OUTLIM=1000                                    
+//SYSUT1   DD  DSN=TRAIN00.JCLCLASS.CNTL,DISP=SHR                      
+--------------------------------------------------------------------------------------------                                                                    
+MEMBER NAME  JCLERR10                                                 
+//TRAIN00A JOB 01992,'JCL ERRORS',                                        
+//             MSGCLASS=X,CLASS=A,NOTIFY=TRAIN00                       
+//S1     EXEC  PGM=IEBJENER                                              
+//SYSIN    DD  DUMMY                                                   
+//SYSPRINT DD  SYSOUT=*,OUTLIM=1000                                   
+//SYSUT1   DD  SYSOUT=*,OUTLIM=1000                                    
+//SYSUT2   DD  DSN=TRAIN00.JCLCLASS.CNTL,DISP=SHR                        
+--------------------------------------------------------------------------------------------                                                                      
+MEMBER NAME  JCLERR11                                                    
+//TRAIN00A JOB 01992,'JCL ERRORS',                                         
+//             MSGCLASS=X,CLASS=A,NOTIFY=TRAIN00                       
+//S1     EXEC  PGM=IEBGENER                                            
+//SYSIN    DD  DUMMY                                                   
+//SYSPRINT DD  SYSOUT=*,OUTLIM=1000                                      
+//SYSUT2   DD  SYSOUT=*,OUTLIM=1000                                    
+//SYSUT1   DD  DSN=TRAIN00.JCLCLASS.CNTL(JCLERR1),DISP=SHR  
+---------------------------------------------------------------------------------------------                                                          
+ MEMBER NAME  JCLERR12                                                   
+//TRAIN00A JOB 01992,'JCL ERRORS',                                        
+//             MSGCLASS=X,CLASS=A,NOTIFY=TRAIN00                         
+//S1     EXEC  PGM=IEBGENER                                             
+//SYSIN    DD  DUMMY                                                   
+//SYSUT2   DD  SYSOUT=*,OUTLIM=1000                                      
+//SYSUT1   DD  DSN=TRAIN00.JCLCLASS.CNTL(JCLERR1),DISP=SHR 
+-------------------------------------------------------------------------------------------                                                             
+MEMBER NAME  JCLERR13                                                   
+//TRAIN00A JOB 01992,'JCL ERRORS',                                         
+//             MSGCLASS=X,CLASS=A,NOTIFY=TRAIN00                        
+//S1     EXEC  PGM=IEBGENER                                             
+//SYS1N    DD  DUMMY                                                    
+//SYSPRINT DD  SYSOUT=*,OUTLIM=1000                                     
+//SYSUT2   DD  SYSOUT=*,OUTLIM=1000                                      
+//SYSUT1   DD  DSN=TRAIN00.JCLCLASS.CNTL(JCLERR1),DISP=SHR              
+--------------------------------------------------------------------------------------------                                                                         
+MEMBER NAME  JCLERR14                                                  
+//TRAIN00A JOB 01992,'JCL ERRORS',                                          
+//             MSGCLASS=X,CLASS=A,NOTIFY=TRAIN00                        
+//S1     EXEC  PGM=IEBGENER                                              
+//SYSIN    DD  DUMMY                                                    
+//SYSPRINT DD  SYSOUT=*,OUTLIM=1000                                     
+//SYSUT2   DD  SYSOUT=*,OUTLIM=1000                                     
+//SYSUT1   DD  DSN=TRAIN00.JCLCLASS.CNTL(JCLERR1),DISP=SHARE             
+--------------------------------------------------------------------------------------------                                                                        
+MEMBER NAME  JCLERR15                                                   
+//TRAIN00A JOB 01992,'JCL ERRORS',                                          
+//             MSGCLASS=X,CLASS=A,NOTIFY=TRAIN00                         
+//S1     EXEC  PGM=IEBGENER                                              
+//SYSIN    DD  DUMMY                                                     
+//SYSPRINT DD  SYSOUT=*,OUTLIM=1000                                     
+//SYSUT1   DD  SYSOUT=*,OUTLIM=1000                                    
+//SYSUT2   DD  DSN=TRAIN00.JCLCLASS.NEW,                                 
+//         DD  DISP=(NEW,CATLG,DELETE),                                 
+//         DD  SPACE=(TRK,(1,1)),                                     
+//         DD  LRECL=80,RECFM=FB,                                      
+//         DD  UNIT=SYSDA                                              
+--------------------------------------------------------------------------------------------                                                                      
+MEMBER NAME  JCLERR16                                                    
+//TRAIN00A JOB 01992,'JCL ERRORS',                                        
+//             MSGCLASS=X,CLASS=A,NOTIFY=TRAIN00                        
+//S1     EXEC  PGM=IEBGENER                                            
+//SYSIN    DD  DUMMY                                                    
+//SYSPRINT DD  SYSOUT=*,OUTLIM=1000                                      
+//SYSUT1   DD  SYSOUT=*,OUTLIM=1000                                      
+//SYSUT2   DD  DSN=TRAIN00.JCLCLASS.NEW                                 
+//             DISP=(NEW,CATLG,DELETE)                                   
+//             SPACE=(TRK,(1,1))                                         
+//             LRECL=80,RECFM=FB                                        
+//             UNIT=SYSDA                                                
+---------------------------------------------------------------------------------------------                                                                         
+MEMBER NAME  JCLERR17                                                    
+//TRAIN00A JOB 01992,'JCL ERRORS',                                         
+//             MSGCLASS=X,CLASS=A,NOTIFY=TRAIN00                       
+//S1     EXEC  PGM=IEBGENER                                            
+//SYSIN    DD  DUMMY                                                    
+//SYSPRINT DD  SYSOUT=*,OUTLIM=1000                                    
+//SYSUT1   DD  SYSOUT=*,OUTLIM=1000                                      
+//SYSUT2   DD  DSN=TRAIN00.JCLCLASS.NEW                                  
+//             DISP=(NEW,CATLG,DELETE),                                 
+//             SPACE=(TRK,(1,1)),                                      
+//             LRECL=80,RECFM=FB,                                       
+//             UNIT=SYSDA,   
+---------------------------------------------------------------------------------------------                                           
+MEMBER NAME  JCLERR18                                                    
+//TRAIN00A JOB  01992,'JCL ERRORS',                                        
+//              MSGCLASS=X,CLASS=A,NOTIFY=TRAIN00                      
+//S1     EXEC   PGM=IEBGENER                                             
+//SYSIN    DD   DUMMY                                                    
+//SYSPRINT DD   SYSOUT=*,OUTLIM=1000                                     
+//SYSUT1   DD   SYSOUT=*,OUTLIM=1000                                     
+//SYSUT2   DD   DSN=TRAIN00.JCLCLASS.NEW,                                
+//              DISP=(NEW,CATLG,DELETE),                                 
+//              SPACE=(TRK,(1,1)),                                      
+//              LRECL=80,RECFM=FB,                                    
+//              UNIT=SYSDA  
+---------------------------------------------------------------------------------------------                                                                                                          
+EMBER NAME  JCLERR18                                                    
+//TRAIN00A JOB  01992,'JCL ERRORS',                                        
+//              MSGCLASS=X,CLASS=A,NOTIFY=TRAIN00                      
+//S1     EXEC   PGM=IEBGENER                                             
+//SYSIN    DD   DUMMY                                                   
+//SYSPRINT DD   SYSOUT=*,OUTLIM=1000                                     
+//SYSUT1   DD   SYSOUT=*,OUTLIM=1000                                   
+//SYSUT2   DD   DSN=TRAIN00.JCLCLASS.NEW,                               
+//              DISP=(NEW,CATLG,DELETE),                                
+//              SPACE=(TRK,(1,1)),                                      
+//              LRECL=80,RECFM=FB,                                    
+//              UNIT=SYSDA                                              
+---------------------------------------------------------------------------------------------                                          
+MEMBER NAME  JCLERR19                                                    
+//TRAIN00A JOB 01992,'JCL ERRORS',                                       
+//             MSGCLASS=X,CLASS=A,NOTIFY=TRAIN00                         
+//S1     EXEC  PGM=IEBGENER                                              
+//SYSIN    DD  DUMMY                                                     
+//SYSPRINT DD  SYSOUT=*,OUTLIM=1000                                      
+//SYSUT1   DD  SYSOUT=*,OUTLIM=1000                                    
+//SYSUT2   DD  DSN=TRAIN00.JCLCLASS.NEW,                             
+//             DISP=(NEW,CATLG,DELETE),                                  
+//             SPACE=(TRK(1,1)),                                        
+//             LRECL=80,RECFM=FB,                                       
+//             UNIT=SYSDA  
+---------------------------------------------------------------------------------------------                                              
+MEMBER NAME  JCLERR20                                                    
+//TRAIN00A JOB 01992,'JCL ERRORS',                                       
+//             MSGCLASS=X,CLASS=A,NOTIFY=TRAIN00                         
+//S1     EXEC  PGM=IEBGENER                                              
+//SYSIN    DD  DUMMY                                                     
+//SYSPRINT DD  SYSOUT=*,OUTLIM=1000                                     
+//SYSUT1   DD  SYSOUT=*,OUTLIM=1000                                      
+//SYSUT2   DD  DSN=TRAIN00.JCLCLASS.NEW,                               
+               DISP=(NEW,CATLG,DELETE),                                  
+               SPACE=(TRK,(1,1)),                                       
+               LRECL=80,RECFM=FB,                                        
+               UNIT=SYSDA  
+--------------------------------------------------------------------------------------------
+MEMBER NAME  JCLERR21 
+//TRAIN00A JOB 01992,'JCL ERRORS',                                       
+//             MSGCLASS=X,CLASS=A,NOTIFY=TRAIN00
+//PSCRTP4 PROC                                                    
+//STEP01 EXEC PGM=IEFBR14                                         
+//SYSPRINT DD SYSOUT=*                                            
+//DD1 DD DSN=TRAIN00.TEST.SAMPLE.PS1,                             
+//    DISP=(NEW,CATLG,DELETE),                                    
+//    DCB=(RECFM=FB,LRECL=80,BLKSIZE=800),                        
+//    SPACE=(TRK,(5,4,),RLSE)                                     
+// PEND                                                           
+//STEP02 EXEC PROC=PSCRTP3                                        
+//                                                                                                              
+-------------------------------------------------------------------------------------------
+MEMBER NAME  JCLERR22 
+//TRAIN00A JOB 01992,'B.MALIK',CLASS=A,MSGCLASS=H,MSGLEVEL=(1,1),    
+//             NOTIFY=&SYSUID,REGION=6M,TIME=(,59)                   
+//STEP01   EXEC PGM=IEBGENR                                          
+//SYSPRINT DD   SYSOUT=*                                             
+//SYSUT1   DD   DSN=TSTRN76.RTDA.TEST.PS01,DISP=SHR                  
+//SYSUT    DD   DSN=TSTRN76.RTDA.TEST.PS03,DISP=(NEW,CATLG,DELETE),  
+//             SPACE=(TRK,(5,3,0),RLSE),                             
+//             DCB=(RECFM=FB,LRECL=100,BLKSIZE=0,DSORG=PS)           
+//SYSIN    DD  DUMMY                                                 
+//     
+-------------------------------------------------------------------------------------------                                                              
