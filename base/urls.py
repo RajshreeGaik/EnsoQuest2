@@ -20,4 +20,11 @@ urlpatterns =[
     path('search/', views.search_view, name='search'),  # Search without category
     path('search/<str:category>/', views.search_view, name='search_category'),  # Search with category
     path('feedback', views.feedback_view, name='feedback'),
+    path('notices/', views.notice_list, name='notice_list'),
+    path('notices/add/', views.add_notice, name='add_notice'),
+    path('notices/edit/<int:pk>/', views.edit_notice, name='edit_notice'),
 ]
+
+
+
+

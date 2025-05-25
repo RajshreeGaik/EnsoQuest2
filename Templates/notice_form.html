@@ -1,0 +1,12 @@
+{% extends 'index.html' %}
+{% block title %}EnsoQuest- Notice{% endblock title %}
+{% load static %}
+{% block content %}
+<h2>{{ action }} Notice</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">{{ action }}</button>
+</form>
+<a href="{% url 'notice_list' %}">Back to Notices</a>
+{% endblock %}

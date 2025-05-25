@@ -1,0 +1,106 @@
+{% extends 'index.html' %}
+{% block title %}EnsoQuest - Notice{% endblock title %}
+{% load static %}
+
+{% block content %}
+<style>
+  .notice-container {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 25px;
+    background-color: #f4f6f9;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .notice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .notice-header h2 {
+    color: #333;
+    font-size: 28px;
+    margin: 0;
+  }
+
+  .notice-header a {
+    font-size: 16px;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .notice-header a:hover {
+    text-decoration: underline;
+  }
+
+  ul.notice-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  ul.notice-list li {
+    background: white;
+    border-left: 5px solid #007bff;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+  }
+
+  ul.notice-list li strong {
+    font-size: 18px;
+    color: #222;
+  }
+
+  ul.notice-list li small {
+    display: block;
+    margin-top: 5px;
+    font-size: 13px;
+    color: #888;
+  }
+
+  ul.notice-list li a {
+    margin-left: 10px;
+    font-size: 14px;
+    color: #28a745;
+    text-decoration: none;
+  }
+
+  ul.notice-list li a:hover {
+    text-decoration: underline;
+  }
+
+  .empty-message {
+    text-align: center;
+    font-style: italic;
+    color: #777;
+  }
+</style>
+
+<div class="notice-container">
+  <div class="notice-header">
+    <h2>All Notices</h2>
+    {% if user.is_superuser %}
+      <a href="{% url 'add_notice' %}">+ Add Notice</a>
+    {% endif %}
+  </div>
+
+  <ul class="notice-list">
+    {% for notice in notices %}
+      <li>
+        <strong>{{ notice.title }}</strong><br>
+        {{ notice.content }}<br>
+        <small>{{ notice.created_at }}</small>
+        {% if user.is_superuser %}
+          <a href="{% url 'edit_notice' notice.id %}">Edit</a>
+        {% endif %}
+      </li>
+    {% empty %}
+      <li class="empty-message">No notices available.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}
