@@ -4,8 +4,6 @@ from .models import Profile
 from quiz.models import QuizSubmission, Quiz, Category
 from django.urls import reverse
 
-
-
 class ProfileviewTest(TestCase):
     # setup
     def setUp(self):

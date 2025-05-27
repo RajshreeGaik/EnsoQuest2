@@ -1,0 +1,19 @@
+.table-container-vertical {
+    max-height: 400px; /* Adjust height as needed */
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+/* Optional: improve table layout */
+.table-container-vertical table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-container-vertical thead th {
+    position: sticky;
+    top: 0;
+    background-color: #f9f9f9;
+    z-index: 1;
+}

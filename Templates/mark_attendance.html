@@ -1,0 +1,27 @@
+{% extends "index.html" %}
+
+{% block content %}
+{% load dict_extras %}
+
+<h2>Mark Attendance for {{ session.name }} on {{ date }}</h2>
+<form method="post">
+    {% csrf_token %}
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>Trainee</th>
+            <th>Present</th>
+        </tr>
+        {% for trainee in trainees %}
+        <tr>
+            <td>{{ trainee.get_full_name|default:trainee.username }}</td>
+            <td>
+                <input type="checkbox" name="present_{{ trainee.id }}" 
+                {% if attendance_records|dictkey:trainee.id and attendance_records|dictkey:trainee.id.present %}checked{% endif %}>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <button type="submit">Save Attendance</button>
+</form>
+<a href="{% url 'attendance:session_list' %}">Back to Sessions</a>
+{% endblock %}

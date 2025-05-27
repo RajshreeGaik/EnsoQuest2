@@ -24,8 +24,8 @@ urlpatterns = [
     path('',include('base.urls')),
     path('user/',include('account.urls')),
     path('quiz/',include('quiz.urls')),
-    path('library/',include('library.urls')),    # ✅ Correct: use your actual app name
-  
+    path('attendance/', include('attendance.urls')),
+
 
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

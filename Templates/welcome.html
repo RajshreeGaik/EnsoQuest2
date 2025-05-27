@@ -33,7 +33,7 @@
         <!-- <img src="{{ rank.user.profile.profile_img.url }}" class="leaderboard-img img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover;" alt="user-profile"> -->
         <img src="{{rank.user.profile.profile_img.url}}" class="leaderboard-img rounded-circle alt=user-profile">
         <span class="position-absolute top-0 start-90 translate-middle badge rounded-pill modern-badge ">
-          {{ forloop.counter}}
+           {{ rank.rank }}
         </span>
         <h2 class="fw-normal username">@{{rank.user.username}}</h2>
         <p class="card-bio">{{rank.user.profile.bio}}</p>

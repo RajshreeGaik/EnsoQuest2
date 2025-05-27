@@ -3,7 +3,7 @@
 from django import forms
 from .models import Feedback
 from .models import Notice
-
+from .models import Resource
 class FeedbackForm(forms.ModelForm):
     class Meta:
         model = Feedback
@@ -22,3 +22,7 @@ class NoticeForm(forms.ModelForm):
         model = Notice
         fields = ['title', 'content']
 
+class ResourceForm(forms.ModelForm):
+    class Meta:
+        model = Resource
+        fields = ['title', 'description', 'file']

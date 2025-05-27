@@ -1,0 +1,23 @@
+{% extends "index.html" %}
+
+{% block content %}
+<h2>Sessions</h2>
+{% if user.is_staff %}
+    <a href="{% url 'attendance:create_session' %}">Create New Session</a>
+{% endif %}
+<ul>
+    {% for session in sessions %}
+    <li>
+        {{ session.name }}
+        {% if user.is_staff %}
+        - <a href="{% url 'attendance:mark_attendance' session.id %}">Mark Attendance</a>
+        - <a href="{% url 'attendance:attendance_report_session' session.id %}">View Report</a>
+        {% else %}
+        - <a href="{% url 'attendance:attendance_report_session' session.id %}">View Report</a>
+        {% endif %}
+    </li>
+    {% empty %}
+    <li>No sessions available.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

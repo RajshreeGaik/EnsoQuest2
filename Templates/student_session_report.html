@@ -1,0 +1,124 @@
+{% extends "index.html" %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/student_session_report.css' %}">
+<div class="container">
+
+  <h2>Attendance Report for Session: <strong>{{ session.name }}</strong></h2>
+   
+   <form method="get" class="mb-4">
+    <label for="start_date">Start Date:</label>
+    <input type="date" name="start_date" value="{{ start_date }}">
+
+    <label for="end_date">End Date:</label>
+    <input type="date" name="end_date" value="{{ end_date }}">
+
+    <label for="trainee_id">Trainee:</label>
+    <select name="trainee_id">
+        <option value="">-- All Trainees --</option>
+        {% for trainee in trainees %}
+            <option value="{{ trainee.id }}" {% if trainee.id|stringformat:"s" == trainee_id %}selected{% endif %}>
+                {{ trainee.get_full_name|default:trainee.username }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <button type="submit" class="btn btn-secondary">Filter</button>
+    <a href="?">Clear</a>
+</form>
+
+
+  <!-- Attendance Table -->
+  <h4>Detailed Attendance Records</h4>
+  <div class="table-container-vertical">
+  <table border="1" cellpadding="8" cellspacing="0">
+      <thead>
+          <tr>
+              <th>Date</th>
+              <th>Trainee</th>
+              <th>Present</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for record in attendance %}
+          <tr>
+              <td>{{ record.date }}</td>
+              <td>{{ record.trainee.get_full_name|default:record.trainee.username }}</td>
+              <td>{{ record.present|yesno:"Yes,No" }}</td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="3">No attendance records found.</td></tr>
+          {% endfor %}
+      </tbody>
+  </table>
+  </div>
+
+  <!-- Attendance Percentages -->
+  <h4>Attendance Percentages</h4>
+  <div class="table-container-vertical">
+  <table border="1" cellpadding="8" cellspacing="0">
+      <thead>
+          <tr>
+              <th>Trainee</th>
+              <th>Percentage</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for item in percentages %}
+          <tr>
+              <td>{{ item.trainee.get_full_name|default:item.trainee.username }}</td>
+              <td>{{ item.percentage }}%</td>
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+</div>
+  <!-- Export Button -->
+  <p style="margin-top: 20px;">
+      <a href="{% url 'attendance:export_excel' session.id %}" class="btn btn-primary">
+          Export to Excel
+      </a>
+  </p>
+
+  <!-- Attendance Chart -->
+  <h4>Attendance Chart</h4>
+  <canvas id="attendanceChart" width="400" height="200" style="margin-bottom: 30px;"></canvas>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+      const ctx = document.getElementById('attendanceChart').getContext('2d');
+      const chart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: [{% for item in percentages %}'{{ item.trainee.get_full_name|default:item.trainee.username }}',{% endfor %}],
+              datasets: [{
+                  label: 'Attendance %',
+                  data: [{% for item in percentages %}{{ item.percentage }},{% endfor %}],
+                  backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                  borderColor: 'rgba(75, 192, 192, 1)',
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              responsive: true,
+              scales: {
+                  y: {
+                      beginAtZero: true,
+                      max: 100,
+                      title: {
+                          display: true,
+                          text: 'Percentage'
+                      }
+                  }
+              }
+          }
+      });
+  </script>
+
+  <!-- Back Link -->
+  <p>
+      <a href="{% url 'attendance:student_attendance_report' %}">← Back to Your Attendance Overview</a>
+  </p>
+</div>
+{% endblock %}

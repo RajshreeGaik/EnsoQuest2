@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.db.models import Sum
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.core.exceptions import ValidationError
+from django.db.models import Sum
 
 # Create your models here.
 class Category(models.Model):
@@ -88,51 +90,66 @@ class Choice(models.Model):
 
     def __self__(self):
         return f"{self.question.text[:50]}, {self.text[:20]}"
-
+    
 class QuizSubmission(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    quiz = models.ForeignKey('Quiz', on_delete=models.CASCADE)
     score = models.IntegerField()
     submitted_at = models.DateTimeField(auto_now_add=True)
-
-    
 
     def __str__(self):
         return f"{self.user}, {self.quiz.title}"
 
+    def clean(self):
+        if self.quiz:
+            total_questions = self.quiz.question_set.count()
+            if self.score > total_questions:
+                raise ValidationError(f"Score cannot exceed total marks ({total_questions}).")
+
 class UserRank(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     rank = models.IntegerField(null=True, blank=True)
-    total_score = models.IntegerField(null=True,blank=True)
+    total_score = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.rank}, {self.user.username}"
-    
+
+    def clean(self):
+        # This ensures admin cannot manually change the rank/score
+        if self.pk:  # If this is an update, not a new instance
+            original = UserRank.objects.get(pk=self.pk)
+            if original.rank != self.rank or original.total_score != self.total_score:
+                raise ValidationError("Rank and total score cannot be changed manually.")
+
 @receiver(post_save, sender=QuizSubmission)
-def update_leaderboard(sender, instance, created, **kwargs):
-    if created:
-        update_leaderboard()
-
-
-
+def quizsubmission_post_save_handler(sender, instance, created, **kwargs):
+    print("Leaderboard update triggered")
+    update_leaderboard()
     
 def update_leaderboard():
-    # count the sum of scores for all user
-    user_score =(QuizSubmission.objects.values('user').annotate(total_score =Sum('score') ).order_by('-total_score'))
+    user_scores = (
+        QuizSubmission.objects
+        .values('user')
+        .annotate(total_score=Sum('score'))
+        .order_by('-total_score', 'user__username')
+    )
 
-    #update rank based on the sorted list
-    rank = 1
-    for entry in user_score:
+    rank = 0
+    prev_score = None
+
+    for i, entry in enumerate(user_scores, start=1):
         user_id = entry['user']
         total_score = entry['total_score']
 
-        user_rank, created = UserRank.objects.get_or_create(user_id=user_id)
+        if total_score != prev_score:
+            rank += 1  # Increase rank only when score changes
+
+        user_rank, _ = UserRank.objects.get_or_create(user_id=user_id)
         user_rank.rank = rank
         user_rank.total_score = total_score
         user_rank.save()
 
-
-        rank += 1
+        prev_score = total_score
 
 class QuizAnswer(models.Model):
     submission = models.ForeignKey(QuizSubmission, on_delete=models.CASCADE)

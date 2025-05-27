@@ -23,6 +23,8 @@ urlpatterns =[
     path('notices/', views.notice_list, name='notice_list'),
     path('notices/add/', views.add_notice, name='add_notice'),
     path('notices/edit/<int:pk>/', views.edit_notice, name='edit_notice'),
+    path('upload/', views.upload_resource, name='upload_resource'),
+    path('resources/', views.resource_list, name='resource_list'),
 ]
 
 

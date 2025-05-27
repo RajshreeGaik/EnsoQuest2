@@ -1,0 +1,112 @@
+{% extends "index.html" %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/admin_report.css' %}">
+<div class="content-padding-fix">
+
+<h2>Attendance Report for Session: {{ session.name }}</h2>
+
+<form method="get" action="{% url 'attendance:attendance_report_session' session.id %}">
+    <label for="start">Start Date:</label>
+    <input type="date" id="start" name="start" value="{{ start_date }}">
+
+    <label for="end">End Date:</label>
+    <input type="date" id="end" name="end" value="{{ end_date }}">
+
+    <label for="trainee">Trainee:</label>
+    <select id="trainee" name="trainee">
+        <option value="">All</option>
+        {% for trainee in trainees %}
+            <option value="{{ trainee.id }}" {% if selected_trainee == trainee.id %}selected{% endif %}>
+                {{ trainee.get_full_name|default:trainee.username }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Filter</button>
+     <a href="{% url 'attendance:attendance_report_session' session.id %}">Reset Filter</a>
+</form>
+
+
+<!-- Attendance Table -->
+<div class="table-container-vertical">
+<table border="1" cellpadding="8">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Trainee</th>
+            <th>Present</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for record in attendance %}
+        <tr>
+            <td>{{ record.date }}</td>
+            <td>{{ record.trainee.get_full_name|default:record.trainee.username }}</td>
+            <td>{{ record.present|yesno:"Yes,No" }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="3">No attendance records found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+
+<!-- Attendance Percentages -->
+<h3>Attendance Percentages</h3>
+<div class="table-container-vertical">
+<table border="1" cellpadding="8">
+    <thead>
+        <tr>
+            <th>Trainee</th>
+            <th>Percentage</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in percentages %}
+        <tr>
+            <td>{{ item.trainee.get_full_name|default:item.trainee.username }}</td>
+            <td>{{ item.percentage }}%</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+<!-- Export Buttons -->
+<p>
+    <a href="{% url 'attendance:export_excel' session.id %}" class="btn btn-primary">Export to Excel</a>
+
+</p>
+
+<!-- Chart -->
+<canvas id="attendanceChart" width="400" height="200"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('attendanceChart').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [{% for item in percentages %}'{{ item.trainee.get_full_name|default:item.trainee.username }}',{% endfor %}],
+            datasets: [{
+                label: 'Attendance %',
+                data: [{% for item in percentages %}{{ item.percentage }},{% endfor %}],
+                backgroundColor: 'rgba(75, 192, 192, 0.7)'
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            }
+        }
+    });
+</script>
+
+<a href="{% url 'attendance:session_list' %}">Back to Sessions</a>
+{% endblock %}
+</div>

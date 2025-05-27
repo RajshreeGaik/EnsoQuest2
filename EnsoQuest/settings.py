@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'base',
     'quiz',
     'ckeditor',
-    'library',
+    'attendance',
 ]
 
 MIDDLEWARE = [
