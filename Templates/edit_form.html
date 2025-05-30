@@ -1,15 +1,82 @@
 <!-- forum/templates/forum/edit_form.html -->
 {% extends 'index.html' %}
-{% block title %}{{ title }}{% endblock %}
+{% block title %}{{ edit_form }}{% endblock %}
 
 {% block content %}
-<h2>{{ heading }}</h2>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Save Changes</button>
-</form>
+<style>
+    .edit-container {
+        background: #fdfdfd;
+        padding: 2rem;
+        margin-top: 2rem;
+        border-radius: 12px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
 
-<a href="{{ back_url }}">← Back</a>
+    .edit-container h2 {
+        font-size: 1.8rem;
+        color: #003366;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+
+    .edit-container form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .edit-container input[type="text"],
+    .edit-container textarea {
+        padding: 10px 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 1rem;
+        width: 100%;
+    }
+
+    .edit-container button {
+        background-color: #1976d2;
+        color: #fff;
+        padding: 10px 18px;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+        align-self: flex-start;
+    }
+
+    .edit-container button:hover {
+        background-color: #125a9c;
+    }
+
+    .edit-container .back-link {
+        display: inline-block;
+        margin-top: 1.5rem;
+        color: #1976d2;
+        text-decoration: none;
+        font-size: 0.95rem;
+    }
+
+    .edit-container .back-link:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="edit-container">
+    <h2>{{ heading }}</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save Changes</button>
+    </form>
+
+    <a href="{{ back_url }}" class="back-link">← Back</a>
+</div>
+
 {% endblock %}

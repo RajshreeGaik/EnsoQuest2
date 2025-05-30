@@ -1,40 +1,71 @@
-<!-- forum/templates/forum/question_form.html -->
-
 {% extends 'index.html' %}
-{% block title %}EnsoQuest- question_form{% endblock title %}
+{% block title %}EnsoQuest - question_form{% endblock title %}
 {% load static %}
 {% block content %}
-<style>
-    h2 {
-        font-size: 28px;
-        font-weight: bold;
-        margin-bottom: 20px;
-        color: #333;
-    }
 
-    form {
+<style>
+    .question-form-wrapper h2 {
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+    color: #2c3e50;
+    position: relative;
+    padding-bottom: 8px;
+    animation: fadeInUp 0.6s ease;
+}
+
+/* Underline effect */
+.question-form-wrapper h2::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 60px;
+    height: 3px;
+    background-color: #007bff;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+/* Fade-in upward animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+    .question-form-wrapper form {
         max-width: 600px;
         background-color: #fafafa;
         padding: 25px 30px;
         border-radius: 12px;
         box-shadow: 0 3px 8px rgba(0,0,0,0.1);
         margin-bottom: 20px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
-    form p {
+    .question-form-wrapper form p {
         margin-bottom: 15px;
         font-size: 16px;
         color: #444;
     }
 
-    label {
+    .question-form-wrapper label {
         display: block;
         font-weight: 600;
         margin-bottom: 6px;
         color: #222;
     }
 
-    input[type="text"], textarea {
+    .question-form-wrapper input[type="text"],
+    .question-form-wrapper textarea {
         width: 100%;
         padding: 10px 12px;
         border: 1px solid #ccc;
@@ -45,11 +76,11 @@
         font-family: inherit;
     }
 
-    textarea {
+    .question-form-wrapper textarea {
         min-height: 120px;
     }
 
-    button[type="submit"] {
+    .question-form-wrapper button[type="submit"] {
         background-color: #007bff;
         color: white;
         border: none;
@@ -60,26 +91,29 @@
         transition: background-color 0.3s ease;
     }
 
-    button[type="submit"]:hover {
+    .question-form-wrapper button[type="submit"]:hover {
         background-color: #0056b3;
     }
 
-    a {
+    .question-form-wrapper a {
         color: #007bff;
         text-decoration: none;
         font-size: 15px;
     }
 
-    a:hover {
+    .question-form-wrapper a:hover {
         text-decoration: underline;
     }
 </style>
 
-<h2>Ask a Question</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Post</button>
-</form>
-<a href="{% url 'forum:question_list' %}">← Back to Questions</a>
+<div class="question-form-wrapper">
+    <h2>Ask a Question</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Post</button>
+    </form>
+    <a href="{% url 'forum:question_list' %}">← Back to Questions</a>
+</div>
+
 {% endblock %}

@@ -9,6 +9,7 @@ from django.urls import reverse
 
 def question_list(request):
     questions = Question.objects.all().order_by('-created_at')
+    
     return render(request, 'question_list.html', {'questions': questions})
 
 def question_detail(request, pk):
@@ -98,7 +99,7 @@ def edit_question(request, pk):
         'heading': 'Edit Your Question',
         'back_url': reverse('forum:question_list'),
     }
-    return render(request, 'forum/edit_form.html', context)
+    return render(request, 'edit_form.html', context)
 
 @login_required
 def edit_comment(request, pk):
@@ -117,7 +118,7 @@ def edit_comment(request, pk):
         'heading': 'Edit Your Comment',
         'back_url': reverse('forum:question_detail', kwargs={'pk': comment.question.pk}),
     }
-    return render(request, 'forum/edit_form.html', context)
+    return render(request, 'edit_form.html', context)
 
 
 
