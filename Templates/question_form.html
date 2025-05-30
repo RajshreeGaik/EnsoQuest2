@@ -1,0 +1,85 @@
+<!-- forum/templates/forum/question_form.html -->
+
+{% extends 'index.html' %}
+{% block title %}EnsoQuest- question_form{% endblock title %}
+{% load static %}
+{% block content %}
+<style>
+    h2 {
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    form {
+        max-width: 600px;
+        background-color: #fafafa;
+        padding: 25px 30px;
+        border-radius: 12px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+    }
+
+    form p {
+        margin-bottom: 15px;
+        font-size: 16px;
+        color: #444;
+    }
+
+    label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: #222;
+    }
+
+    input[type="text"], textarea {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+        box-sizing: border-box;
+        resize: vertical;
+        font-family: inherit;
+    }
+
+    textarea {
+        min-height: 120px;
+    }
+
+    button[type="submit"] {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+
+    a {
+        color: #007bff;
+        text-decoration: none;
+        font-size: 15px;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<h2>Ask a Question</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Post</button>
+</form>
+<a href="{% url 'forum:question_list' %}">← Back to Questions</a>
+{% endblock %}

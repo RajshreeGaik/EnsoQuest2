@@ -25,7 +25,7 @@ urlpatterns = [
     path('user/',include('account.urls')),
     path('quiz/',include('quiz.urls')),
     path('attendance/', include('attendance.urls')),
-
+    path('forum/', include('forum.urls', namespace='forum')),
 
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

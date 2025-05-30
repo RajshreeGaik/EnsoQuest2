@@ -1,0 +1,15 @@
+<!-- forum/templates/forum/edit_form.html -->
+{% extends 'index.html' %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<h2>{{ heading }}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>
+
+<a href="{{ back_url }}">← Back</a>
+{% endblock %}
