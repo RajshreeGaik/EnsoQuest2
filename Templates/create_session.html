@@ -1,11 +1,37 @@
 {% extends "index.html" %}
+{% load static %}
 
 {% block content %}
-<h2>Create Session</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Create</button>
-</form>
-<a href="{% url 'attendance:session_list' %}">Back to Sessions</a>
+<link rel="stylesheet" href="{% static 'css/create_session.css' %}">
+
+<div class="create-session-container">
+    <h2 class="title">Create Session</h2>
+    <form method="post">
+        {% csrf_token %}
+        
+        <p>
+          {{ form.name.label_tag }}<br>
+          {{ form.name }}
+          {{ form.name.errors }}
+        </p>
+
+        <p>
+          {{ form.description.label_tag }}<br>
+          {{ form.description }}
+          {{ form.description.errors }}
+        </p>
+
+        <p class="field-trainees-label">
+          {{ form.trainees.label_tag }}
+        </p>
+        <div class="field-trainees">
+         {{ form.trainees }}
+        </div>
+         {{ form.trainees.errors }}
+
+
+        <button type="submit">Create</button>
+    </form>
+    <a href="{% url 'attendance:session_list' %}">Back to Sessions</a>
+</div>
 {% endblock %}

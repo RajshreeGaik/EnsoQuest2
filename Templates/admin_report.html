@@ -43,7 +43,11 @@
         {% for record in attendance %}
         <tr>
             <td>{{ record.date }}</td>
-            <td>{{ record.trainee.get_full_name|default:record.trainee.username }}</td>
+            <td>
+            <a href="{% url 'profile' record.trainee.username %}">
+             {{ record.trainee.get_full_name|default:record.trainee.username }}
+            </a>
+            </td>
             <td>{{ record.present|yesno:"Yes,No" }}</td>
         </tr>
         {% empty %}
@@ -66,9 +70,13 @@
     <tbody>
         {% for item in percentages %}
         <tr>
-            <td>{{ item.trainee.get_full_name|default:item.trainee.username }}</td>
+            <td>
+            <a href="{% url 'profile' item.trainee.username %}">
+             {{ item.trainee.get_full_name|default:item.trainee.username }}
+            </a>
+            </td>
             <td>{{ item.percentage }}%</td>
-        </tr>
+       </tr>
         {% endfor %}
     </tbody>
 </table>

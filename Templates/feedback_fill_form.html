@@ -1,0 +1,62 @@
+{% extends "index.html" %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/feedback_fill_form.css' %}">
+<div class="feedback-fill-wrapper">
+<div class="container mt-5">
+    <h2 class="mb-4">{{ form.title }}</h2>
+
+    {% if already_submitted %}
+        <div class="alert alert-info">
+            <strong>You have already submitted this feedback form.</strong><br>
+            Thank you for your response!
+        </div>
+        <a href="{% url 'feedback_dashboard' %}" class="btn btn-primary mt-3">Back to Dashboard</a>
+
+    {% else %}
+        <form method="post">
+            {% csrf_token %}
+            {% for question in questions %}
+                <div class="mb-4">
+                    <strong>{{ question.text }}</strong><br>
+
+                    {% if question.question_type == 'MCQ' %}
+                        {% for option in question.option_list %}
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input"
+                                       id="question_{{ question.id }}_{{ forloop.counter }}"
+                                       name="question_{{ question.id }}" value="{{ option }}" required>
+                                <label class="form-check-label" for="question_{{ question.id }}_{{ forloop.counter }}">
+                                    {{ option }}
+                                </label>
+                            </div>
+                        {% endfor %}
+
+                    {% elif question.question_type == 'CHECKBOX' %}
+                        {% for option in question.option_list %}
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input"
+                                       id="question_{{ question.id }}_{{ forloop.counter }}"
+                                       name="question_{{ question.id }}" value="{{ option }}">
+                                <label class="form-check-label" for="question_{{ question.id }}_{{ forloop.counter }}">
+                                    {{ option }}
+                                </label>
+                            </div>
+                        {% endfor %}
+
+                    {% elif question.question_type == 'PARAGRAPH' %}
+                        <textarea name="question_{{ question.id }}" rows="3" class="form-control" required></textarea>
+
+                    {% elif question.question_type == 'RATING' %}
+                        <input type="number" name="question_{{ question.id }}" class="form-control" min="1" max="5" required>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn btn-primary">Submit Feedback</button>
+        </form>
+    {% endif %}
+</div>
+</div>
+{% endblock %}

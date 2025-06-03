@@ -2,11 +2,14 @@
 
 {% block content %}
 {% load dict_extras %}
-
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/mark_attendance.css' %}">
+<div class="attendance-container">
 <h2>Mark Attendance for {{ session.name }} on {{ date }}</h2>
 <form method="post">
     {% csrf_token %}
-    <table border="1" cellpadding="8">
+    <div class="table-wrapper">
+    <table>
         <tr>
             <th>Trainee</th>
             <th>Present</th>
@@ -21,7 +24,9 @@
         </tr>
         {% endfor %}
     </table>
+    </div>
     <button type="submit">Save Attendance</button>
 </form>
 <a href="{% url 'attendance:session_list' %}">Back to Sessions</a>
 {% endblock %}
+</div>

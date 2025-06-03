@@ -1,0 +1,38 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+}
+
+.feedback-responses-wrapper {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  min-height: 100vh;
+}
+
+.feedback-responses-wrapper .container {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.feedback-responses-wrapper h2 {
+  color: #9b51e0;
+}
+
+.feedback-responses-wrapper .card {
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+}
+
+.feedback-responses-wrapper .list-group-item {
+  border: none;
+  border-bottom: 1px solid #f0f0f0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.feedback-responses-wrapper p {
+  font-style: italic;
+  color: #777;
+}

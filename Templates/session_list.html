@@ -1,23 +1,32 @@
 {% extends "index.html" %}
+{% load static %}
 
 {% block content %}
-<h2>Sessions</h2>
-{% if user.is_staff %}
-    <a href="{% url 'attendance:create_session' %}">Create New Session</a>
-{% endif %}
-<ul>
-    {% for session in sessions %}
-    <li>
-        {{ session.name }}
-        {% if user.is_staff %}
-        - <a href="{% url 'attendance:mark_attendance' session.id %}">Mark Attendance</a>
-        - <a href="{% url 'attendance:attendance_report_session' session.id %}">View Report</a>
-        {% else %}
-        - <a href="{% url 'attendance:attendance_report_session' session.id %}">View Report</a>
-        {% endif %}
-    </li>
-    {% empty %}
-    <li>No sessions available.</li>
-    {% endfor %}
-</ul>
+<link rel="stylesheet" href="{% static 'css/session_list.css' %}">
+
+<div class="sessions-container">
+    <h2 class="title">Sessions</h2>
+
+    {% if user.is_staff %}
+        <a href="{% url 'attendance:create_session' %}" class="create-session-btn">+ Create New Session</a>
+    {% endif %}
+
+    <div class="session-cards">
+        {% for session in sessions %}
+            <div class="session-card">
+                <span class="session-name">{{ session.name }}</span>
+                <div class="session-actions">
+                    {% if user.is_staff %}
+                        <a href="{% url 'attendance:mark_attendance' session.id %}">Mark Attendance</a>
+                        <a href="{% url 'attendance:attendance_report_session' session.id %}">View Report</a>
+                    {% else %}
+                        <a href="{% url 'attendance:attendance_report_session' session.id %}">View Report</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% empty %}
+            <p class="no-sessions">No sessions available.</p>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

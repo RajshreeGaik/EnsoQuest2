@@ -1,0 +1,55 @@
+{% extends "index.html" %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/feedback_create_form.css' %}">
+<div class="feedback-form-wrapper">
+<div class="container mt-5">
+    <h2 class="mb-4">Create Feedback Form</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label>Form Title</label>
+            <input type="text" name="title" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label>Send to Users</label><br>
+            {% for user in users %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="assigned_users" value="{{ user.id }}">
+                    <label class="form-check-label">{{ user.username }}</label>
+                </div>
+            {% endfor %}
+        </div>
+
+        <hr>
+        <h4>Add Questions</h4>
+        <div id="question-container">
+            <div class="question-block mb-3">
+                <input class="form-control mb-2" type="text" name="question_text" placeholder="Question Text" required>
+                <select class="form-select mb-2" name="question_type">
+                    <option value="MCQ">Multiple Choice</option>
+                    <option value="PARAGRAPH">Paragraph</option>
+                    <option value="CHECKBOX">Checkbox</option>
+                    <option value="RATING">Rating (1-5)</option>
+                </select>
+                <input class="form-control" type="text" name="question_options" placeholder="Options (comma-separated)">
+            </div>
+        </div>
+        <button type="button" class="btn btn-outline-secondary" onclick="addQuestion()">+ Add Another Question</button><br><br>
+
+        <button type="submit" class="btn btn-success">Create Form</button>
+    </form>
+</div>
+</div>
+<script>
+    function addQuestion() {
+        const container = document.getElementById('question-container');
+        const block = container.querySelector('.question-block');
+        const clone = block.cloneNode(true);
+        clone.querySelectorAll('input, select').forEach(input => input.value = '');
+        container.appendChild(clone);
+    }
+</script>
+{% endblock %}

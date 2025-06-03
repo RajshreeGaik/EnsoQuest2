@@ -3,7 +3,7 @@
 {% block content %}
 
 <link rel="stylesheet" href="{% static 'css/student_session_report.css' %}">
-<div class="container">
+<div class="content-padding-fix">
 
   <h2>Attendance Report for Session: <strong>{{ session.name }}</strong></h2>
    
@@ -24,7 +24,7 @@
         {% endfor %}
     </select>
 
-    <button type="submit" class="btn btn-secondary">Filter</button>
+    <button type="submit" >Filter</button>
     <a href="?">Clear</a>
 </form>
 
@@ -44,7 +44,11 @@
           {% for record in attendance %}
           <tr>
               <td>{{ record.date }}</td>
-              <td>{{ record.trainee.get_full_name|default:record.trainee.username }}</td>
+              <td>
+            <a href="{% url 'profile' record.trainee.username %}">
+             {{ record.trainee.get_full_name|default:record.trainee.username }}
+            </a>
+            </td>
               <td>{{ record.present|yesno:"Yes,No" }}</td>
           </tr>
           {% empty %}
@@ -67,8 +71,12 @@
       <tbody>
           {% for item in percentages %}
           <tr>
-              <td>{{ item.trainee.get_full_name|default:item.trainee.username }}</td>
-              <td>{{ item.percentage }}%</td>
+               <td>
+                <a href="{% url 'profile' item.trainee.username %}">
+                 {{ item.trainee.get_full_name|default:item.trainee.username }}
+                </a>
+               </td>
+               <td>{{ item.percentage }}%</td>
           </tr>
           {% endfor %}
       </tbody>

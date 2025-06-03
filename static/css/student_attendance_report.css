@@ -1,0 +1,146 @@
+/* General styles */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  color: #000;
+  /* Removed margin here to avoid pushing navbar/footer */
+}
+
+.content-container {
+  max-width: 1100px;      /* constrain width */
+  margin: 20px auto;      /* center with vertical spacing */
+  padding: 0 15px;        /* side padding */
+  box-sizing: border-box; /* include padding in width */
+}
+
+.content-container h2,
+.content-container h3 {
+  color: #9b51e0;
+  margin-bottom: 10px;
+}
+
+/* Table styling */
+.content-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.content-container th,
+.content-container td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.content-container th {
+  background-color: #9b51e0;
+  color: white;
+}
+
+.content-container td {
+  background-color: #fff;
+}
+
+/* Button styling */
+.content-container button {
+  background-color: #9b51e0;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.content-container button:hover {
+  background-color: #7d3ccf;
+}
+
+.content-container a {
+  text-decoration: none;
+}
+
+/* Form styling */
+.content-container form {
+  margin: 20px 0;
+}
+
+.content-container form label {
+  margin-right: 15px;
+  font-weight: 500;
+}
+
+.content-container input[type="date"],
+.content-container select {
+  padding: 6px 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .content-container table,
+  .content-container thead,
+  .content-container tbody,
+  .content-container th,
+  .content-container td,
+  .content-container tr {
+    display: block;
+  }
+
+  .content-container th {
+    display: none;
+  }
+
+  .content-container tr {
+    margin-bottom: 15px;
+    border-bottom: 2px solid #eee;
+  }
+
+  .content-container td {
+    background-color: #fff;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  .content-container td::before {
+    position: absolute;
+    top: 12px;
+    left: 15px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    font-weight: bold;
+    color: #9b51e0;
+    content: attr(data-label);
+  }
+
+  .content-container button {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .content-container form label,
+  .content-container input[type="date"],
+  .content-container select {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    margin-right: 0; /* reset right margin */
+  }
+}
+
+.table-wrapper {
+  background-color: #fafafa;
+  max-height: 400px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  position: relative;
+}
+.content-container table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1; 
+}

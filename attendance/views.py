@@ -14,6 +14,7 @@ from openpyxl.utils import get_column_letter
 
 
 
+
 def calculate_attendance_percentage(trainee, session):
     total = Attendance.objects.filter(session=session, trainee=trainee).count()
     present = Attendance.objects.filter(session=session, trainee=trainee, present=True).count()
@@ -135,11 +136,9 @@ def attendance_report_session(request, session_id):
 @login_required
 def export_attendance_excel(request, session_id):
     session = get_object_or_404(Session, id=session_id)
-   
-    # Attendance records queryset
-    attendance_qs = Attendance.objects.filter(session=session).select_related('trainee').order_by('date', 'trainee__username')
 
-    # Prepare attendance data
+    attendance_qs = Attendance.objects.filter(session=session).select_related('trainee').order_by('-date', 'trainee__username')
+
     attendance_data = [
         {
             'Trainee': a.trainee.get_full_name() or a.trainee.username,
@@ -149,7 +148,6 @@ def export_attendance_excel(request, session_id):
         for a in attendance_qs
     ]
 
-    # Calculate attendance percentages per trainee
     trainees = session.trainees.all()
     percentages = []
     for trainee in trainees:
@@ -158,25 +156,37 @@ def export_attendance_excel(request, session_id):
         percentage = round((present / total) * 100, 2) if total > 0 else 0
         percentages.append({'Trainee': trainee.get_full_name() or trainee.username, 'Percentage': percentage})
 
-    # Use pandas ExcelWriter to create multiple sheets
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = f'attachment; filename="{session.name}_attendance.xlsx"'
 
     with pd.ExcelWriter(response, engine='openpyxl') as writer:
-        # Attendance sheet
         df_attendance = pd.DataFrame(attendance_data)
         df_attendance.to_excel(writer, index=False, sheet_name='Attendance Records')
 
-        # Percentages sheet
         df_percentages = pd.DataFrame(percentages)
         df_percentages.to_excel(writer, index=False, sheet_name='Attendance Percentages')
+
+        # Adjust column widths (especially for date)
+        workbook = writer.book
+        sheet = writer.sheets['Attendance Records']
+
+        for column_cells in sheet.columns:
+            max_length = 0
+            column_letter = get_column_letter(column_cells[0].column)
+            for cell in column_cells:
+                try:
+                    if cell.value:
+                        max_length = max(max_length, len(str(cell.value)))
+                except:
+                    pass
+            adjusted_width = max_length + 2
+            sheet.column_dimensions[column_letter].width = adjusted_width
 
     return response
 
 @login_required
 def student_attendance_report(request):
     student = request.user
- 
 
     # Get filters
     start_date = request.GET.get('start')
@@ -231,6 +241,7 @@ def student_attendance_report(request):
     return render(request, 'student_attendance_report.html', context)
 
 
+
 def export_attendance_to_excel(records):
     wb = openpyxl.Workbook()
     ws = wb.active
@@ -262,10 +273,6 @@ def export_attendance_to_excel(records):
     wb.save(response)
     return response
 
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseForbidden
-from django.utils.dateparse import parse_date
 
 @login_required
 def student_session_report(request, session_id):

@@ -1,0 +1,38 @@
+{% extends "index.html" %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/feedback_dashboard.css' %}">
+<div class="feedback-dashboard-wrapper">
+<div class="container mt-5">
+    <h2 class="mb-4">Feedback Dashboard</h2>
+
+    {% if is_tad %}
+        <a href="{% url 'create_feedback_form' %}" class="btn btn-primary mb-3">+ Create Feedback Form</a>
+        <h4>Your Feedback Forms:</h4>
+        <ul class="list-group">
+            {% for form in forms %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ form.title }}
+                    <a href="{% url 'view_feedback_responses' form.id %}" class="btn btn-secondary">View Responses</a>
+                </li>
+            {% empty %}
+                <li class="list-group-item">No forms created yet.</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h4>Assigned Feedback Forms:</h4>
+        <ul class="list-group">
+            {% for form in assigned_forms %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ form.title }}
+                    <a href="{% url 'fill_feedback_form' form.id %}" class="btn btn-secondary">Fill</a>
+                </li>
+            {% empty %}
+                <li class="list-group-item">No forms assigned to you.</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+</div>                      
+{% endblock %}

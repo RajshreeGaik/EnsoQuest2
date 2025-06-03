@@ -1,0 +1,51 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+}
+  
+.feedback-form-wrapper {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.feedback-form-wrapper .container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.feedback-form-wrapper h2,
+.feedback-form-wrapper h4 {
+    color: #9b51e0;
+}
+
+.feedback-form-wrapper label {
+    font-weight: 600;
+}
+
+.feedback-form-wrapper input.form-control,
+.feedback-form-wrapper select.form-select {
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.feedback-form-wrapper .btn-outline-secondary {
+    color: #9b51e0;
+    border-color: #9b51e0;
+}
+
+.feedback-form-wrapper .btn-outline-secondary:hover {
+    background-color: #9b51e0;
+    color: white;
+}
+
+.feedback-form-wrapper .btn-success {
+    background-color: #9b51e0;
+    border-color: #9b51e0;
+}
+
+.feedback-form-wrapper .btn-success:hover {
+    background-color: #833dcf;
+    border-color: #833dcf;
+}

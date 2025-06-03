@@ -1,85 +1,92 @@
 {% extends 'index.html' %}
 {% block content %}
-<div class="container">
-  <h2>Your Attendance Summary</h2>
+{% load static %}
 
-  <table border="1" cellpadding="10" cellspacing="0">
-    <thead>
-      <tr>
-        <th>Session</th>
-        <th>Attendance Percentage</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for item in individual_percentages %}
-        <tr>
-          <td>{{ item.session.name }}</td>
-          <td>{{ item.percentage }}%</td>
-          <td>
-          <a href="{% url 'attendance:student_session_report' item.session.id %}">
-            <button>View Detail</button>
-          </a>
-        </td>
-        </tr>
-      {% empty %}
-        <tr>
-          <td colspan="2">You are not enrolled in any sessions or no attendance data available yet.</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-
-  <hr>
-
-  <h3>Detailed Attendance Records</h3>
-    <p>Attendance Percentage: {{ attendance_percentage }}%</p>
-  <form method="get">
-  <label>Start Date: <input type="date" name="start" value="{{ start_date }}"></label>
-  <label>End Date: <input type="date" name="end" value="{{ end_date }}"></label>
-  <label>Session:
-    <select name="session">
-      <option value="">All</option>
-      {% for session in session_list %}
-        <option value="{{ session.id }}" {% if session.id == selected_session %}selected{% endif %}>
-          {{ session.name }}
-        </option>
-      {% endfor %}
-    </select>
-  </label>
-  <button type="submit">Filter</button>
-</form>
-
-  {% if attendance_records %}
-  <div style="max-height: 400px; overflow-y: auto; border: 1px solid #ccc; margin-top: 10px;">
-    <table  border="1" cellpadding="5" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+<link rel="stylesheet" href="{% static 'css/student_attendance_report.css' %}">
+<div class="content-container">
+    <h2>Attendance Report</h2>
+    <div class="table-wrapper">
+    <table>
       <thead>
         <tr>
           <th>Session</th>
-          <th>Date</th>
-          <th>Status</th>
+          <th>Attendance Percentage</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
-        {% for record in attendance_records %}
+        {% for item in individual_percentages %}
           <tr>
-            <td>{{ record.session.name }}</td>
-            <td>{{ record.date }}</td>
-            <td>{% if record.present %}Present{% else %}Absent{% endif %}</td>
+            <td>{{ item.session.name }}</td>
+            <td>{{ item.percentage }}%</td>
+            <td>
+              <a href="{% url 'attendance:student_session_report' item.session.id %}">
+                <button>View Detail</button>
+              </a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="3">You are not enrolled in any sessions or no attendance data available yet.</td>
           </tr>
         {% endfor %}
       </tbody>
     </table>
-  </div>
-  <form method="get" action=".">
-  <input type="hidden" name="start" value="{{ start_date }}">
-  <input type="hidden" name="end" value="{{ end_date }}">
-  <input type="hidden" name="session" value="{{ selected_session }}">
-  <input type="hidden" name="export" value="excel">
-  <button type="submit">Export to Excel</button>
-</form>
+    </div>
+    <hr>
 
-  {% else %}
-    <p>No attendance records found.</p>
-  {% endif %}
+    <h3>Detailed Attendance Records</h3>
+    <p>Attendance Percentage: {{ attendance_percentage }}%</p>
+
+    <form method="get">
+      <label>Start Date: <input type="date" name="start" value="{{ start_date }}"></label>
+      <label>End Date: <input type="date" name="end" value="{{ end_date }}"></label>
+      <label>Session:
+        <select name="session">
+          <option value="">All</option>
+          {% for session in session_list %}
+            <option value="{{ session.id }}" {% if session.id == selected_session %}selected{% endif %}>
+              {{ session.name }}
+            </option>
+          {% endfor %}
+        </select>
+      </label>
+      <button type="submit">Filter</button>
+    </form>
+
+    {% if attendance_records %}
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Session</th>
+              <th>Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for record in attendance_records %}
+              <tr>
+                <td>{{ record.session.name }}</td>
+                <td>{{ record.date }}</td>
+                <td>{% if record.present %}Present{% else %}Absent{% endif %}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <form method="get" action=".">
+        <input type="hidden" name="start" value="{{ start_date }}">
+        <input type="hidden" name="end" value="{{ end_date }}">
+        <input type="hidden" name="session" value="{{ selected_session }}">
+        <input type="hidden" name="export" value="excel">
+        <button type="submit">Export to Excel</button>
+      </form>
+
+    {% else %}
+      <p>No attendance records found.</p>
+    {% endif %}
+
+    <a href="{% url 'attendance:session_list' %}">Back to Sessions</a>
 </div>
 {% endblock %}

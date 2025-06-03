@@ -1,0 +1,32 @@
+{% extends "index.html" %}
+{% load static %}
+{% block content %}
+
+
+<link rel="stylesheet" href="{% static 'css/feedback_view_responses.css' %}">
+<div class="feedback-responses-wrapper">
+<div class="container mt-5">
+    <h2 class="mb-4">Responses for: {{ form.title }}</h2>
+
+    {% if responses %}
+        {% for response in responses %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    <strong>{{ response.user.username }}</strong> — {{ response.submitted_at }}
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for answer in response.answers.all %}
+                            <li class="list-group-item">
+                                <strong>{{ answer.question.text }}</strong> : {{ answer.answer_text }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No responses yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

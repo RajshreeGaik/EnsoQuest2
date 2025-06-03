@@ -6,7 +6,10 @@ class SessionForm(forms.ModelForm):
     trainees = forms.ModelMultipleChoiceField(
         queryset=User.objects.filter(is_staff=False),
         widget=forms.CheckboxSelectMultiple,
-        required=True
+        required=True,
+        label="Select Trainees",
+        help_text="Choose one or more trainees to add to this session."
+
     )
 
     class Meta:

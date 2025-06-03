@@ -31,26 +31,6 @@ class Blog(models.Model):
     
 
 
-RATING_CHOICES = [
-    (1, '1 - Poor'),
-    (2, '2 - Fair'),
-    (3, '3 - Good'),
-    (4, '4 - Very Good'),
-    (5, '5 - Excellent'),
-]
-
-class Feedback(models.Model):
-    name = models.CharField(max_length=100)
-    email = models.EmailField(blank=True)
-    rating = models.IntegerField(choices=RATING_CHOICES)
-    expectations_met = models.TextField()
-    improvement_suggestions = models.TextField()
-    submitted_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"Feedback from {self.name}"
-
-
 class Notice(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
@@ -69,3 +49,41 @@ class Resource(models.Model):
 
     def __str__(self):
         return self.title
+    
+class FeedbackForm(models.Model):
+    title = models.CharField(max_length=255)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    assigned_users = models.ManyToManyField(User, related_name='assigned_feedbacks')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+
+QUESTION_TYPES = (
+    ('MCQ', 'Multiple Choice'),
+    ('PARAGRAPH', 'Paragraph'),
+    ('CHECKBOX', 'Checkbox'),
+    ('RATING', 'Rating'),
+)
+
+class FeedbackQuestion(models.Model):
+    form = models.ForeignKey(FeedbackForm, on_delete=models.CASCADE, related_name='questions')
+    text = models.CharField(max_length=1024)
+    question_type = models.CharField(max_length=20, choices=QUESTION_TYPES)
+    options = models.TextField(blank=True, help_text="Comma-separated options (for MCQ and CHECKBOX)")
+
+    def __str__(self):
+        return self.text
+
+
+class FeedbackResponse(models.Model):
+    form = models.ForeignKey(FeedbackForm, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+
+class FeedbackAnswer(models.Model):
+    response = models.ForeignKey(FeedbackResponse, on_delete=models.CASCADE, related_name='answers')
+    question = models.ForeignKey(FeedbackQuestion, on_delete=models.CASCADE)
+    answer_text = models.TextField(blank=True, null=True)

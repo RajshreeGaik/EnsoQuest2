@@ -5,18 +5,14 @@ from account.models import Profile
 from quiz.models import UserRank, Quiz, QuizSubmission, Question
 from django.contrib.auth.decorators import login_required,user_passes_test
 import datetime
-from .models import Message, Blog
+from .models import *
+from .form import *
 from django.db.models import Count, Q
 import math
 from django.db.models.functions import ExtractYear
-from .models import Feedback
-from .models import Notice
-from .form import NoticeForm
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from .models import Resource
-from .form import ResourceForm
-
+from django.forms import modelform_factory
+from django.http import Http404
+from django.db import transaction
 
 # Create your views here.
 def home(request):
@@ -167,31 +163,6 @@ def search_users_view(request):
     context={"query": query, "users":users}
     return render (request, "search-users.html", context)
 
-
-
-@login_required
-def feedback_view(request):
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        rating = int(request.POST.get('rating'))
-        expectations_met = request.POST.get('expectation')  # from form field
-        improvement_suggestions = request.POST.get('improvement')  # from form field
-
-        Feedback.objects.create(
-            name=name,
-            email=email,
-            rating=rating,
-            expectations_met=expectations_met,
-            improvement_suggestions=improvement_suggestions,
-        )
-        # Add a success message
-        messages.success(request, "Thank you for your feedback 😊🎉🙏!")
-        # Redirect to feedback page to avoid form resubmission
-        return redirect('feedback')  # Make sure 'feedback' is the name of your url pattern
-    return render(request, "feedback.html")
-
-
 def custom_404(request, exception):
     return render(request, '404.html', status=404)
 
@@ -273,4 +244,131 @@ def resource_list(request):
     return render(request, 'resource_list.html', {'resources': resources})
 
 
+@login_required
+def feedback_dashboard(request):
+    # Check if user is in TAD group
+    is_tad = request.user.groups.filter(name='TAD').exists()
 
+    if is_tad:
+        forms = FeedbackForm.objects.filter(created_by=request.user)
+        context = {'forms': forms, 'is_tad': True}
+    else:
+        assigned_forms = FeedbackForm.objects.filter(assigned_users=request.user)
+        context = {'assigned_forms': assigned_forms, 'is_tad': False}
+
+    return render(request, 'feedback_dashboard.html', context)
+
+
+@login_required
+@transaction.atomic
+def create_feedback_form(request):
+    # Only TAD group users allowed
+    if not request.user.groups.filter(name='TAD').exists():
+        messages.error(request, "You are not authorized to create feedback forms.")
+        return redirect('feedback_dashboard')
+
+    users = User.objects.exclude(id=request.user.id)  # Exclude self from assignment list
+
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        assigned_users_ids = request.POST.getlist('assigned_users')
+
+        question_texts = request.POST.getlist('question_text')
+        question_types = request.POST.getlist('question_type')
+        question_options_list = request.POST.getlist('question_options')
+
+        if not title or not assigned_users_ids or not question_texts:
+            messages.error(request, "Please fill all required fields.")
+            return render(request, 'feedback_create_form.html', {'users': users})
+
+        # Create form
+        form = FeedbackForm.objects.create(title=title, created_by=request.user)
+        form.assigned_users.set(User.objects.filter(id__in=assigned_users_ids))
+        form.save()
+
+        # Create questions
+        for text, qtype, options in zip(question_texts, question_types, question_options_list):
+            if text.strip():
+                FeedbackQuestion.objects.create(
+                    form=form,
+                    text=text.strip(),
+                    question_type=qtype,
+                    options=options.strip() if options else ''
+                )
+
+        messages.success(request, "Feedback form created successfully!")
+        return redirect('feedback_dashboard')
+
+    return render(request, 'feedback_create_form.html', {'users': users})
+
+@login_required
+def feedback_fill_form(request, form_id):
+    form = get_object_or_404(FeedbackForm, id=form_id)
+
+    # Prepare questions with option_list in view
+    questions_with_options = []
+    for question in form.questions.all():
+        option_list = [opt.strip() for opt in question.options.split(',')] if question.options else []
+        questions_with_options.append({
+            'id': question.id,
+            'text': question.text,
+            'question_type': question.question_type,
+            'option_list': option_list,
+        })
+
+    # Check user assignment
+    if request.user not in form.assigned_users.all():
+        messages.error(request, "You are not assigned to this feedback form.")
+        return redirect('feedback_dashboard')
+
+    existing_response = FeedbackResponse.objects.filter(form=form, user=request.user).first()
+
+    if existing_response:
+        return render(request, 'feedback_fill_form.html', {
+            'form': form,
+            'already_submitted': True,
+        })
+
+    if request.method == 'POST':
+        response = FeedbackResponse.objects.create(form=form, user=request.user)
+
+        for question in form.questions.all():
+            field_name = f"question_{question.id}"
+
+            if question.question_type == 'CHECKBOX':
+                answers = request.POST.getlist(field_name)
+                answer_text = ", ".join(answers) if answers else ''
+            else:
+                answer_text = request.POST.get(field_name, '').strip()
+
+            FeedbackAnswer.objects.create(
+                response=response,
+                question=question,
+                answer_text=answer_text
+            )
+
+        messages.success(request, "Feedback submitted successfully!")
+        return redirect('feedback_dashboard')
+
+    return render(request, 'feedback_fill_form.html', {
+        'form': form,
+        'questions': questions_with_options,
+        'already_submitted': False,
+    })
+
+
+@login_required
+def view_feedback_responses(request, form_id):
+    form = get_object_or_404(FeedbackForm, id=form_id)
+
+    # Only creator (TAD user) can view responses
+    if request.user != form.created_by:
+        messages.error(request, "You are not authorized to view responses for this form.")
+        return redirect('feedback_dashboard')
+
+    responses = FeedbackResponse.objects.filter(form=form).order_by('-submitted_at').prefetch_related('answers', 'user')
+
+    return render(request, 'feedback_view_responses.html', {
+        'form': form,
+        'responses': responses
+    })
