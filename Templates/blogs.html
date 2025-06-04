@@ -3,12 +3,19 @@
 
 {% block content %}
 <style> 
-  body{
+  body {
       background-color: #f9f9f9;
   }
 </style>
+
 <div class="container my-5">
-  <h1 class="text-center fw-bold display-5 mb-5 title"> Explore Blogs</h1>
+  <h1 class="text-center fw-bold display-5 mb-5 title">Explore Blogs</h1>
+
+  {% if request.user.is_staff %}
+  <div class="text-end mb-4">
+    <a href="{% url 'create_blog' %}" class="btn btn-primary">+ New Blog</a>
+  </div>
+  {% endif %}
 
   <div class="col-lg-8 mx-auto">
     {% for year_count in year_blog_count %}

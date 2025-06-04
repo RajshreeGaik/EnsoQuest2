@@ -14,12 +14,12 @@ class Question(models.Model):
 
 class Comment(models.Model):
     question = models.ForeignKey(Question, related_name='comments', on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='forum_comments')
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
 class Like(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='forum_likes') 
     question = models.ForeignKey(Question, null=True, blank=True, on_delete=models.CASCADE)
     comment = models.ForeignKey(Comment, null=True, blank=True, on_delete=models.CASCADE)
 

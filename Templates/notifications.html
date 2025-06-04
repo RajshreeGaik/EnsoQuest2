@@ -1,0 +1,29 @@
+<!-- base/templates/base/notifications.html -->
+
+{% extends "index.html" %}
+{% block title %}EnsoQuest - Notification{% endblock title %}
+{% load static %}
+{% block content %}
+<style>
+  .notification-list {
+    margin-top: 20px;
+  }
+  .notification-item {
+    margin-bottom: 10px;
+    border-radius: 8px;
+    padding: 12px 16px;
+  }
+</style>
+
+<h2>Notifications</h2>
+<ul class="list-group notification-list">
+  {% for notification in notifications %}
+    <li class="list-group-item notification-item {% if not notification.is_read %}list-group-item-info{% endif %}">
+      {{ notification.message }}
+      <small class="text-muted float-end">{{ notification.created_at }}</small>
+    </li>
+  {% empty %}
+    <li class="list-group-item notification-item">No notifications.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

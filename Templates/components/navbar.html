@@ -1,18 +1,30 @@
+<!-- 🔽 MOBILE NAVBAR SECTION -->
 <div class="container text-center my-2 d-sm-block d-lg-none">
   <div class="btn-group" role="group" aria-label="Basic outlined example">
     <a href="{% url 'home' %}" class="btn btn-outline-primary"><i class="bi bi-house-door"></i></a>
     <a href="{% url 'all_quiz' %}" class="btn btn-outline-primary text-success">Tests</a>
-    
+
     {% if request.user.is_superuser %}
       <a href="{% url 'dashboard' %}" class="btn btn-outline-primary">Dashboard</a>
     {% endif %}
-    
+
     <a href="{% url 'leaderboard' %}" class="btn btn-outline-primary">Leaderboard</a>
-    
+
     {% if request.user.is_authenticated %}
       <a href="{% url 'profile' request.user.username %}" class="btn btn-outline-primary">
         <img src="{{ request.user.profile.profile_img.url }}" class="rounded-circle" width="20" height="20" alt="profile_img">
       </a>
+
+      <!-- 🔔 Bell Icon for Mobile -->
+      <a href="{% url 'notifications' %}" class="btn btn-outline-primary position-relative">
+        <i class="bi bi-bell"></i>
+        {% if unread_notification_count > 0 %}
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{ unread_notification_count }}
+          </span>
+        {% endif %}
+      </a>
+
       <a href="{% url 'attendance:session_list' %}" class="btn btn-outline-primary">Attendance</a>
       <a href="{% url 'logout' %}" class="btn btn-outline-primary"><i class="bi bi-box-arrow-left"></i></a>
     {% else %}
@@ -21,6 +33,7 @@
   </div>
 </div>
 
+<!-- 🔽 DESKTOP NAVBAR SECTION -->
 <nav class="navbar navbar-expand-lg bg-body-tertiary d-none d-lg-block">
   <div class="container">
     <a class="navbar-brand" href="{% url 'home' %}">EnsoQuest</a>
@@ -28,6 +41,7 @@
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
@@ -36,17 +50,17 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'all_quiz' %}">Test</a>
         </li>
-        
+
         {% if request.user.is_superuser %}
           <li class="nav-item">
             <a class="nav-link text-success" href="{% url 'dashboard' %}">Dashboard</a>
           </li>
         {% endif %}
-        
+
         <li class="nav-item">
           <a class="nav-link" href="{% url 'leaderboard' %}">Leaderboard</a>
         </li>
-        
+
         {% if request.user.is_authenticated %}
           {% if request.user.is_superuser %}
             <li class="nav-item">
@@ -58,7 +72,7 @@
             </li>
           {% endif %}
         {% endif %}
-        
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Other
@@ -79,16 +93,42 @@
           </ul>
         </li>
       </ul>
-      
+
       <form class="d-flex" role="search" action="{% url 'search_users' %}">
         <input class="form-control me-2" type="search" name="q" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
-        
+
         {% if request.user.is_authenticated %}
+          <!-- Profile Icon -->
           <a href="{% url 'profile' request.user.username %}" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="{{ request.user.username }}" class="mx-2">
             <img src="{{ request.user.profile.profile_img.url }}" class="rounded-circle" width="40" height="40" alt="profile_img">
           </a>
-          <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+
+          <!-- 🔔 Notification Bell (Desktop) -->
+          <li class="nav-item dropdown list-unstyled mx-2">
+            <a class="nav-link dropdown-toggle position-relative" href="#" id="notificationDropdown" data-bs-toggle="dropdown" role="button" aria-expanded="false">
+              <i class="bi bi-bell"></i>
+              {% if unread_notification_count > 0 %}
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                  {{ unread_notification_count }}
+                </span>
+              {% endif %}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
+              {% for note in request.user.notification_set.all|slice:":5" %}
+                <li>
+                  <a class="dropdown-item" href="{{ note.url }}">{{ note.message|truncatechars:40 }}</a>
+                </li>
+              {% empty %}
+                <li><span class="dropdown-item-text">No new notifications</span></li>
+              {% endfor %}
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-center" href="{% url 'notifications' %}">View All</a></li>
+            </ul>
+          </li>
+
+          <!-- Logout Button -->
+          <a href="{% url 'logout' %}" class="btn btn-primary ms-2">Logout</a>
         {% else %}
           <a href="{% url 'login' %}" class="btn btn-primary ms-2">Login</a>
         {% endif %}

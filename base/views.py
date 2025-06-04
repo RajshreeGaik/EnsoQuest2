@@ -13,15 +13,30 @@ from django.db.models.functions import ExtractYear
 from django.forms import modelform_factory
 from django.http import Http404
 from django.db import transaction
+from base.models import Notification
+from .form import BlogForm
+from django.contrib.admin.views.decorators import staff_member_required
+from django.http import HttpResponseForbidden
+from django.http import JsonResponse
+from .models import Blog, Like, Comment
+from .form import CommentForm
+
 
 # Create your views here.
 def home(request):
-
     leaderboard_users = UserRank.objects.order_by('rank')[:4]
+    
+    unread_count = 0
+    if request.user.is_authenticated:
+        unread_count = request.user.notification_set.filter(is_read=False).count()
 
-    context={"leaderboard_users":leaderboard_users}
+    context = {
+        "leaderboard_users": leaderboard_users,
+        "unread_count": unread_count,
+    }
 
     return render(request, 'welcome.html', context)
+
 
 @login_required(login_url="login")
 def leaderboard_view(request):
@@ -107,6 +122,76 @@ def blog_view(request,blog_id):
         
         context={"blog": blog}
         return render(request, "blog.html", context)
+
+
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def create_blog(request):
+    if request.method == 'POST':
+        form = BlogForm(request.POST)
+        if form.is_valid():
+            blog = form.save(commit=False)
+            blog.author = request.user
+            blog.save()
+            return redirect('blogs')
+    else:
+        form = BlogForm()
+    return render(request, 'create_blog.html', {'form': form})
+
+# views.py
+@login_required
+def edit_blog(request, blog_id):
+    blog = get_object_or_404(Blog, pk=blog_id)
+
+    # Optional: Only allow the author or admin to edit
+    if request.user != blog.author and not request.user.is_staff:
+        return HttpResponseForbidden("You are not allowed to edit this blog.")
+
+    if request.method == 'POST':
+        form = BlogForm(request.POST, instance=blog)
+        if form.is_valid():
+            form.save()
+            return redirect('blog', blog_id=blog.id)
+    else:
+        form = BlogForm(instance=blog)
+
+    return render(request, 'edit_blog.html', {'form': form, 'blog': blog})
+
+@login_required
+def like_blog(request, blog_id):
+    blog = get_object_or_404(Blog, id=blog_id)
+    liked = False
+
+    # Toggle like
+    like_obj, created = Like.objects.get_or_create(user=request.user, blog=blog)
+    if not created:
+        like_obj.delete()
+    else:
+        liked = True
+
+    # Return JSON response for AJAX
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return JsonResponse({
+            'liked': liked,
+            'like_count': blog.likes.count()
+        })
+
+    return redirect('blog', blog_id=blog_id)
+
+@login_required
+@login_required
+def comment_blog(request, blog_id):
+    if request.method == 'POST':
+        blog = get_object_or_404(Blog, id=blog_id)
+        content = request.POST.get('content')
+        if content:
+            Comment.objects.create(blog=blog, user=request.user, content=content)
+        return redirect('blog', blog_id=blog.id)
+
+
+
     
 @login_required
 def contact_view(request):
@@ -144,8 +229,8 @@ def terms_conditions_view(request):
 
 @login_required
 def resources_view(request):
-
-        return render(request, "resources.html")
+    resources = Resource.objects.all()
+    return render(request, "resource_list.html", {'resources': resources})
 
 def search_users_view(request):
 
@@ -238,10 +323,6 @@ def upload_resource(request):
     else:
         form = ResourceForm()
     return render(request, 'upload_resource.html', {'form': form})
-
-def resource_list(request):
-    resources = Resource.objects.all().order_by('-uploaded_at')
-    return render(request, 'resource_list.html', {'resources': resources})
 
 
 @login_required
@@ -372,3 +453,15 @@ def view_feedback_responses(request, form_id):
         'form': form,
         'responses': responses
     })
+
+# base/views.py
+@login_required
+def notification_list(request):
+    # Fetch all notifications for the logged-in user
+    notifications = Notification.objects.filter(user=request.user).order_by('-created_at')
+
+    # ✅ Mark all unread notifications as read
+    notifications.filter(is_read=False).update(is_read=True)
+
+    return render(request, 'notifications.html', {'notifications': notifications})
+

@@ -16,7 +16,7 @@ class Message(models.Model):
     
 class Blog(models.Model):
     title = models.CharField(max_length=255)
-    content = RichTextField()
+    content = models.TextField()
     author = models.ForeignKey('auth.user', on_delete=models.CASCADE)
     STATUS = (
         ('public','Public'),
@@ -29,7 +29,19 @@ class Blog(models.Model):
     def __str__(self):
         return self.title
     
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='base_likes')
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name='likes')
+    created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        unique_together = ('user', 'blog')  # Prevent duplicate likes
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='base_comments')
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name='comments')
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
 class Notice(models.Model):
     title = models.CharField(max_length=200)
@@ -44,6 +56,7 @@ class Resource(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     file = models.FileField(upload_to='resources/')
+    author_name = models.CharField(max_length=100, blank=True, null=True)
     uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
@@ -87,3 +100,17 @@ class FeedbackAnswer(models.Model):
     response = models.ForeignKey(FeedbackResponse, on_delete=models.CASCADE, related_name='answers')
     question = models.ForeignKey(FeedbackQuestion, on_delete=models.CASCADE)
     answer_text = models.TextField(blank=True, null=True)
+
+# base/models.py
+
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.TextField()
+    url = models.URLField(null=True, blank=True)
+    category = models.CharField(max_length=20, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.message}"
+
