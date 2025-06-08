@@ -28,19 +28,14 @@
     font-size: 0.95rem;
   }
 
-  .btn-primary {
-    padding: 0.5rem 1.5rem;
-    font-weight: 500;
-    border-radius: 8px;
-    font-size: 1rem;
-  }
+ 
 
-  .form-check-label a {
+  .glass-container a {
     text-decoration: underline;
     color: #9b51e0;
   }
 
-  .form-check-label a:hover {
+  .glass-container a:hover {
     color: #7a3dcf;
   }
 
@@ -79,6 +74,29 @@
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
 
+.btn-primary {
+    background-color: #9b51e0;
+    border-color: #9b51e0;
+}
+
+ .btn-primary:hover {
+    background-color: #833dcf;
+    border-color: #833dcf;
+}
+
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #9b51e0 !important;
+  box-shadow: 0 0 0 0.2rem rgba(155, 81, 224, 0.25) !important;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+select:focus {
+  color: #9b51e0;
+}
 </style>
 
 <h1 class="display-4 text-center my-4 fw-bold title">Register</h1>

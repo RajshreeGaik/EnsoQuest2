@@ -24,13 +24,12 @@
         {% endfor %}
     </select>
 
-    <button type="submit" >Filter</button>
-    <a href="?">Clear</a>
+    <button class=" btn-primary" type="submit" >Filter</button>
+    <a class=" btn-outline-primary" href="?">Reset</a>
 </form>
 
 
   <!-- Attendance Table -->
-  <h4>Detailed Attendance Records</h4>
   <div class="table-container-vertical">
   <table border="1" cellpadding="8" cellspacing="0">
       <thead>
@@ -59,7 +58,7 @@
   </div>
 
   <!-- Attendance Percentages -->
-  <h4>Attendance Percentages</h4>
+  <h3>Attendance Percentages</h3>
   <div class="table-container-vertical">
   <table border="1" cellpadding="8" cellspacing="0">
       <thead>
@@ -113,11 +112,7 @@
               scales: {
                   y: {
                       beginAtZero: true,
-                      max: 100,
-                      title: {
-                          display: true,
-                          text: 'Percentage'
-                      }
+                      max: 100
                   }
               }
           }
@@ -126,7 +121,7 @@
 
   <!-- Back Link -->
   <p>
-      <a href="{% url 'attendance:student_attendance_report' %}">← Back to Your Attendance Overview</a>
+      <a class="btn btn-outline-secondary" href="{% url 'attendance:student_attendance_report' %}">← Back to Attendance Overview</a>
   </p>
 </div>
 {% endblock %}

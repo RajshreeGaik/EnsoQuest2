@@ -3,95 +3,137 @@
 {% block title %}@{{request.user.username}}'s Profile Edit - EnsoQuest {% endblock title %}
 
 {% block content %}
+{% load static %}
 <style>
+  body {
+    background-color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
   .glass-card {
-    background: rgba(255, 255, 255, 0.85);
-    border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
-    backdrop-filter: blur(8px);
-    padding: 2rem;
+    background-color: #ffffff;
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    margin-top: 10px;
   }
 
-  .glass-card input:focus,
-  .glass-card textarea:focus {
-    border-color: #4c8bf5;
-    box-shadow: 0 0 0 0.2rem rgba(76, 139, 245, 0.25);
-  }
-
-  .gradient-btn {
-    background: linear-gradient(135deg, #4c8bf5, #6c63ff);
-    color: #fff;
-    border: none;
-    transition: 0.3s ease-in-out;
-  }
-
-  .gradient-btn:hover {
-    background: linear-gradient(135deg, #6c63ff, #4c8bf5);
+  .glass-card:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(76, 139, 245, 0.4);
+  }
+
+  .glass-card label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+  }
+
+  .glass-card .form-control {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .glass-card .form-control:focus {
+    border-color: #9b51e0;
+    box-shadow: 0 0 0 0.25rem rgba(155, 81, 224, 0.2);
+    outline: none;
   }
 
   .profile-img {
-    border: 4px solid #ffffff;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #9b51e0;
+    transition: transform 0.3s ease;
+  }
+
+  .profile-img:hover {
+    transform: scale(1.05);
+  }
+
+  .alert-danger {
+    background-color: #ffe6ea;
+    border: 1px solid #ffccd4;
+    color: #d63384;
+    border-radius: 6px;
+    font-size: 0.95rem;
+  }
+
+  .btn-primary {
+    background-color: #9b51e0;
+    border-color: #9b51e0;
+    border-radius: 8px;
+    padding: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 150px;
+  }
+
+  .btn-primary:hover {
+    background-color: #833dcf;
+    border-color: #833dcf;
+    transform: scale(1.02);
+  }
+
+  @media (max-width: 768px) {
+    .glass-card {
+      padding: 25px;
+    }
+
+    .profile-img {
+      width: 100px;
+      height: 100px;
+    }
   }
 </style>
 
-<h1 class="display-5 text-center my-5 title">Edit Your Profile</h1>
-
 <div class="container">
+  <h1 class="text-center display-5 title">@{{ request.user.username }} - Edit Profile</h1>
+
   <div class="row justify-content-center">
-    <div class="col-lg-6 col-md-8">
+    <div class="col-lg-6 col-md-8 col-sm-12">
       <div class="glass-card">
 
         <form action="" method="POST" enctype="multipart/form-data">
           {% csrf_token %}
 
           <div class="text-center mb-4">
-            <img src="{{user_profile.profile_img.url}}" alt="profile-pic" class="rounded-circle profile-img" width="130" height="130">
+            <img src="{{ user_profile.profile_img.url }}" alt="Profile Picture" class="profile-img" width="130" height="130">
           </div>
 
           {% for message in messages %}
-          <div class="alert alert-danger text-center py-1">{{ message }}</div>
+            <div class="alert alert-danger text-center">{{ message }}</div>
           {% endfor %}
 
-          <div class="form-floating mb-3">
-            <input type="file" name="profile_img" class="form-control" id="floatingImage">
-            <label for="floatingImage">Upload New Image</label>
-          </div>
+          <label for="profile_img">Upload New Image</label>
+          <input type="file" name="profile_img" class="form-control" id="profile_img">
 
-          <div class="form-floating mb-3">
-            <input type="text" name="firstname" value="{{user_profile.user.first_name}}" class="form-control" id="floatingFirstName" placeholder="First Name" required>
-            <label for="floatingFirstName">First Name</label>
-          </div>
+          <label for="firstname">First Name</label>
+          <input type="text" name="firstname" value="{{ user_profile.user.first_name }}" class="form-control" id="firstname" required>
 
-          <div class="form-floating mb-3">
-            <input type="text" name="lastname" value="{{user_profile.user.last_name}}" class="form-control" id="floatingLastName" placeholder="Last Name" required>
-            <label for="floatingLastName">Last Name</label>
-          </div>
+          <label for="lastname">Last Name</label>
+          <input type="text" name="lastname" value="{{ user_profile.user.last_name }}" class="form-control" id="lastname" required>
 
-          <div class="form-floating mb-3">
-            <input type="email" name="email" value="{{user_profile.user.email}}" class="form-control" id="floatingEmail" placeholder="Email" required>
-            <label for="floatingEmail">Email</label>
-          </div>
+          <label for="email">Email</label>
+          <input type="email" name="email" value="{{ user_profile.user.email }}" class="form-control" id="email" required>
 
-          <div class="form-floating mb-3">
-            <input type="text" name="username" value="{{user_profile.user.username}}" class="form-control" id="floatingUsername" placeholder="Username" required>
-            <label for="floatingUsername">Username</label>
-          </div>
+          <label for="username">Username</label>
+          <input type="text" name="username" value="{{ user_profile.user.username }}" class="form-control" id="username" required>
 
-          <div class="form-floating mb-3">
-            <input type="text" name="position" value="{{user_profile.position}}" class="form-control" id="floatingPosition" placeholder="Position" required>
-            <label for="floatingPosition">Position</label>
-          </div>
+          <label for="position">Position</label>
+          <input type="text" name="position" value="{{ user_profile.position }}" class="form-control" id="position" required>
 
-          <div class="form-floating mb-4">
-            <textarea class="form-control" name="bio" id="floatingBio" placeholder="Your Bio" style="height: 100px;" required>{{user_profile.bio}}</textarea>
-            <label for="floatingBio">Your Bio</label>
-          </div>
+          <label for="bio">Your Bio</label>
+          <textarea name="bio" class="form-control" id="bio" style="height: 120px;" required>{{ user_profile.bio }}</textarea>
 
-          <div class="d-grid">
-            <button type="submit" class="btn gradient-btn btn-lg rounded-pill">Save Profile</button>
+          <div class="d-grid mt-3">
+            <button type="submit" class="btn btn-primary">Save Profile</button>
           </div>
 
         </form>

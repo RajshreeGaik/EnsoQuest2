@@ -6,4 +6,7 @@ urlpatterns =[
     path('search/<str:category>/',views.search_view, name='search'),
     path('<int:quiz_id>',views.quiz_view, name='quiz'),
     path('<int:submission_id>/result',views.quiz_result_view, name='quiz_result'),
+    path('<int:quiz_id>/report/', views.quiz_report_view, name='quiz_report'),
+    path('<int:quiz_id>/report/export/', views.export_quiz_report_excel, name='quiz_report_export'),
+
 ]

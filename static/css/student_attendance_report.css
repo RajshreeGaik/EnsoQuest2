@@ -43,7 +43,7 @@ body {
 }
 
 /* Button styling */
-.content-container button {
+.content-container .btn-primary {
   background-color: #9b51e0;
   color: white;
   border: none;
@@ -53,7 +53,7 @@ body {
   transition: background-color 0.3s;
 }
 
-.content-container button:hover {
+.content-container .btn-primary:hover {
   background-color: #7d3ccf;
 }
 
@@ -89,7 +89,7 @@ body {
   .content-container tr {
     display: block;
   }
-
+  
   .content-container th {
     display: none;
   }
@@ -143,4 +143,42 @@ body {
   position: sticky;
   top: 0;
   z-index: 1; 
+}
+
+
+.btn-secondary {
+    background-color: #fff;
+    color: #9b51e0;
+    border: 2px solid #9b51e0;
+    border-radius: 999px;
+    padding: 0.4rem 1.2rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #9b51e0;
+    color: #fff;
+    border-color: #9b51e0;
+}
+
+.btn-outline-secondary {
+padding: 10px 18px;          
+    font-size: 15px;             
+    font-weight: 600;          
+    border-radius: 6px;        
+    border: 2px solid #9b51e0;
+    background-color: #fff;
+    color: #9b51e0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    line-height: 1.2;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #9b51e0;
+  color: #fff;
+  border-color: #9b51e0;
 }

@@ -1,0 +1,155 @@
+{% extends 'index.html' %}
+
+{% block title %}Report - {{ quiz.title }}{% endblock %}
+
+{% block content %}
+<style>
+  
+body {
+    background-color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+ 
+  .chart-container {
+    max-width: 900px;
+    margin: 40px auto 30px;
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    transition: box-shadow 0.3s ease;
+  }
+
+  .chart-container:hover {
+    box-shadow: 0 6px 25px rgba(0,0,0,0.08);
+  }
+
+  .table {
+    background-color: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  }
+
+  .table th {
+    background-color: #9b51e0;
+    color: #ffffff;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .table td {
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  .table tr:hover{
+    background-color: #9b51e0;
+  }
+
+  .btn-primary {
+    background-color: #9b51e0;
+    border-color: #9b51e0;
+  }
+
+  .btn-primary:hover {
+    background-color: #833dcf;
+    border-color: #833dcf;
+  }
+</style>
+
+<div class="container my-5">
+  <h2 class="title">Report - {{ quiz.title }}</h2>
+
+  <!-- Chart Section -->
+  <div class="chart-container">
+    <canvas id="scoreChart" height="100"></canvas>
+  </div>
+
+  <div >
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Username</th>
+          <th>Score</th>
+          <th>Submitted At</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for entry in ranked_submissions %}
+        <tr>
+          <td>#{{ entry.rank }}</td>
+          <td>{{ entry.submission.user.username }}</td>
+          <td>{{ entry.submission.score }}</td>
+          <td>{{ entry.submission.submitted_at|date:"Y-m-d H:i" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+
+<a href="{% url 'quiz_report_export' quiz.id %}" class="btn btn-primary">Export Report</a>
+  
+</div>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Chart Script -->
+<script>
+  const ctx = document.getElementById('scoreChart').getContext('2d');
+
+  const usernames = [
+    {% for entry in ranked_submissions %}
+      "{{ entry.submission.user.username }}",
+    {% endfor %}
+  ];
+
+  const scores = [
+    {% for entry in ranked_submissions %}
+      {{ entry.submission.score }},
+    {% endfor %}
+  ];
+
+  const backgroundColors = new Array({{ ranked_submissions|length }}).fill('rgba(155, 81, 224, 0.7)');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: usernames,
+      datasets: [{
+        label: 'Score',
+        data: scores,
+        backgroundColor: backgroundColors,
+        borderColor: 'rgba(155, 81, 224, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return context.parsed.y + ' marks';
+            }
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: { display: true, text: 'Score' }
+        },
+        x: {
+          title: { display: true, text: 'Usernames' }
+        }
+      }
+    }
+  });
+</script>
+{% endblock %}

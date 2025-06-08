@@ -40,8 +40,12 @@ body {
     outline: none;
 }
 
-/* Button Hover Effect */
-.btn-primary:hover {
-    background-color: #6a2dbf;
-    box-shadow: 0 6px 16px rgba(106, 45, 191, 0.4);
-}
+.btn-primary {
+    background-color: #9b51e0;
+    border-color: #9b51e0;
+  }
+
+  .btn-primary:hover {
+    background-color: #833dcf;
+    border-color: #833dcf;
+  }

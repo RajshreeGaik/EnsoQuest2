@@ -1,168 +1,12 @@
 {% extends 'index.html' %}
-
+{% load static %}
 {% block title %}@{{user_profile2.user.username}}'s Profile - EnsoQuest {% endblock title %}
 
 {% block content %}
-<style>
-  body {
-    background-color: #f9f9f9;
-  }
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
 
-  .profile-card {
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(6px);
-    border-radius: 20px;
-    padding: 2.5rem;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-    animation: fadeSlideUp 1s ease-out;
-    height: 100%;
-    min-height: 300px;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  @keyframes fadeSlideUp {
-    from {
-      opacity: 0;
-      transform: translateY(40px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .btn-gradient {
-    background: linear-gradient(135deg, #4c8bf5, #6c63ff);
-    color: white;
-    border: none;
-    transition: all 0.3s ease-in-out;
-  }
-
-  .btn-gradient:hover {
-    background: linear-gradient(135deg, #6c63ff, #4c8bf5);
-    box-shadow: 0 6px 16px rgba(100, 100, 255, 0.3);
-  }
-
-  .table-striped tbody tr:nth-of-type(odd) {
-    background-color: #f8f9fa;
-  }
-
-  .title {
-    font-weight: 700;
-    color: #3f3f3f;
-  }
-
-  .icon {
-    margin-right: 8px;
-    color: rgb(33, 34, 35);
-    transition: transform 0.3s ease, color 0.3s ease;
-  }
-
-  .user-meta {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: #333;
-    opacity: 0;
-    transform: translateX(50px);
-    animation: fadeInRight 1.2s ease forwards;
-    animation-delay: 0.4s;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    max-width: 100%;
-  }
-
-  @keyframes fadeInRight {
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  .user-meta h4 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #2d2d2d;
-    margin-bottom: 1rem;
-  }
-
-  .user-meta p {
-    font-size: 1.1rem;
-    margin: 0.6rem 0;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .user-meta p:hover .icon {
-    transform: scale(1.2);
-    color: #6c63ff;
-  }
-
-  .profile-card img {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;  /* keeps aspect ratio while filling the box */
-  border-radius: 50%;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
-
-  .profile-card img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(76, 139, 245, 0.3);
-  }
-
-  /* ===========================
-     Enhanced Graph Styles
-  ============================ */
-
-  .graph-container {
-    background-color: #f9f9f9;
-    padding: 1rem;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(76, 139, 245, 0.15);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    animation: fadeScaleIn 1s ease forwards;
-    height: 100%;
-    min-height: 300px;
-  }
-
-  @keyframes fadeScaleIn {
-    0% {
-      opacity: 0;
-      transform: scale(0.85);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  .graph-container img {
-    border-radius: 12px;
-    box-shadow: 0 8px 18px rgba(76, 139, 245, 0.3);
-    max-width: 100%;
-    height: auto;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .graph-container img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 12px 30px rgba(76, 139, 245, 0.5);
-  }
-
-  /* Force the row to stretch children vertically */
-  .row.align-items-stretch {
-    align-items: stretch !important;
-  }
-</style>
-
-<h1 class="display-5 text-center my-5 title">@{{user_profile2.user.username}}'s Profile</h1>
+<div class="container text-center">
+<h1 class="display-5 text-center  title">@{{user_profile2.user.username}}'s Profile</h1>
 
 <div class="mb-3">
   {% for message in messages %}
@@ -170,10 +14,9 @@
   {% endfor %}
 </div>
 
-<div class="container text-center">
   {% if request.user.username == user_profile2.user.username %}
-    <div class="mb-4">
-      <a href="{% url 'edit_profile' %}" class="btn btn-gradient rounded-pill me-2">Edit Profile</a>
+    <div class="buttons">
+      <a href="{% url 'edit_profile' %}" class="btn btn-outline-primary rounded-pill">Edit Profile</a>
       <a href="{% url 'delete_profile' %}" class="btn btn-outline-danger rounded-pill">Delete Profile</a>
     </div>
   {% endif %}
@@ -185,7 +28,7 @@
         <div class="profile-card text-start d-flex flex-column flex-md-row align-items-center align-items-md-start flex-grow-1">
           <div class="text-center text-md-start me-md-4">
             <img src="{{user_profile2.profile_img.url}}" class="rounded-circle border border-3 border-light shadow-sm" width="150" height="150" alt="Profile Image">
-            <h3 class="mt-3 fw-bold text-primary">@{{user_profile2.user.username}}</h3>
+            <h3 class="mt-3 fw-bold ">@{{user_profile2.user.username}}</h3>
           </div>
           <div class="user-meta ps-md-3 mt-4 mt-md-0">
             <h4>{{user_profile2.user.first_name|default:"Full name not available"}} {{user_profile2.user.last_name}}</h4>
@@ -214,9 +57,9 @@
     <div class="row justify-content-center">
       <div class="col-lg-10">
         <h3 class="text-start mb-3">Tests Attended by @{{user_profile2.user.username}}</h3>
-        <div class="table-responsive">
-          <table class="table table-hover table-striped align-middle">
-            <thead class="table-primary">
+          <div class="table-responsive">
+          <table class="table align-middle">
+            <thead>
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Test</th>
@@ -229,13 +72,13 @@
             <tbody>
               {% for submission in submissions %}
               <tr>
-                <th scope="row">{{forloop.counter}}</th>
+                <td scope="row">{{forloop.counter}}</td>
                 <td>{{submission.quiz.title|truncatewords:4}}</td>
                 <td>{{submission.score}}/{{submission.quiz.question_set.all|length}}</td>
                 <td>{{submission.submitted_at|date:"F j, Y"}}</td>
                 <td>{{submission.submitted_at|timesince}}</td>
                 <td>
-                  <a href="{% url 'quiz_result' submission.id %}" class="btn btn-sm btn-outline-secondary">View</a>
+                  <a href="{% url 'quiz_result' submission.id %}" class="btn btn-sm btn-outline-primary rounded-pill">View</a>
                 </td>
               </tr>
               {% empty %}
@@ -269,8 +112,8 @@
       datasets: [{
         label: 'Test Scores',
         data: graphData.scores,
-        backgroundColor: 'rgba(76, 139, 245, 0.3)',
-        borderColor: '#4c8bf5',
+        backgroundColor: '#c58bf7',
+        borderColor: '#9b51e0',
         borderWidth: 2,
         fill: true,
         tension: 0.3,

@@ -1,58 +1,64 @@
 {% extends 'index.html' %}
+{% load static %}
 
-{% block title%} All Quizzes - EnsoQuest{% endblock title%}
+{% block title %} All Quizzes - EnsoQuest {% endblock title %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/alltest-style.css' %}">
 
-{% load static %}
-    <h1 class="display-4 text-center my-4 fw-bold title">Tests</h1>
+<h1 class="display-4 text-center my-4 fw-bold title">Tests</h1>
 
-    <div class="container">
-      <div class="d-flex flex-wrap">
-        <a href="{% url 'all_quiz' %}" class="btn btn-sm btn-light m-1">All Tests</a>
-       
-        {% for category in categories %}
-        <a href="{% url 'search' category.name %}" class="btn btn-sm btn-secondary m-1">{{category.name}}</a>
-        <link rel="stylesheet" href="{% static 'css/alltest-style.css' %}">
-        {% endfor %}
-
+<div class="container">
+{% if messages %}
+  <div class="mt-3">
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
-    </div>
-    <form class="container d-flex my-5" role="search" method="get" action="{% url 'search'  %}">
-      <input name="q" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-      <!-- <a href="#" class="btn btn-outline-success" type="submit">Search</a> -->
-      <button type="submit" class="btn btn-outline-success">Search</button>
+    {% endfor %}
+  </div>
+{% endif %}
 
-    </form>
-    <div class="container my-5">
+  <div class="d-flex flex-wrap gap-2 mb-4">
+    <a href="{% url 'all_quiz' %}" class="btn btn-outline-primary">All Tests</a>
+    {% for category in categories %}
+      <a href="{% url 'search' category.name %}" class="btn btn-primary">{{ category.name }}</a>
+    {% endfor %}
+  </div>
+</div>
 
-      <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 g-3">
-        {% if quizzes|length > 0 %}
-        {% for quiz in quizzes %}
+<form class="container d-flex my-4" role="search" method="get" action="{% url 'search' %}">
+  <input name="q" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+  <button type="submit" class="btn btn-secondary">Search</button>
+</form>
+
+<div class="container my-5">
+  <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% if quizzes %}
+      {% for quiz in quizzes %}
         <div class="col">
           <div class="card shadow-sm">
             <div class="card-body">
-              <h4 class="card-title">{{quiz.title}}</h4>
-              <p class="card-text">Total Questions : {{quiz.question_set.all|length}}</p>
-              <p class="card-text">{{quiz.description|truncatewords:7}}</p>
+              <h4 class="card-title">{{ quiz.title }}</h4>
+              <p class="card-text">Total Questions: {{ quiz.question_set.all|length }}</p>
+              <p class="card-text">{{ quiz.description|truncatewords:7 }}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <a href="{% url 'quiz' quiz.id %}" type="button" class="btn btn-sm btn-outline-primary">Start Test</a>
-
+                  <a href="{% url 'quiz' quiz.id %}" class="btn btn-sm btn-outline-primary">Start Test</a>
+                  <a href="{% url 'quiz_report' quiz.id %}" class="btn btn-sm btn-outline-primary ms-2">View Report</a>
                 </div>
-                <small class="text-body-secondary">{{quiz.created_at|timesince}} ago</small>
+                <small class="text-body-secondary">{{ quiz.created_at|timesince }} ago</small>
               </div>
             </div>
           </div>
         </div>
-        {% endfor %}
-        {% else %}
-
-        <div class="col-lg-12 col-md-12 col-12">
-          <p class="text-center text-danger fs-5">There is no Test available for this category or search.</p>
-        </div>
-        {% endif %}
+      {% endfor %}
+    {% else %}
+      <div class="col-12">
+        <p class="text-center text-danger fs-5">There is no Test available for this category or search.</p>
       </div>
-    </div>
-    
-    {% endblock content %}
+    {% endif %}
+  </div>
+</div>
+{% endblock content %}

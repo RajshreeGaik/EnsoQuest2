@@ -45,7 +45,53 @@ nav.navbar {
 }
 
 .content-wrapper {
-    padding-bottom: 50px; /* Ensure space for footer */
+    padding-bottom: 50px; 
+
+}
+
+.form-control[type="search"] {
+  border: 2px solid #9b51e0;
+  border-radius: 999px; /* pill shape */
+  padding: 0.5rem 1.2rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(155, 81, 224, 0.08);
+}
+
+/* On focus */
+.form-control[type="search"]:focus {
+  border-color: #833dcf;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(155, 81, 224, 0.2);
+}
+
+.btn-search {
+    background-color: #fff;
+    color: #9b51e0;
+    border: 2px solid #9b51e0;
+    border-radius: 999px;
+    padding: 0.4rem 1.2rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-search:hover {
+    background-color: #9b51e0;
+    color: #fff;
+    border-color: #9b51e0;
+}
+
+.btn-log {
+    background-color: #9b51e0;
+    background: #9b51e0;
+    border-color: #9b51e0;
+    color: white;
+    font-weight: 500;
+}
+
+ .btn-log:hover {
+    background-color: #833dcf;
+    border-color: #833dcf;
+    color: white;
 }
 
 </style>

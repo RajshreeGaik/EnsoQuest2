@@ -3,9 +3,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.contrib import messages
-
 from .models import Quiz, Category
 from quiz.models import QuizSubmission, Choice, QuizAnswer
+from django.http import HttpResponse
+import openpyxl
+from openpyxl.utils import get_column_letter
+from openpyxl import Workbook
+from django.utils.timezone import is_aware, make_naive, get_current_timezone
 
 
 # View to show all quizzes
@@ -39,6 +43,11 @@ def search_view(request, category):
 @login_required
 def quiz_view(request, quiz_id):
     quiz = get_object_or_404(Quiz, pk=quiz_id)
+    
+    existing_submission = QuizSubmission.objects.filter(user=request.user, quiz=quiz).first()
+    if existing_submission:
+        messages.info(request, "You have already attempted this quiz.")
+        return redirect('quiz_result', submission_id=existing_submission.id)
 
     if request.method == "POST":
         score = 0
@@ -94,3 +103,77 @@ def quiz_result_view(request, submission_id):
     }
 
     return render(request, 'test-result.html', context)
+
+@login_required
+def quiz_report_view(request, quiz_id):
+    quiz = get_object_or_404(Quiz, id=quiz_id)
+    submissions = QuizSubmission.objects.filter(quiz=quiz).order_by('-score', 'submitted_at')
+   
+    if not submissions.exists():
+        messages.warning(request, "No submissions found for this quiz yet.")
+        return redirect('all_quiz')  # Or wherever you want to send the user
+
+
+    ranked_submissions = []
+    last_score = None
+    current_rank = 1
+
+    for index, sub in enumerate(submissions):
+        if sub.score != last_score:
+            current_rank = current_rank if not ranked_submissions else ranked_submissions[-1]['rank'] + 1
+
+        ranked_submissions.append({
+            'submission': sub,
+            'rank': current_rank
+        })
+
+        last_score = sub.score
+
+    context = {
+        'quiz': quiz,
+        'ranked_submissions': ranked_submissions
+    }
+    return render(request, 'test_report.html', context)
+
+
+# Export report to Excel (with correct dense ranking)
+@login_required
+def export_quiz_report_excel(request, quiz_id):
+    quiz = get_object_or_404(Quiz, id=quiz_id)
+    submissions = QuizSubmission.objects.filter(quiz=quiz).order_by('-score', 'submitted_at')
+
+    ranked_data = []
+    last_score = None
+    current_rank = 1
+
+    for sub in submissions:
+        if sub.score != last_score:
+            current_rank = current_rank if not ranked_data else ranked_data[-1][0] + 1
+
+        submitted_at = sub.submitted_at
+        if is_aware(submitted_at):
+            submitted_at = make_naive(submitted_at, get_current_timezone())
+
+        ranked_data.append([current_rank, sub.user.username, sub.score, submitted_at])
+        last_score = sub.score
+
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "Report"
+
+    headers = ['Rank', 'Username', 'Score', 'Submitted At']
+    ws.append(headers)
+
+    for row in ranked_data:
+        ws.append(row)
+
+    for i, column in enumerate(ws.columns, 1):
+        max_length = max(len(str(cell.value)) for cell in column)
+        ws.column_dimensions[get_column_letter(i)].width = max_length + 2
+
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    filename = f"{quiz.title}_Report.xlsx".replace(" ", "_")
+    response['Content-Disposition'] = f'attachment; filename={filename}'
+    wb.save(response)
+
+    return response

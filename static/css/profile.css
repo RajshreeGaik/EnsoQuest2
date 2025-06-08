@@ -1,0 +1,100 @@
+body {
+  background-color: #f9f9f9;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.title {
+  color: #9b51e0;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.buttons {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.profile-card {
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 25px;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.profile-card:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.profile-card img {
+  border: 4px solid #9b51e0;
+  object-fit: cover;
+}
+
+
+.user-meta p {
+  margin: 10px 0;
+  font-size: 18px;
+  color: #555;
+}
+
+.icon  {
+  margin-right: 5px;
+  color: #9b51e0;
+}
+
+.graph-container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  height: 100%;
+  width: 100%;
+}
+
+.btn-outline-primary {
+  border-color: #9b51e0;
+  color: #9b51e0;
+  transition: 0.2s ease-in-out;
+}
+
+.btn-outline-primary:hover {
+  background-color: #9b51e0;
+  color: #fff;
+}
+
+.btn-outline-danger {
+  border-color: #dc3545;
+  color: #dc3545;
+  transition: 0.2s ease-in-out;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+@media screen and (max-width: 768px) {
+  .profile-card {
+    text-align: center;
+  }
+  .user-meta {
+    text-align: center;
+  }
+  .graph-container {
+    margin-top: 20px;
+  }
+}
+
+h3, h4, .user-meta p a{
+    color:#9b51e0;
+}
+.user-meta h4,h4 {
+  font-size: 20px;
+  font-weight: 600;
+}

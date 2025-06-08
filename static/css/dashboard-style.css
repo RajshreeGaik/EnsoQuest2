@@ -26,7 +26,7 @@ body {
 
 .card-title {
     font-size: 2.5rem;
-    color: #000;
+    color: #9b51e0;
     font-weight: bold;
 }
 
@@ -50,42 +50,23 @@ body {
     background-color: #9b51e0 !important;
 }
 
-/* Table Styles */
-table.table {
-    background-color: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
-}
-
-thead tr {
-    background-color: #9b51e0;
-    color: white;
-}
-
-.table-active {
-    background-color: #f1f0fd !important;
-}
-
-.table td a {
-    color: #4b0082;  /* Dark indigo for better contrast on white */
-    text-decoration: none;
-    padding: 6px 10px;
-    border-radius: 5px;
-    display: inline-block;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.table td a:hover {
-    color: #fff;
-    background-color: #9b51e0;
-    text-decoration: none;
-}
-
-
-
-/* Inbox Header */
 h2 {
     font-weight: bold;
-    color: #000;
+    color: #9b51e0;
+}
+
+.btn-secondary {
+  background-color: #fff;
+  color: #9b51e0;
+  border: 2px solid #9b51e0;
+  border-radius: 999px;
+  padding: 0.4rem 1.2rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #9b51e0;
+  color: #fff;
+  border-color: #9b51e0;
 }

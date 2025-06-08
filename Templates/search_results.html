@@ -10,7 +10,7 @@
 
 {% block content %}
 {% load static %}
-
+<link rel="stylesheet" href="{% static 'css/alltest-style.css' %}">
 <h1 class="display-4 text-center my-4 fw-bold title">
   {% if search_query %}
     Search Results for "{{ search_query }}"
@@ -21,7 +21,7 @@
 
 <form class="container d-flex my-5" role="search" method="get" action="{% url 'search' %}">
   <input name="q" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" value="{{ search_query|default:'' }}">
-  <button type="submit" class="btn btn-outline-success">Search</button>
+  <button type="submit" class="btn btn-secondary">Search</button>
 </form>
 
 <div class="container my-5">

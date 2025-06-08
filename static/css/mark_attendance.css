@@ -1,5 +1,6 @@
 body{
     background-color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .attendance-container {
@@ -9,29 +10,22 @@ body{
   text-align: center;      /* center text inside container */
 }
 
-
-.attendance-container table {
-  text-align: left;
-  margin: 0 auto; /* optional: to center table itself if smaller than container */
-}
-
-.attendance-container button,
-.attendance-container a {
-  display: inline-block;
-  margin-top: 15px;
-}
 /* Container and heading */
 
 h2 {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #9b51e0;
     margin-bottom: 20px;
 }
 
 
 .attendance-container table {
-    min-width: 400px;
+  min-width: 400px;
+  text-align: left;
+  margin: 0 auto; 
+  border-radius: 12px;
+  overflow: hidden;
 }
+
 .table-wrapper {
     max-height: 600px;
     overflow-y: auto;
@@ -54,14 +48,14 @@ th {
     padding: 12px 15px;
     text-align: left;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 18px;
     z-index: 1;
 }
 
 td {
     padding: 12px 15px;
     border-bottom: 1px solid #ddd;
-    font-size: 14px;
+    font-size: 16px;
     color: #333;
 }
 
@@ -74,35 +68,6 @@ input[type="checkbox"] {
     width: 18px;
     height: 18px;
     cursor: pointer;
-}
-
-/* Submit button */
-button[type="submit"] {
-    background-color: #9b51e0;
-    color: white;
-    border: none;
-    padding: 10px 25px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button[type="submit"]:hover {
-    background-color: #7a3db8;
-}
-
-/* Back link */
-a[href$="session_list"] {
-    display: inline-block;
-    margin-top: 10px;
-    color: #9b51e0;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-a[href$="session_list"]:hover {
-    text-decoration: underline;
 }
 
 /* Responsive for small screens */
@@ -144,4 +109,50 @@ a[href$="session_list"]:hover {
     /* Labels for each td (matching header names) */
     td:nth-of-type(1)::before { content: "Trainee"; }
     td:nth-of-type(2)::before { content: "Present"; }
+}
+
+/* Submit button */
+.attendance-container .btn-primary {
+    padding: 8px 0;
+    font-size: 17px;
+    font-weight: 600;
+    background-color: #9b51e0;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    width: 150px;
+}
+
+
+.attendance-container .btn-primary:hover {
+    background-color: #7a3dbe;
+    box-shadow: 0 6px 12px rgba(122, 61, 190, 0.6);
+}
+
+.attendance-container .btn-secondary {
+    text-decoration: none;
+    background-color: #f9f9f9;
+    color: #9b51e0;
+    font-weight: 500;
+    border: 2px solid #9b51e0;
+    padding: 8px 16px;
+    border-radius: 9999px; /* Pill shape */
+    transition: all 0.3s ease;
+    display: inline-block;
+    
+}
+
+.attendance-container .btn-secondary:hover {
+    background-color: #9b51e0;
+    color: #fff;
+    text-decoration: none;
+}
+
+.attendance-button-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
 }

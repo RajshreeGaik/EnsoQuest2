@@ -51,6 +51,38 @@
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
 
+.glass-container a {
+    text-decoration: underline;
+    color: #9b51e0;
+  }
+
+.glass-container a:hover {
+    color: #7a3dcf;
+  }
+
+.btn-primary {
+    background-color: #9b51e0;
+    border-color: #9b51e0;
+}
+
+ .btn-primary:hover {
+    background-color: #833dcf;
+    border-color: #833dcf;
+}
+
+input{
+  background-Color: #fff !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #9b51e0 !important;
+  box-shadow: 0 0 0 0.2rem rgba(155, 81, 224, 0.25) !important;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
 </style>
 
 
@@ -77,10 +109,6 @@
               <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label visually-hidden">Password</label>
                 <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
-              </div>
-              <div class="mb-3 form-check">
-                <input type="checkbox" name="remember_me" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Remember me</label>
               </div>
               <button type="submit" class="btn btn-primary">Login</button>
             </form>

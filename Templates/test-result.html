@@ -26,6 +26,13 @@
 </style>
 
 <div class="container my-5">
+{% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li class="alert alert-{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
 
     <div class="result-card">
         <div class="card shadow">
@@ -43,7 +50,10 @@
             </div>
             <div class="card-footer text-center">
                 <a href="{% url 'all_quiz' %}" class="btn btn-primary">All Tests</a>
-                <a href="{% url 'quiz' submission.quiz.id %}" class="btn btn-primary">Retake</a>
+                <a href="{% url 'quiz_report' submission.quiz.id %}" class="btn btn-outline-primary">
+                 View Report
+                </a>
+
             </div>
         </div>
     </div>
@@ -85,5 +95,75 @@
     </div>
 
 </div>
+<script>
+    const ctx = document.getElementById('reportChart').getContext('2d');
+
+    const usernames = [
+        {% for entry in ranked_submissions %}
+            "{{ entry.submission.user.username }}",
+        {% endfor %}
+    ];
+
+    const scores = [
+        {% for entry in ranked_submissions %}
+            {{ entry.submission.score }},
+        {% endfor %}
+    ];
+
+    const backgroundColors = [
+        {% for entry in ranked_submissions %}
+            {% if entry.submission.user == request.user %}
+                'rgba(155, 81, 224, 0.8)',  // Highlight current user (purple)
+            {% else %}
+                'rgba(54, 162, 235, 0.6)',
+            {% endif %}
+        {% endfor %}
+    ];
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: usernames,
+            datasets: [{
+                label: 'Score',
+                data: scores,
+                backgroundColor: backgroundColors,
+                borderColor: 'rgba(0, 0, 0, 0.2)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            indexAxis: 'x',
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.parsed.y + ' marks';
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Score'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Users'
+                    }
+                }
+            }
+        }
+    });
+</script>
 
 {% endblock content %}

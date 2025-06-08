@@ -24,8 +24,8 @@
         {% endfor %}
     </select>
 
-    <button type="submit">Filter</button>
-     <a href="{% url 'attendance:attendance_report_session' session.id %}">Reset Filter</a>
+    <button class=" btn-primary" type="submit">Filter</button>
+     <a class=" btn-outline-primary" href="?">Reset</a>
 </form>
 
 
@@ -83,10 +83,11 @@
 </div>
 <!-- Export Buttons -->
 <p>
-    <a href="{% url 'attendance:export_excel' session.id %}" class="btn btn-primary">Export to Excel</a>
+    <a class="btn btn-primary" href="{% url 'attendance:export_excel' session.id %}">Export to Excel</a>
 
 </p>
 
+<h4>Attendance Chart</h4>
 <!-- Chart -->
 <canvas id="attendanceChart" width="400" height="200"></canvas>
 
@@ -115,6 +116,6 @@
     });
 </script>
 
-<a href="{% url 'attendance:session_list' %}">Back to Sessions</a>
+<a class="btn btn-outline-secondary" href="{% url 'attendance:session_list' %}">← Back to Sessions</a>
 {% endblock %}
 </div>

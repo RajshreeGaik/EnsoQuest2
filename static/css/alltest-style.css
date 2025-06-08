@@ -3,68 +3,93 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-
 .card {
-    background: #ffffff;
-    border-radius: 18px;
-    padding: 22px;
-    border: 1px solid #dce3f0;
-    box-shadow: 0 6px 18px rgba(30, 60, 114, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
-    min-height: 280px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    color: #1e3c72;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  /* Gradient accent line on top */
-  .card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 5px;
-    width: 100%;
-    background: linear-gradient(to right, #1e3c72, #2a5298);
-    border-top-left-radius: 18px;
-    border-top-right-radius: 18px;
-  }
-  
-  /* Hover glow and lift */
-  .card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 32px rgba(42, 82, 152, 0.2);
-    border-color: #b0c4de;
-  }
-  
-  /* Card title */
-  .card-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 14px;
-    color: #2a5298;
-  }
-  
-  /* Card text */
-  .card-text {
-    color: #444;
-    font-size: 1.05rem;
-    line-height: 1.6;
-  }
-  
-  /* Optional: subtle icon or badge inside card */
-  .card-badge {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    background: #e3f2fd;
-    color: #1e88e5;
-    padding: 4px 10px;
-    border-radius: 12px;
-    font-size: 0.75rem;
+  background: #ffffff;
+  border-left: 5px solid #b07ce1;
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #9b51e0;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(155, 81, 224, 0.15);
+  border-left: 5px solid #833dcf; /* slight glow effect */
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: #9b51e0;
+}
+
+.card-text {
+  color: #444;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #9b51e0;
+  border-color: #9b51e0;
+}
+
+.btn-primary:hover {
+  background-color: #833dcf;
+  border-color: #833dcf;
+}
+
+
+.btn-outline-primary {
+  border: 2px solid #6a2dbf;
+  color: #6a2dbf;
+  box-shadow: 0 2px 6px rgba(106, 45, 191, 0.1);
+}
+
+.btn-outline-primary:hover {
+  background-color: #9b51e0;
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(152, 119, 199, 0.3);
+}
+
+/* Search input field */
+.form-control[type="search"] {
+  border: 2px solid #9b51e0;
+  border-radius: 999px; /* pill shape */
+  padding: 0.5rem 1.2rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(155, 81, 224, 0.08);
+}
+
+/* On focus */
+.form-control[type="search"]:focus {
+  border-color: #833dcf;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(155, 81, 224, 0.2);
+}
+
+.btn-secondary {
+    background-color: #fff;
+    color: #9b51e0;
+    border: 2px solid #9b51e0;
+    border-radius: 999px;
+    padding: 0.4rem 1.2rem;
     font-weight: 600;
-  }
-  
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #9b51e0;
+    color: #fff;
+    border-color: #9b51e0;
+}

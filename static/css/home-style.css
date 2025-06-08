@@ -156,12 +156,33 @@ body {
     margin-bottom: 2.5rem;
   }
   
-  
+  .btn-primary {
+    background-color: #9b51e0;
+    border-color: #9b51e0;
+  }
+
   .btn-primary:hover {
-    background-color: #6a2dbf;
-    box-shadow: 0 6px 16px rgba(106, 45, 191, 0.4);
+    background-color: #833dcf;
+    border-color: #833dcf;
   }
   
+  
+  .btn-secondary {
+    background-color: #fff;
+    color: #9b51e0;
+    border: 2px solid #9b51e0;
+    border-radius: 999px;
+    padding: 0.4rem 1.2rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+ .btn-secondary:hover {
+    background-color: #9b51e0;
+    color: #fff;
+    border-color: #9b51e0;
+}
+
   .btn-outline-secondary {
     border: 2px solid #6a2dbf;
     color: #6a2dbf;

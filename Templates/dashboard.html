@@ -85,10 +85,10 @@
         </div>
 
         <div class="row">
-            
                 
             <div class="col-sm-12 col-md-12 mb-3">
                 <h2 class="mb-3 text-center">Inbox</h2>
+                <div class="table-wrapper">
                 <table class="table">
                     <thead>
                         <tr>
@@ -106,11 +106,12 @@
                             <td><a href="{% url 'profile' message.user.username %}">@{{message.user.username}}</a></td>
                             <td>{{message.subject}}</td>
                             <td>{{message.created_at}}</td>
-                            <td><a href="{% url 'message' message.id%}" class="btn btn-sm btn-outline-secondary">Open</a></td>
+                            <td><a href="{% url 'message' message.id%}" class="btn btn-sm btn-secondary">Open</a></td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
+                </div>
             </div>
         </div>
     </div>

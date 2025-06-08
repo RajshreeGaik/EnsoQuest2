@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{% static 'css/session_list.css' %}">
 
 <div class="sessions-container">
-    <h2 class="title">Sessions</h2>
+    <h2 class="title">Attendance</h2>
 
     {% if user.is_staff %}
         <a href="{% url 'attendance:create_session' %}" class="create-session-btn">+ Create New Session</a>

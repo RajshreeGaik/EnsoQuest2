@@ -102,6 +102,10 @@ title {
     flex-wrap: wrap;
 }
 
+.session-cards :hover {
+    background: #f3e8ff;
+}
+
 .session-name {
     font-size: 18px;
     font-weight: 600;
@@ -117,6 +121,7 @@ title {
 .session-actions a {
     text-decoration: none;
     color: #9b51e0;
+    background-color: #fff;
     font-weight: 500;
     border: 2px solid #9b51e0;
     padding: 8px 16px;

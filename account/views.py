@@ -58,30 +58,24 @@ def editProfile(request):
        if request.FILES.get('profile_img') != None:
          user_profile.profile_img = request.FILES.get('profile_img')
          user_profile.save()
-
-       #Email
-       if request.POST.get('email') != None:
-           u = get_object_or_404(User, email=request.POST.get('email'))
-
-           if u == None:
-               user_object.email = request.POST.get('email')
-               user_object.save()
-           else:
-               if u!= user_object:
-                   messages.info(request,"Email Already Used, Choose a different one!")
-                   return redirect('edit_profile')
-               
-       #Username
-       if request.POST.get('username') != None:
-           u = get_object_or_404(User, username=request.POST.get('username'))
-
-           if u == None:
-               user_object.username = request.POST.get('username')
-               user_object.save()
-           else:
-               if u!= user_object:
-                   messages.info(request,"Username Already Taken, Choose a unique one!")
-                   return redirect('edit_profile')
+        
+       # Email
+       email = request.POST.get('email')
+       if email and email != user_object.email:
+           existing_user_email = User.objects.filter(email=email).exclude(pk=user_object.pk).first()
+           if existing_user_email:
+               messages.info(request, "Email Already Used, Choose a different one!")
+               return redirect('edit_profile')
+           user_object.email = email
+  
+       # Username
+       username = request.POST.get('username')
+       if username and username != user_object.username:
+          existing_user_username = User.objects.filter(username=username).exclude(pk=user_object.pk).first()
+          if existing_user_username:
+              messages.info(request, "Username Already Taken, Choose a unique one!")
+              return redirect('edit_profile')
+       user_object.username = username
 
        #firstname lastname         
        user_object.first_name = request.POST.get('firstname')

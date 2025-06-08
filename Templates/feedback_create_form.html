@@ -4,52 +4,98 @@
 
 <link rel="stylesheet" href="{% static 'css/feedback_create_form.css' %}">
 <div class="feedback-form-wrapper">
-<div class="container mt-5">
-    <h2 class="mb-4">Create Feedback Form</h2>
+  <h2 class="mb-4 title">Create Feedback Form</h2>
+  <div class="container mt-5">
+
     <form method="post">
-        {% csrf_token %}
-        <div class="mb-3">
-            <label>Form Title</label>
-            <input type="text" name="title" class="form-control" required>
-        </div>
+      {% csrf_token %}
 
-        <div class="mb-3">
-            <label>Send to Users</label><br>
-            {% for user in users %}
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" name="assigned_users" value="{{ user.id }}">
-                    <label class="form-check-label">{{ user.username }}</label>
-                </div>
-            {% endfor %}
-        </div>
+      <!-- Form Title -->
+      <div class="mb-3">
+        <h4>Form Title</h4>
+        <input type="text" name="title" class="form-control" required>
+      </div>
 
-        <hr>
-        <h4>Add Questions</h4>
-        <div id="question-container">
-            <div class="question-block mb-3">
-                <input class="form-control mb-2" type="text" name="question_text" placeholder="Question Text" required>
-                <select class="form-select mb-2" name="question_type">
-                    <option value="MCQ">Multiple Choice</option>
-                    <option value="PARAGRAPH">Paragraph</option>
-                    <option value="CHECKBOX">Checkbox</option>
-                    <option value="RATING">Rating (1-5)</option>
-                </select>
-                <input class="form-control" type="text" name="question_options" placeholder="Options (comma-separated)">
-            </div>
-        </div>
-        <button type="button" class="btn btn-outline-secondary" onclick="addQuestion()">+ Add Another Question</button><br><br>
+      <!-- User Selection -->
+      <div>
+        <h4>Send to Users</h4>
+        {% for user in users %}
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="assigned_users" value="{{ user.id }}">
+            <label class="form-check-label">{{ user.username }}</label>
+          </div>
+        {% endfor %}
+      </div>
 
-        <button type="submit" class="btn btn-success">Create Form</button>
+      <hr>
+
+      <!-- Question Section -->
+      <h4>Add Questions</h4>
+      <div id="question-container">
+        <div class="question-block mb-3">
+          <input class="form-control mb-2" type="text" name="question_text" placeholder="Question Text" required>
+          
+          <select class="form-select mb-2 question-type" name="question_type" onchange="toggleOptions(this)">
+            <option value="MCQ">Multiple Choice</option>
+            <option value="PARAGRAPH">Paragraph</option>
+            <option value="CHECKBOX">Checkbox</option>
+            <option value="RATING">Rating (1-5)</option>
+          </select>
+
+          <div class="options-wrapper">
+            <input class="form-control question-options" type="text" name="question_options" placeholder="Options (comma-separated)">
+          </div>
+        </div>
+      </div>
+
+      <!-- Add More Questions -->
+      <button type="button" class="btn btn-outline-secondary" onclick="addQuestion()">+ Add Another Question</button><br><br>
+
+      <!-- Submit -->
+      <button type="submit" class="btn btn-success">Create Form</button>
     </form>
+  </div>
 </div>
-</div>
+
+<!-- Scripts -->
 <script>
-    function addQuestion() {
-        const container = document.getElementById('question-container');
-        const block = container.querySelector('.question-block');
-        const clone = block.cloneNode(true);
-        clone.querySelectorAll('input, select').forEach(input => input.value = '');
-        container.appendChild(clone);
+  function toggleOptions(selectElement) {
+    const optionsWrapper = selectElement.closest('.question-block').querySelector('.options-wrapper');
+    const selectedType = selectElement.value;
+    if (selectedType === 'MCQ' || selectedType === 'CHECKBOX') {
+      optionsWrapper.style.display = 'block';
+    } else {
+      optionsWrapper.style.display = 'none';
     }
+  }
+
+  function addQuestion() {
+    const container = document.getElementById('question-container');
+    const originalBlock = container.querySelector('.question-block');
+    const newBlock = originalBlock.cloneNode(true);
+
+    // Clear input values
+    newBlock.querySelectorAll('input').forEach(input => input.value = '');
+    newBlock.querySelector('select').value = 'MCQ';
+
+    // Set event listener for new select
+    const select = newBlock.querySelector('.question-type');
+    select.addEventListener('change', function () {
+      toggleOptions(this);
+    });
+
+    toggleOptions(select); // initialize display
+    container.appendChild(newBlock);
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.question-type').forEach(select => {
+      select.addEventListener('change', function () {
+        toggleOptions(this);
+      });
+      toggleOptions(select); // initialize on load
+    });
+  });
 </script>
+
 {% endblock %}

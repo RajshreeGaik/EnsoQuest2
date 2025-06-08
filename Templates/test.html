@@ -1,9 +1,10 @@
 {% extends 'index.html' %}
-
+{% load static %}
 {% block title %}{{ quiz.title }} - EnsoQuest{% endblock title %}
 
 {% block content %}
 <style>
+  
   .questions {
     user-select: none;
   }
@@ -58,6 +59,19 @@
       padding: 8px 18px;
     }
   }
+  .btn-primary {
+  background-color: #9b51e0;
+  border-color: #9b51e0;
+}
+
+.btn-primary:hover {
+  background-color: #833dcf;
+  border-color: #833dcf;
+}
+
+
+
+
 </style>
 
 <span class="fs-5" id="timer">10:00</span>
@@ -185,6 +199,29 @@
 
   submitButton.addEventListener("click", submitQuiz);
   quizTimerId = setInterval(updateTimer, 1000);
+
+let hasSubmitted = false;
+
+function submitIfNotDone() {
+  if (!hasSubmitted) {
+    hasSubmitted = true;
+    alert("You switched windows or tabs! Your quiz will be submitted automatically.");
+    calculateScore();
+    quizForm.submit();
+  }
+}
+
+document.addEventListener("visibilitychange", function() {
+  if (document.hidden) {
+    submitIfNotDone();
+  }
+});
+
+window.addEventListener("blur", function() {
+  submitIfNotDone();
+});
+
+
 </script>
 
 {% endblock content %}
