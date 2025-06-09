@@ -127,7 +127,7 @@ def blog_view(request,blog_id):
 
 
 @login_required
-@user_passes_test(lambda u: u.is_staff)
+#@user_passes_test(lambda u: u.is_staff)
 def create_blog(request):
     if request.method == 'POST':
         form = BlogForm(request.POST)

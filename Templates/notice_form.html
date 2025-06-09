@@ -1,12 +1,102 @@
 {% extends 'index.html' %}
-{% block title %}EnsoQuest- Notice{% endblock title %}
+{% block title %}EnsoQuest - {{ action }} Notice{% endblock title %}
 {% load static %}
+
 {% block content %}
-<h2>{{ action }} Notice</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">{{ action }}</button>
-</form>
-<a href="{% url 'notice_list' %}">Back to Notices</a>
+<style>
+  body {
+    background-color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .notice-form-wrapper {
+    max-width: 600px;
+    margin: 60px auto;
+    padding: 40px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(155, 81, 224, 0.08);
+  }
+
+  .notice-form-wrapper h2 {
+    text-align: center;
+    font-weight: 700;
+    color: #2d2d2d;
+    margin-bottom: 30px;
+  }
+
+  form p {
+    margin-bottom: 20px;
+  }
+
+  form label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+    color: #333;
+  }
+
+  form input[type="text"],
+  form textarea {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fdfdfd;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  form textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  form input:focus,
+  form textarea:focus {
+    border-color: #9b51e0;
+    box-shadow: 0 0 4px rgba(155, 81, 224, 0.2);
+    outline: none;
+    background-color: #fff;
+  }
+
+  button[type="submit"] {
+    background-color: #9b51e0;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-weight: 600;
+    font-size: 15px;
+    border-radius: 999px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #7b39c4;
+  }
+
+  .back-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    font-weight: 500;
+    color: #9b51e0;
+    text-decoration: none;
+  }
+
+  .back-link:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<div class="notice-form-wrapper">
+  <h2>{{ action }} Notice</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">{{ action }}</button>
+  </form>
+  <a class="back-link" href="{% url 'notice_list' %}">← Back to Notices</a>
+</div>
 {% endblock %}

@@ -1,119 +1,122 @@
 {% extends 'index.html' %}
-{% block title %}EnsoQuest - question_form{% endblock title %}
+{% block title %}EnsoQuest - Ask a Question{% endblock title %}
 {% load static %}
-{% block content %}
 
+{% block content %}
 <style>
-    .question-form-wrapper h2 {
-    font-size: 32px;
+  .question-form-scope {
+    background-color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 40px 1rem;
+  }
+
+  .question-form-scope h1 {
+    font-size: 2.5rem;
     font-weight: bold;
     text-align: center;
-    margin-bottom: 25px;
-    color: #2c3e50;
+    color: #3b176f;
+    margin-bottom: 1.5rem;
     position: relative;
-    padding-bottom: 8px;
-    animation: fadeInUp 0.6s ease;
-}
+  }
 
-/* Underline effect */
-.question-form-wrapper h2::after {
+  .question-form-scope h1::after {
     content: '';
     position: absolute;
     left: 50%;
-    bottom: 0;
+    bottom: -8px;
     width: 60px;
     height: 3px;
-    background-color: #007bff;
+    background-color: #9b51e0;
     transform: translateX(-50%);
     border-radius: 2px;
-}
+  }
 
-/* Fade-in upward animation */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+  .question-form-scope form {
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06);
+  }
 
-    .question-form-wrapper form {
-        max-width: 600px;
-        background-color: #fafafa;
-        padding: 25px 30px;
-        border-radius: 12px;
-        box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-        margin-bottom: 20px;
-        margin-left: auto;
-        margin-right: auto;
-    }
+  .question-form-scope form p {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 1rem;
+  }
 
-    .question-form-wrapper form p {
-        margin-bottom: 15px;
-        font-size: 16px;
-        color: #444;
-    }
+  .question-form-scope label {
+    font-weight: 600;
+    color: #333;
+    display: block;
+    margin-bottom: 6px;
+  }
 
-    .question-form-wrapper label {
-        display: block;
-        font-weight: 600;
-        margin-bottom: 6px;
-        color: #222;
-    }
+  .question-form-scope input[type="text"],
+  .question-form-scope textarea {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
+  }
 
-    .question-form-wrapper input[type="text"],
-    .question-form-wrapper textarea {
-        width: 100%;
-        padding: 10px 12px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        font-size: 16px;
-        box-sizing: border-box;
-        resize: vertical;
-        font-family: inherit;
-    }
+  .question-form-scope input[type="text"]:focus,
+  .question-form-scope textarea:focus {
+    outline: none;
+    border-color: #9b51e0;
+    box-shadow: 0 0 6px rgba(155, 81, 224, 0.3);
+  }
 
-    .question-form-wrapper textarea {
-        min-height: 120px;
-    }
+  .question-form-scope .btn-primary {
+    padding: 10px 28px;
+    font-size: 16px;
+    font-weight: 600;
+    background-color: #9b51e0;
+    border: none;
+    color: white;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 20px;
+  }
 
-    .question-form-wrapper button[type="submit"] {
-        background-color: #007bff;
-        color: white;
-        border: none;
-        padding: 10px 18px;
-        font-size: 16px;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
+  .question-form-scope .btn-primary:hover {
+    background-color: #833dcf;
+    box-shadow: 0 6px 12px rgba(131, 61, 207, 0.3);
+  }
 
-    .question-form-wrapper button[type="submit"]:hover {
-        background-color: #0056b3;
-    }
+  .question-form-scope .text-center {
+    text-align: center;
+  }
 
-    .question-form-wrapper a {
-        color: #007bff;
-        text-decoration: none;
-        font-size: 15px;
-    }
+  .question-form-scope .back-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    font-weight: 600;
+    color: #9b51e0;
+    text-decoration: none;
+  }
 
-    .question-form-wrapper a:hover {
-        text-decoration: underline;
-    }
+  .question-form-scope .back-link:hover {
+    text-decoration: underline;
+  }
 </style>
-
-<div class="question-form-wrapper">
-    <h2>Ask a Question</h2>
+<h1 class="title">Ask a Question</h1>
+<div class="question-form-scope">
+  <div class="container">
+    
     <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Post</button>
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary">Post</button>
+      </div>
     </form>
-    <a href="{% url 'forum:question_list' %}">← Back to Questions</a>
+    <a href="{% url 'forum:question_list' %}" class="back-link">← Back to Questions</a>
+  </div>
 </div>
-
-{% endblock %}
+{% endblock content %}

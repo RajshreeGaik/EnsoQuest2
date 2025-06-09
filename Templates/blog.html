@@ -5,105 +5,137 @@
 <!-- CSRF token for AJAX -->
 <meta name="csrf-token" content="{{ csrf_token }}">
 
-<style> 
-    body {
-        background-color: #f9f9f9;
-    }
+<style>
+  body {
+    background-color: #f9f9f9;
+  }
+
+  .btn-primary {
+    background-color: #9b51e0;
+    border-color: #9b51e0;
+    color: white;
+    padding: 8px 18px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+  }
+
+  .btn-primary:hover {
+    background-color: #833dcf;
+    border-color: #833dcf;
+    box-shadow: 0 4px 10px rgba(131, 61, 207, 0.4);
+  }
+
+  .btn-secondary {
+    background-color: #fff;
+    color: #9b51e0;
+    border: 2px solid #9b51e0;
+    border-radius: 999px;
+    padding: 6px 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .btn-secondary:hover {
+    background-color: #9b51e0;
+    color: #fff;
+    border-color: #9b51e0;
+  }
 </style>
 
 <h1 class="display-4 text-center my-5 title">{{ blog.title|title }}</h1>
 
-{% if request.user.is_staff %}
+{% if request.user == blog.author or request.user.is_staff %}
 <div class="text-end me-5 mb-4">
-    <a href="{% url 'edit_blog' blog.id %}" class="btn btn-warning btn-sm">Edit Blog</a>
+    <a href="{% url 'edit_blog' blog.id %}" class="btn-primary">Edit Blog</a>
 </div>
 {% endif %}
 
 <main>
-    <div class="container col-md-8 col-sm-12">
-        <div class="d-flex justify-content-between mb-4">
-            <div>
-                <sub>Author</sub><br>
-                <a href="{% url 'profile' blog.author.username %}">@{{ blog.author.username }}</a>
-            </div>
-            <div>
-                <sub>Published At</sub><br>
-                <span>{{ blog.created_at|timesince }} ago</span>
-            </div>
-            <div>
-                <sub>Updated At</sub><br>
-                <span>{{ blog.updated_at|timesince }} ago</span>
-            </div>
-        </div>
-
-        <!-- Blog content -->
-        <article class="blog-post mb-4">
-            {{ blog.content|safe }}
-        </article>
-
-        <!-- Like button with AJAX -->
-        <div class="mb-4">
-            <button id="like-btn" class="btn btn-sm {% if request.user in blog.likes.all %}btn-primary{% else %}btn-outline-primary{% endif %}">
-                ❤️ <span id="like-count">{{ blog.likes.count }}</span> Like{{ blog.likes.count|pluralize }}
-            </button>
-        </div>
-
-        <script>
-            const likeBtn = document.getElementById('like-btn');
-            const csrftoken = document.querySelector('[name=csrf-token]').content;
-
-            likeBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-
-                fetch("{% url 'like_blog' blog.id %}", {
-                    method: "POST",
-                    headers: {
-                        "X-CSRFToken": csrftoken,
-                        "X-Requested-With": "XMLHttpRequest"
-                    },
-                })
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('like-count').innerText = data.like_count;
-                    if (data.liked) {
-                        likeBtn.classList.remove("btn-outline-primary");
-                        likeBtn.classList.add("btn-primary");
-                    } else {
-                        likeBtn.classList.remove("btn-primary");
-                        likeBtn.classList.add("btn-outline-primary");
-                    }
-                })
-                .catch(error => console.error("Like error:", error));
-            });
-        </script>
-
-        <!-- Comment section -->
-        <hr>
-        <h5>Comments ({{ blog.comments.count }})</h5>
-
-        {% if user.is_authenticated %}
-        <form method="post" action="{% url 'comment_blog' blog_id=blog.id %}">
-            {% csrf_token %}
-            <div class="mb-3">
-                <textarea name="content" rows="3" class="form-control" placeholder="Write your comment here..." required></textarea>
-            </div>
-            <button type="submit" class="btn btn-sm btn-success mt-2">Add Comment</button>
-        </form>
-        {% else %}
-        <p><a href="{% url 'login' %}">Login</a> to comment.</p>
-        {% endif %}
-
-        <ul class="list-group mt-3">
-            {% for comment in blog.comments.all %}
-            <li class="list-group-item">
-                <strong>@{{ comment.user.username }}</strong>: {{ comment.content }}
-                <br>
-                <small class="text-muted">{{ comment.created_at|timesince }} ago</small>
-            </li>
-            {% empty %}
-            <li class="list-group-item">No comments yet.</li>
-            {% endfor %}
-        </ul>
+  <div class="container col-md-8 col-sm-12">
+    <div class="d-flex justify-content-between mb-4">
+      <div>
+        <sub>Author</sub><br>
+        <a href="{% url 'profile' blog.author.username %}">@{{ blog.author.username }}</a>
+      </div>
+      <div>
+        <sub>Published At</sub><br>
+        <span>{{ blog.created_at|timesince }} ago</span>
+      </div>
+      <div>
+        <sub>Updated At</sub><br>
+        <span>{{ blog.updated_at|timesince }} ago</span>
+      </div>
     </div>
+
+    <!-- Blog content -->
+    <article class="blog-post mb-4">
+      {{ blog.content|safe }}
+    </article>
+
+    <!-- Like button -->
+    <div class="mb-4">
+      <button id="like-btn" class="btn-secondary">
+        ❤️ <span id="like-count">{{ blog.likes.count }}</span> Like{{ blog.likes.count|pluralize }}
+      </button>
+    </div>
+
+    <script>
+      const likeBtn = document.getElementById('like-btn');
+      const csrftoken = document.querySelector('[name=csrf-token]').content;
+
+      likeBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        fetch("{% url 'like_blog' blog.id %}", {
+          method: "POST",
+          headers: {
+            "X-CSRFToken": csrftoken,
+            "X-Requested-With": "XMLHttpRequest"
+          },
+        })
+          .then(response => response.json())
+          .then(data => {
+            document.getElementById('like-count').innerText = data.like_count;
+            if (data.liked) {
+              likeBtn.classList.add("liked");
+            } else {
+              likeBtn.classList.remove("liked");
+            }
+          })
+          .catch(error => console.error("Like error:", error));
+      });
+    </script>
+
+    <!-- Comment section -->
+    <hr>
+    <h5>Comments ({{ blog.comments.count }})</h5>
+
+    {% if user.is_authenticated %}
+    <form method="post" action="{% url 'comment_blog' blog_id=blog.id %}">
+      {% csrf_token %}
+      <div class="mb-3">
+        <textarea name="content" rows="3" class="form-control" placeholder="Write your comment here..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-success btn-sm mt-2">Add Comment</button>
+    </form>
+    {% else %}
+    <p><a href="{% url 'login' %}">Login</a> to comment.</p>
+    {% endif %}
+
+    <ul class="list-group mt-3">
+      {% for comment in blog.comments.all %}
+      <li class="list-group-item">
+        <strong>@{{ comment.user.username }}</strong>: {{ comment.content }}
+        <br>
+        <small class="text-muted">{{ comment.created_at|timesince }} ago</small>
+      </li>
+      {% empty %}
+      <li class="list-group-item">No comments yet.</li>
+      {% endfor %}
+    </ul>
+  </div>
 </main>
 {% endblock content %}
