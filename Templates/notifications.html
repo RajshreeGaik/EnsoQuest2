@@ -35,20 +35,21 @@
     padding: 15px 20px;
     margin-bottom: 15px;
     border-radius: 12px;
-    background-color: #f4f4f4;
-    border-left: 5px solid #ccc;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    background-color: #fff;
+    border-left: 4px solid #9b51e0;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);  /* Matches .shadow-sm */
     position: relative;
+    color: #2c3e50;
   }
 
   .notification-item:hover {
-    background-color: #f0ebfa;
-    transform: translateY(-2px);
+    background-color: #f3e8ff !important;
+    cursor: pointer;
   }
 
   .notification-item.unread {
     background-color: #e7dcfa;
-    border-left: 5px solid #9b51e0;
   }
 
   .notification-time {
@@ -70,9 +71,9 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   }
 </style>
-
+<h2 class="title">Notifications</h2>
 <div class="notifications-wrapper">
-  <h2>Notifications</h2>
+  
   <ul class="notification-list">
     {% for notification in notifications %}
       <li class="notification-item {% if not notification.is_read %}unread{% endif %}">

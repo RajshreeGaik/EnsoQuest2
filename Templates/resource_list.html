@@ -4,128 +4,136 @@
 {% load static %}
 
 <style>
-    body {
-        background-color: #f9f9f9;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+  body {
+    background-color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
 
-    .title {
-        color: #2d2d2d;
-        font-weight: 700;
-    }
+  .title {
+    color: #9b51e0;
+    font-weight: 700;
+    margin-bottom: 40px;
+  }
 
-    .square-card {
-        height: 330px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        padding: 20px;
-        border-radius: 20px;
-        border: 1px solid #eee;
-        background-color: #fff;
-        transition: all 0.3s ease-in-out;
-    }
+  .upload-btn-container {
+    text-align: right;
+    margin-bottom: 30px;
+  }
 
-    .square-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 12px 24px rgba(155, 81, 224, 0.15);
-    }
+  /* ✅ Updated upload button to match standard rectangle style */
+  .btn-primary {
+    background-color: #9b51e0;
+    border-color: #9b51e0;
+    color: white;
+    padding: 0.45rem 1.5rem;
+    font-weight: 700;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease;
+    box-shadow: 0 2px 8px rgba(155, 81, 224, 0.1);
+    text-decoration: none;
+    border-radius: 6px; /* changed from 999px to rectangle */
+  }
 
-    .card-title {
-        font-size: 1.25rem;
-        font-weight: 700;
-        margin-bottom: 10px;
-        color: #333;
-    }
+  .btn-primary:hover {
+    background-color: #833dcf;
+    border-color: #833dcf;
+    color: white;
+    box-shadow: 0 6px 16px rgba(123, 57, 196, 0.2);
+  }
 
-    .card-text {
-        font-size: 0.95rem;
-        color: #666;
-        margin-bottom: 6px;
-    }
+  .square-card {
+    background: #ffffff;
+    border-left: 5px solid #b07ce1;
+    border-radius: 16px;
+    padding: 22px;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
 
-    .info-label {
-        font-weight: 600;
-        color: #4a4a4a;
-    }
+  .square-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(155, 81, 224, 0.15);
+    border-left: 5px solid #833dcf;
+  }
 
-    .description-text {
-        height: 4.5em;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #9b51e0;
+    margin-bottom: 10px;
+    text-align: center;
+  }
 
-    .btn-outline-primary {
-        color: #9b51e0;
-        border: 2px solid #9b51e0;
-        border-radius: 999px;
-        font-weight: 600;
-        padding: 0.45rem 1.2rem;
-        transition: all 0.3s ease-in-out;
-    }
+  .card-text {
+    font-size: 0.95rem;
+    color: #444;
+    margin-bottom: 6px;
+  }
 
-    .btn-outline-primary:hover {
-        background-color: #9b51e0;
-        color: #fff;
-        border-color: #9b51e0;
-    }
+  .info-label {
+    font-weight: 600;
+    color: #4a4a4a;
+  }
 
-    /* Upload Button styling */
-    .btn-upload {
-        background-color: #9b51e0;
-        color: white;
-        border-radius: 999px;
-        padding: 0.45rem 1.5rem;
-        font-weight: 700;
-        border: none;
-        transition: background-color 0.3s ease-in-out;
-    }
-    .btn-upload:hover {
-        background-color: #7e3ab3;
-        color: white;
-        text-decoration: none;
-    }
+  .description-text {
+    height: 4.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-    /* Container for Upload Button alignment */
-    .upload-btn-container {
-        text-align: right;
-        margin-bottom: 25px;
-    }
+  .btn-outline-primary {
+    border: 2px solid #6a2dbf;
+    color: #6a2dbf;
+    border-radius: 999px;
+    font-weight: 600;
+    padding: 0.45rem 1.2rem;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .btn-outline-primary:hover {
+    background-color: #9b51e0;
+    color: #fff;
+    border-color: #9b51e0;
+    box-shadow: 0 6px 16px rgba(152, 119, 199, 0.3);
+  }
 </style>
 
 <div class="container mt-5">
-    <h1 class="mb-5 text-center title">Resources Library</h1>
+  <h1 class="mb-5 text-center title">Resources Library</h1>
 
-    <!-- Upload Button Container -->
-    <div class="upload-btn-container">
-        <a href="{% url 'upload_resource' %}" class="btn btn-upload">
-            + Upload Resource
-        </a>
-    </div>
+  <!-- Upload Button Container -->
+  <div class="upload-btn-container">
+    <a href="{% url 'upload_resource' %}" class="btn btn-primary">
+      + Upload Resource
+    </a>
+  </div>
 
-    <div class="row">
-        {% for resource in resources %}
-        <div class="col-md-4 mb-4">
-            <div class="card square-card shadow text-start">
-                <div>
-                    <h5 class="card-title text-center">{{ resource.title }}</h5>
-                    <p class="card-text description-text">
-                        <span class="info-label">Description:</span>
-                        {{ resource.description|truncatewords:20 }}
-                    </p>
-                    <p class="card-text">
-                        <span class="info-label">Author:</span> {{ resource.author_name }}
-                    </p>
-                    <p class="card-text">
-                        <span class="info-label">Uploaded by:</span> {{ resource.uploaded_by.username }}
-                    </p>
-                </div>
-                <a class="btn btn-outline-primary mt-3 w-100" href="{{ resource.file.url }}" download>Download</a>
-            </div>
+  <div class="row">
+    {% for resource in resources %}
+    <div class="col-md-4 mb-4">
+      <div class="card square-card shadow text-start">
+        <div>
+          <h5 class="card-title text-center">{{ resource.title }}</h5>
+          <p class="card-text description-text">
+            <span class="info-label">Description:</span>
+            {{ resource.description|truncatewords:20 }}
+          </p>
+          <p class="card-text">
+            <span class="info-label">Author:</span> {{ resource.author_name }}
+          </p>
+          <p class="card-text">
+            <span class="info-label">Uploaded by:</span> {{ resource.uploaded_by.username }}
+          </p>
         </div>
-        {% empty %}
-        <p class="text-center">No resources uploaded yet.</p>
-        {% endfor %}
+        <a class="btn btn-outline-primary mt-3 w-100" href="{{ resource.file.url }}" download>Download</a>
+      </div>
     </div>
+    {% empty %}
+    <p class="text-center">No resources uploaded yet.</p>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}

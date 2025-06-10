@@ -21,7 +21,7 @@
   .notice-form-wrapper h2 {
     text-align: center;
     font-weight: 700;
-    color: #2d2d2d;
+    color: #9b51e0;
     margin-bottom: 30px;
   }
 
@@ -59,34 +59,47 @@
     background-color: #fff;
   }
 
-  button[type="submit"] {
+  .attendance-button-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+  }
+
+  .btn-primary {
+    padding: 8px 0;
+    font-size: 17px;
+    font-weight: 600;
     background-color: #9b51e0;
     color: white;
     border: none;
-    padding: 12px 24px;
-    font-weight: 600;
-    font-size: 15px;
-    border-radius: 999px;
+    border-radius: 8px;
     cursor: pointer;
-    width: 100%;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    width: 150px;
   }
 
-  button[type="submit"]:hover {
-    background-color: #7b39c4;
+  .btn-primary:hover {
+    background-color: #7a3dbe;
+    box-shadow: 0 6px 12px rgba(122, 61, 190, 0.6);
   }
 
-  .back-link {
-    display: block;
-    text-align: center;
-    margin-top: 20px;
-    font-weight: 500;
-    color: #9b51e0;
+  .btn-secondary {
     text-decoration: none;
+    background-color: #f9f9f9;
+    color: #9b51e0;
+    font-weight: 500;
+    border: 2px solid #9b51e0;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    transition: all 0.3s ease;
+    display: inline-block;
   }
 
-  .back-link:hover {
-    text-decoration: underline;
+  .btn-secondary:hover {
+    background-color: #9b51e0;
+    color: #fff;
+    text-decoration: none;
   }
 </style>
 
@@ -95,8 +108,10 @@
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">{{ action }}</button>
+    <div class="attendance-button-row">
+      <a class="btn-secondary" href="{% url 'notice_list' %}">← Back to Notices</a>
+      <button class="btn-primary" type="submit">{{ action }}</button>
+    </div>
   </form>
-  <a class="back-link" href="{% url 'notice_list' %}">← Back to Notices</a>
 </div>
 {% endblock %}

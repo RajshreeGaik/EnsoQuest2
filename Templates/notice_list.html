@@ -26,26 +26,22 @@
   }
 
   .notice-header h2 {
-    color: #2d2d2d;
+    color: #9b51e0;
     font-size: 28px;
     font-weight: 700;
     margin: 0;
   }
 
-  .notice-header a {
-    background-color: #9b51e0;
-    color: #fff;
-    padding: 8px 18px;
-    border-radius: 999px;
-    font-weight: 600;
-    font-size: 14px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-  }
+  .btn-primary {
+  background-color: #9b51e0;
+  border-color: #9b51e0;
+}
 
-  .notice-header a:hover {
-    background-color: #7b39c4;
-  }
+.btn-primary:hover {
+  background-color: #833dcf;
+  border-color: #833dcf;
+}
+
 
   ul.notice-list {
     list-style: none;
@@ -80,17 +76,19 @@
     color: #999;
   }
 
-  ul.notice-list li a {
-    margin-left: 12px;
-    font-size: 14px;
-    font-weight: 500;
-    color: #00b894;
-    text-decoration: none;
-  }
+ ul.notice-list li a {
+  margin-left: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #9b51e0; /* Changed from green to purple */
+  text-decoration: none;
+}
 
-  ul.notice-list li a:hover {
-    text-decoration: underline;
-  }
+ul.notice-list li a:hover {
+  text-decoration: underline;
+  color: #7b39c4; /* Darker purple on hover */
+}
+
 
   .empty-message {
     text-align: center;
@@ -105,7 +103,8 @@
   <div class="notice-header">
     <h2>All Notices</h2>
     {% if user.is_superuser %}
-      <a href="{% url 'add_notice' %}">+ Add Notice</a>
+     <a href="{% url 'add_notice' %}" class="btn btn-primary">+ Add Notice</a>
+
     {% endif %}
   </div>
 

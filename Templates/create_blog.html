@@ -4,86 +4,96 @@
 
 {% block content %}
 <style>
-  .blog-form-scope {
+  body {
     background-color: #f9f9f9;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    padding: 40px 0;
   }
 
-  .blog-form-scope h2 {
-    color: #9b51e0;
-    font-weight: 600;
-  }
-
-  .blog-form-scope form {
+  .blog-form-wrapper {
     max-width: 700px;
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 30px;
+    margin: 60px auto;
+    padding: 40px;
+    background-color: #ffffff;
     border-radius: 16px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 25px rgba(155, 81, 224, 0.08);
   }
 
-  .blog-form-scope form p {
+  .blog-form-wrapper h2 {
+    text-align: center;
+    font-weight: 700;
+    color: #9b51e0;
+    margin-bottom: 30px;
+  }
+
+  form p {
     margin-bottom: 20px;
   }
 
-  .blog-form-scope label {
+  label {
     font-weight: 600;
-    color: #333;
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
+    color: #333;
   }
 
-  .blog-form-scope input[type="text"],
-  .blog-form-scope input[type="url"],
-  .blog-form-scope textarea,
-  .blog-form-scope select {
+  input[type="text"],
+  input[type="url"],
+  textarea,
+  select {
     width: 100%;
-    padding: 12px 14px;
-    font-size: 16px;
+    padding: 10px 15px;
     border: 1px solid #ccc;
-    border-radius: 8px;
-    transition: border 0.3s ease;
-  }
-
-  .blog-form-scope input[type="text"]:focus,
-  .blog-form-scope input[type="url"]:focus,
-  .blog-form-scope textarea:focus,
-  .blog-form-scope select:focus {
-    outline: none;
-    border-color: #9b51e0;
-    box-shadow: 0 0 5px rgba(155, 81, 224, 0.3);
-  }
-
-  .blog-form-scope .btn-primary {
-    padding: 10px 30px;
-    font-size: 16px;
-    font-weight: 600;
-    background-color: #9b51e0;
-    border: none;
-    color: white;
     border-radius: 10px;
+    background-color: #fdfdfd;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    border-color: #9b51e0;
+    box-shadow: 0 0 4px rgba(155, 81, 224, 0.2);
+    outline: none;
+    background-color: #fff;
+  }
+
+  button[type="submit"] {
+    background-color: #9b51e0;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    font-weight: 600;
+    font-size: 15px;
+    border-radius: 999px;
+    cursor: pointer;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
   }
 
-  .blog-form-scope .btn-primary:hover {
-    background-color: #833dcf;
-    box-shadow: 0 6px 12px rgba(131, 61, 207, 0.4);
+  button[type="submit"]:hover {
+    background-color: #7b39c4;
+    box-shadow: 0 6px 12px rgba(123, 57, 196, 0.6);
+  }
+
+  .text-center {
+    text-align: center;
+    margin-top: 30px;
   }
 </style>
 
-<div class="blog-form-scope">
-  <div class="container my-5">
-      <h1 class="display-4 text-center my-5 title ">Create Blog</h1>
-      <form method="post">
-          {% csrf_token %}
-          {{ form.media }}
-          {{ form.as_p }}
-          <div class="text-center">
-              <button type="submit" class="btn btn-primary mt-3">Publish Blog</button>
-          </div>
-      </form>
-  </div>
+<div class="blog-form-wrapper">
+  <h2>Create Blog</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+    <div class="text-center">
+      <button type="submit">Publish Blog</button>
+    </div>
+  </form>
 </div>
 {% endblock content %}

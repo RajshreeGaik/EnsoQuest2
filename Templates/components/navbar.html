@@ -1,3 +1,20 @@
+<style>
+  .bell-purple {
+    color: #9b51e0 !important;
+  }
+
+  .bg-purple {
+    background-color: #9b51e0 !important;
+    color: white !important;
+  }
+
+  .notification-badge {
+    top: 8px !important; /* adjust as per need */
+    right: -8px !important;
+    transform: none !important;
+  }
+</style>
+
 <!-- 🔽 MOBILE NAVBAR SECTION -->
 <div class="container text-center my-2 d-sm-block d-lg-none">
   <div class="btn-group" role="group" aria-label="Basic outlined example">
@@ -15,11 +32,11 @@
         <img src="{{ request.user.profile.profile_img.url }}" class="rounded-circle" width="20" height="20" alt="profile_img">
       </a>
 
-      <!-- 🔔 Bell Icon for Mobile (Bigger) -->
+      <!-- 🔔 Bell Icon for Mobile (Purple) -->
       <a href="{% url 'notifications' %}" class="btn btn-outline-primary position-relative">
-        <i class="bi bi-bell fs-3"></i>
+        <i class="bi bi-bell fs-3 bell-purple"></i>
         {% if unread_notification_count > 0 %}
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-purple">
             {{ unread_notification_count }}
           </span>
         {% endif %}
@@ -53,7 +70,7 @@
 
         {% if request.user.is_superuser %}
           <li class="nav-item">
-            <a class="nav-link text-success" href="{% url 'dashboard' %}">Dashboard</a>
+            <a class="nav-link" href="{% url 'dashboard' %}" style="color: #9b51e0 !important;">Dashboard</a>
           </li>
         {% endif %}
 
@@ -101,14 +118,15 @@
             <img src="{{ request.user.profile.profile_img.url }}" class="rounded-circle" width="40" height="40" alt="profile_img">
           </a>
 
-          <!-- 🔔 Notification Bell (Desktop) -->
+          <!-- 🔔 Notification Bell (Desktop, Purple) -->
           <li class="nav-item dropdown list-unstyled mx-2">
             <a class="nav-link dropdown-toggle position-relative" href="#" id="notificationDropdown" data-bs-toggle="dropdown" role="button" aria-expanded="false">
-              <i class="bi bi-bell fs-3"></i>
+              <i class="bi bi-bell fs-3 bell-purple"></i>
               {% if unread_notification_count > 0 %}
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                  {{ unread_notification_count }}
+                <span class="position-absolute badge rounded-pill bg-purple notification-badge">
+                 {{ unread_notification_count }}
                 </span>
+
               {% endif %}
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">

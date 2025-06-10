@@ -1,119 +1,111 @@
 {% extends 'index.html' %}
-{% block title %}Upload Resource - EnsoQuest{% endblock title %}
-{% block content %}
 {% load static %}
+{% block title %}Upload Resource - EnsoQuest{% endblock title %}
 
+{% block content %}
 <style>
-    body {
-        background-color: #f9f9f9;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+  body {
+    background-color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
 
-    .upload-container {
-        max-width: 900px;
-        margin: 80px auto;
-        background-color: #fff;
-        border-radius: 15px;
-        padding: 40px 50px;
-        box-shadow: 0 10px 20px rgba(155, 81, 224, 0.15);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+  .upload-form-wrapper {
+    max-width: 700px;
+    margin: 60px auto;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(155, 81, 224, 0.08);
+  }
 
-    .upload-container:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 15px 25px rgba(155, 81, 224, 0.3);
-    }
-
-    h2.title {
-        text-align: center;
-        color: #9b51e0; /* Purple color matching theme */
-        font-weight: 600;
-        margin-bottom: 30px;
-    }
-
-    .form-row {
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
-        flex-wrap: wrap;
-    }
-
-    .form-row label {
-        flex: 0 0 150px;
-        margin-bottom: 0;
-        font-weight: 600;
-        color: #6c757d;
-    }
-
-    .form-row input[type="text"],
-    .form-row input[type="file"],
-    .form-row textarea {
-        flex: 1;
-        padding: 10px;
-        border-radius: 10px;
-        border: 1.5px solid #9b51e0;
-        background-color: #fdfdfd;
-        transition: all 0.3s ease;
-        font-size: 1rem;
-        color: #333;
-    }
-
-    .form-row textarea {
-        resize: vertical;
-        min-height: 100px;
-    }
-
-    input:focus,
-    textarea:focus {
-        border-color: #833dcf;
-        box-shadow: 0 0 8px rgba(131, 61, 207, 0.4);
-        outline: none;
-        background-color: #fff;
-    }
-
-    .btn-secondary {
-    background-color: #fff;
+  .upload-form-wrapper h2 {
+    text-align: center;
+    font-weight: 700;
     color: #9b51e0;
-    border: 2px solid #9b51e0;
-    border-radius: 999px;
-    padding: 0.4rem 1.2rem;
+    margin-bottom: 30px;
+  }
+
+  .form-row {
+    margin-bottom: 20px;
+  }
+
+  label {
     font-weight: 600;
-    transition: all 0.3s ease;
-    width: 200px;          /* बटन चौड़ाई */
-    display: block;        /* ब्लॉक लेवल बनाएं */
-    margin: 0 auto;        /* सेंटरिंग */
-}
+    display: block;
+    margin-bottom: 6px;
+    color: #333;
+  }
 
-.btn-secondary:hover {
-    background-color: #9b51e0;
-    color: #fff;
+  input[type="text"],
+  input[type="file"],
+  textarea {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1.5px solid #9b51e0;
+    border-radius: 10px;
+    background-color: #fdfdfd;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  input:focus,
+  textarea:focus {
     border-color: #9b51e0;
-}
+    box-shadow: 0 0 4px rgba(155, 81, 224, 0.2);
+    outline: none;
+    background-color: #fff;
+  }
 
+  .text-center {
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  button[type="submit"] {
+    background-color: #9b51e0;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    font-weight: 600;
+    font-size: 15px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #7b39c4;
+    box-shadow: 0 6px 12px rgba(123, 57, 196, 0.6);
+  }
 </style>
 
-<div class="upload-container">
-    <h2 class="title">Upload a Resource</h2>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="form-row">
-            {{ form.title.label_tag }}
-            {{ form.title }}
-        </div>
-        <div class="form-row">
-            {{ form.description.label_tag }}
-            {{ form.description }}
-        </div>
-        <div class="form-row">
-            {{ form.file.label_tag }}
-            {{ form.file }}
-        </div>
-        <div class="form-row">
-            {{ form.author_name.label_tag }}
-            {{ form.author_name }}
-        </div>
-        <button type="submit" class="btn btn-secondary">Upload</button>
-
-    </form>
+<div class="upload-form-wrapper">
+  <h2>Upload a Resource</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-row">
+      {{ form.title.label_tag }}
+      {{ form.title }}
+    </div>
+    <div class="form-row">
+      {{ form.description.label_tag }}
+      {{ form.description }}
+    </div>
+    <div class="form-row">
+      {{ form.file.label_tag }}
+      {{ form.file }}
+    </div>
+    <div class="form-row">
+      {{ form.author_name.label_tag }}
+      {{ form.author_name }}
+    </div>
+    <div class="text-center">
+      <button type="submit">Upload</button>
+    </div>
+  </form>
 </div>
 {% endblock %}
