@@ -3,73 +3,8 @@
 {% block title %}User-Search -EnsoQuest {% endblock title%}
 
 {% block content %}
-
-<style>
- 
-  
-  .user-card {
-      background-color: #f9f9f9;
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease-in-out;
-  }
-  
-  .user-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-  }
-  
-
-  .user-username {
-      color: #333;
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-  }
-  
-  .user-bio {
-      color: #777;
-      font-size: 1rem;
-      margin-bottom: 15px;
-  }
-  
-  .btn-secondary {
-      background-color: #9b51e0;
-      border-color: #9b51e0;
-      transition: all 0.2s;
-  }
-  
-  .btn-secondary:hover {
-      background-color: #7b3da2;
-      border-color: #7b3da2;
-  }
-  
-  .btn-primary {
-      background-color: #0062cc;
-      border-color: #005cbf;
-      padding: 12px 25px;
-      border-radius: 50px;
-      font-size: 1.2rem;
-  }
-  
-  .btn-primary:hover {
-      background-color: #005cbf;
-      border-color: #0056b3;
-  }
-  
-  /* Responsive Design for smaller screens */
-  @media (max-width: 768px) {
-      .user-profile-img {
-          width: 120px;
-          height: 120px;
-      }
-  
-      .user-username {
-          font-size: 1.3rem;
-      }
-  }
-  </style> 
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/search_user.css' %}">
   <div class="container text-center">
     <h1 class="display-4 text-center my-5 title">Search result for query "{{query}}"</h1>
 

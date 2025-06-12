@@ -14,7 +14,13 @@ body {
     box-shadow: 0 6px 15px rgba(155, 81, 224, 0.15);
 }
 
-
+.create-session-container h2 {
+    color: #9b51e0;
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+    text-align: center;
+  }
 
 .create-session-container form {
     display: flex;
@@ -44,7 +50,7 @@ body {
     transition: border-color 0.3s ease;
 }
 
-input:focus,
+input[type="text"]:focus,
 textarea:focus{
   border-color: #9b51e0 !important;
   box-shadow: 0 0 0 0.2rem rgba(155, 81, 224, 0.25);
@@ -55,7 +61,6 @@ textarea:focus{
 /* Multi-select height */
 .create-session-container select[multiple] {
     min-height: 80px;
-    
 }
 
 /* Labels styling */
@@ -112,10 +117,10 @@ textarea:focus{
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 20px;
-  background-color: #fafafa;
   box-shadow: 0 2px 6px rgba(155, 81, 224, 0.15);
   font-size: 18px;
-  color: #3c3c3c;
+scrollbar-width: thin;
+  scrollbar-color: #9b51e0 #f1f1f1;
 }
 
 

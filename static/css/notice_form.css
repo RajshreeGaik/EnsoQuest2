@@ -1,0 +1,98 @@
+  body {
+    background-color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .notice-form-wrapper {
+    max-width: 600px;
+    margin: 60px auto;
+    padding: 40px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(155, 81, 224, 0.08);
+  }
+
+  .notice-form-wrapper h2 {
+    text-align: center;
+    font-weight: 700;
+    color: #9b51e0;
+    margin-bottom: 30px;
+  }
+
+  form p {
+    margin-bottom: 20px;
+  }
+
+  form label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+    color: #333;
+  }
+
+  form input[type="text"],
+  form textarea {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fdfdfd;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  form textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  form input:focus,
+  form textarea:focus {
+    border-color: #9b51e0;
+    box-shadow: 0 0 4px rgba(155, 81, 224, 0.2);
+    outline: none;
+    background-color: #fff;
+  }
+
+  .attendance-button-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+  }
+
+  .btn-primary {
+    padding: 8px 0;
+    font-size: 17px;
+    font-weight: 600;
+    background-color: #9b51e0;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    width: 150px;
+  }
+
+  .btn-primary:hover {
+    background-color: #7a3dbe;
+    box-shadow: 0 6px 12px rgba(122, 61, 190, 0.6);
+  }
+
+  .btn-secondary {
+    text-decoration: none;
+    background-color: #f9f9f9;
+    color: #9b51e0;
+    font-weight: 500;
+    border: 2px solid #9b51e0;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    transition: all 0.3s ease;
+    display: inline-block;
+  }
+
+  .btn-secondary:hover {
+    background-color: #9b51e0;
+    color: #fff;
+    text-decoration: none;
+  }
+

@@ -7,11 +7,13 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
+@login_required
 def question_list(request):
     questions = Question.objects.all().order_by('-created_at')
     
     return render(request, 'question_list.html', {'questions': questions})
 
+@login_required
 def question_detail(request, pk):
     question = get_object_or_404(Question, pk=pk)
     comments = question.comments.all()

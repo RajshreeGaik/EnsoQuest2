@@ -1,0 +1,77 @@
+  body {
+    background-color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .upload-form-wrapper {
+    max-width: 700px;
+    margin: 60px auto;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(155, 81, 224, 0.08);
+  }
+
+  .upload-form-wrapper h2 {
+    text-align: center;
+    font-weight: 700;
+    color: #9b51e0;
+    margin-bottom: 30px;
+  }
+
+  .form-row {
+    margin-bottom: 20px;
+  }
+
+  label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+    color: #333;
+  }
+
+  input[type="text"],
+  input[type="file"],
+  textarea {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fdfdfd;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  input:focus,
+  textarea:focus {
+    border-color: #9b51e0;
+    box-shadow: 0 0 4px rgba(155, 81, 224, 0.2);
+    outline: none;
+    background-color: #fff;
+  }
+
+  .text-center {
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  button[type="submit"] {
+    background-color: #9b51e0;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    font-weight: 600;
+    font-size: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #7b39c4;
+    box-shadow: 0 6px 12px rgba(123, 57, 196, 0.6);
+  }

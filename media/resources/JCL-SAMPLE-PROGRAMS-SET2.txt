@@ -1,0 +1,387 @@
+//USER001A JOB  ACCT#,'SAMPLE 1',CLASS=A,MSGCLASS=H,MSGLEVEL=(1,1),
+//           NOTIFY=&SYSUID                                           
+//*THIS JCL IS USED TO CREATE THE TEST PS DATASET                           
+//STEP01   EXEC PGM=IEFBR14                                           
+//SYSPRINT DD   SYSOUT=*                                               
+//DD1      DD  DSN=USER001.TEST.PS,DISP=(NEW,CATLG,DELETE),              
+//             VOL=SER=MF1TT0,UNIT=SYSDA,SPACE=(TRK,(5,4,0),RLSE),       
+//             DCB=(RECFM=FB,LRECL=80,BLKSIZE=800,DSORG=PS)          
+// 
+-------------------------------------------------------------------------------------------------------------------------
+ JCL SYNTAX ERRORS,ABEND,RETURN CODES - 0 4 8 12 16 20.......4095                                                                    
+
+
+  DISP=(STATUS,NORMAL EXECUTION,ABNORMAL EXECUTION),
+         NEW    CATLG		 CATLG
+         OLD    KEEP		 KEEP
+         SHR    UNCATLG		 UNCATLG
+         MOD    DELETE           DELETE
+                PASS
+---------------------------------------------------------------------------------------------------------------------------
+//USER001B JOB (A123#),'SAMPLE 2',CLASS=C,NOTIFY=&SYSUID,MSGCLASS=X,
+//        MSGLEVEL=(1,0),TYPRUN=HOLD                                   
+//STEP01   EXEC PGM=IEFBR14 
+
+---------------------------------------------------------------------------------------------------------------------------
+//USER001R JOB ACCT#,'SAMPLE 3   ',                             
+//             CLASS=A,MSGCLASS=H,TIME=NOLIMIT,NOTIFY=&SYSUID         
+//* TO DELETE THE ALREADY EXIXTING DATASET                          
+//STEP1    EXEC  PGM=IEFBR14                                        
+//DD1      DD    DSN=USER001.TEST.PS3,DISP=(OLD,DELETE,DELETE)      
+//                                                                                                             
+
+S322 - TIME ABEND
+---------------------------------------------------------------------------------------------------------------------------
+
+//USER001B JOB (ACCT#),'SAMPLE 4',CLASS=A,NOTIFY=&SYSUID,       
+//          MSGLEVEL=(1,1)                                         
+//* ALLOCATING  PDS                                                
+//STEP01   EXEC PGM=IEFBR14                                        
+//SYSPRINT DD SYSOUT=*                                             
+//DD1      DD  DSN=USER001.TEST.PDS,DISP=(NEW,CATLG,DELETE),       
+//             VOL=SER=MF1TT0,UNIT=SYSDA,SPACE=(TRK,(5,4,5),RLSE), 
+//             DCB=(RECFM=FB,LRECL=80,BLKSIZE=3120,DSORG=PO)       
+//                                                                 
+
+   DB=6*N-1 = 29
+----------------------------------------------------------------------------------------------------------------------------
+
+//USER001B JOB (ACCT#),'SAMPLE 5',CLASS=A,NOTIFY=&SYSUID,      
+//          MSGLEVEL=(1,1)                                        
+//* ALLOCATING  PDSE                                              
+//STEP01   EXEC PGM=IEFBR14                                       
+//SYSPRINT DD SYSOUT=*                                            
+//DD1      DD  DSN=USER001.TEST.PDS,DISP=(NEW,CATLG,DELETE),      
+//             VOL=SER=MF1TT0,UNIT=SYSDA,SPACE=(TRK,(5,4,0),RLSE),
+//             DCB=(RECFM=FB,LRECL=80,BLKSIZE=3120)               
+//             DSNTYPE=LIBRARY                                    
+//   
+
+----------------------------------------------------------------------------------------------------------------------------
+//USER001B JOB (ACCT#),'SAMPLE 6',CLASS=A,NOTIFY=&SYSUID,           
+//             MSGLEVEL=(1,1)                                          
+//STEP01   EXEC PGM=IEFBR14                                            
+//DD1      DD  DSN=USER001.TEST.PST,DISP=(NEW,CATLG,DELETE),           
+//             AVGREC=K,SPACE=(80,(5,2),RLSE),                         
+//             DCB=(RECFM=FB,LRECL=80,DSORG=PS)                        
+//* AVERAGE RECORD LENGTH OF 80 BYTES, A PRIMARY QUANTITY OF 5K (5,120)
+//* RECORDS,RECORDS, AND A SECONDARY QUANTITY OF 2K (2,048) RECORDS    
+----------------------------------------------------------------------------------------------------------------------------
+//USER001A  JOB  ACCT#,'SAMPLE 7',CLASS=A,MSGCLASS=H,NOTIFY=&SYSUID
+//STEP01    EXEC PGM=IEBGENER   
+//*IEBGENER IS USED TO COPY THE RECORDS FROM ON SEQUENTIAL DATASET(PS) TO ANOTHER PS.                                       
+//SYSPRINT  DD   SYSOUT=*                                              
+//****************IEBGENER UTILIT**************************            
+//****************COPIES SYSUT1 TO SYSUT2******************            
+//SYSUT1    DD   DSN=USER001.TEST.PS1,DISP=SHR                         
+//SYSUT2    DD   DSN=USER001.TEST.PS2,DISP=SHR                         
+//SYSIN     DD   DUMMY          /*NO CNTL STMTS HENCE DUMMY NEEDED */  
+//                                                                     
+
+---------------------------------------------------------------------------------------------
+//USER001A JOB 01992,'IEFBR14 PGM1',CLASS=A,MSGCLASS=H,MSGLEVEL=(1,1), 
+//             NOTIFY=&SYSUID                                          
+//*****************************************************************    
+//STEP01   EXEC PGM=IEBGENER                                           
+//SYSPRINT DD   SYSOUT=*                                               
+//SYSUT1   DD   DSN=USER001.JCL.CAMPUS(T2),DISP=SHR                    
+//SYSUT2   DD   DSN=USER001.JCL.CAMPUS.DATA3,DISP=(NEW,CATLG,DELETE),  
+//        SPACE=(TRK,(5,4,0),RLSE),                                    
+//       DCB=(RECFM=FB,LRECL=80,BLKSIZE=800,DSORG=PS)                  
+//SYSIN   DD  DUMMY                                                    
+//******************************************************************   
+//STEP02   EXEC PGM=IEBGENER                                           
+//SYSPRINT DD   SYSOUT=*                                               
+//SYSUT1   DD   DSN=TSTRN76.JCL.CAMPUS(T2),DISP=SHR                    
+//SYSUT2   DD   DSN=TSTRN76.JCL.CAMPUS.DATA4,DISP=(NEW,CATLG,DELETE),  
+//        SPACE=(TRK,(5,4,0),RLSE),                                    
+//       DCB=(RECFM=FB,LRECL=80,BLKSIZE=800,DSORG=PS)                  
+//SYSIN   DD  DUMMY                                                    
+//*****************************************************************    
+-------------------------------------------------------------------------------------------
+//USER001A  JOB  ACCT#,'SAMPLE 8',CLASS=A,MSGCLASS=H,NOTIFY=&SYSUID
+//STEP01    EXEC PGM=IEBGENER                                          
+//SYSPRINT  DD   SYSOUT=*                                              
+//****************IEBGENER UTILIT**************************            
+//****************COPIES SYSUT1 TO SYSUT2******************            
+//SYSUT1    DD   DSN=USER001.TEST.PST,DISP=SHR                         
+//SYSUT2    DD   DSN=USER001.TEST.PS5,DISP=(NEW,CATLG,DELETE),         
+//             VOL=SER=MF1TT0,UNIT=SYSDA,SPACE=(TRK,(5,4),RLSE),      
+//             DCB=(RECFM=FB,LRECL=80,BLKSIZE=0,DSORG=PS)              
+//SYSIN     DD   DUMMY          /*NO CNTL STMTS HENCE DUMMY NEEDED */  
+//                                                                     
+
+-----------------------------------------------------------------------------------------------------------------------------
+//USER001A  JOB  ACCT#,'SAMPLE 9',CLASS=A,MSGCLASS=H,NOTIFY=&SYSUID
+//STEP01    EXEC PGM=IEBGENER                                          
+//SYSPRINT  DD   SYSOUT=*                                              
+//****************IEBGENER UTILIT**************************            
+//****************COPIES SYSUT1 TO SYSUT2******************            
+//SYSUT1    DD   DSN=USER001.TEST.PST,DISP=SHR                         
+//SYSUT2    DD   SYSOUT=*                                              
+//SYSIN     DD   DUMMY          /*NO CNTL STMTS HENCE DUMMY NEEDED */  
+//                                                                     
+
+----------------------------------------------------------------------------------------------------------------------------
+//USER001A  JOB  ACCT#,'SAMPLE 10',CLASS=A,MSGCLASS=H,NOTIFY=&SYSUID
+//STEP01    EXEC PGM=IEBGENER                                          
+//SYSPRINT  DD   SYSOUT=*                                              
+//****************IEBGENER UTILIT**************************            
+//****************COPIES SYSUT1 TO SYSUT2******************            
+//SYSUT1    DD   *                                                     
+1001 SINDHU  TELANGANA  999999999                                      
+1002 BHUMIKA BHOPAL     888888888                                      
+1003 DILEEP  TELANGANA  888888888                                      
+//SYSUT2    DD   SYSOUT=*                                              
+//SYSIN     DD   DUMMY          /*NO CNTL STMTS HENCE DUMMY NEEDED */  
+//                                                                     
+
+-----------------------------------------------------------------------------------------------------------------------------
+//USER001A  JOB  ACCT#,'SAMPLE 11',CLASS=A,MSGCLASS=H,NOTIFY=&SYSUID
+//STEP01    EXEC PGM=IEBGENER                                          
+//SYSPRINT  DD   SYSOUT=*                                              
+//****************IEBGENER UTILIT**************************            
+//****************COPIES SYSUT1 TO SYSUT2******************            
+//SYSUT1    DD   *                                                     
+1001 SINDHU  TELANGANA  999999999                                      
+1002 BHUMIKA BHOPAL     888888888                                      
+1003 DILEEP  TELANGANA  888888888                                      
+//SYSUT2    DD   DSN=USER001.TEST.PS5,DISP=SHR                         
+//SYSIN     DD   DUMMY          /*NO CNTL STMTS HENCE DUMMY NEEDED */  
+//                                                                     
+
+-----------------------------------------------------------------------------------------------------------------------------
+//USER001A  JOB  ACCT#,'SAMPLE 12',CLASS=A,MSGCLASS=H,NOTIFY=&SYSUID
+//STEP01    EXEC PGM=IEBGENER                                          
+//SYSPRINT  DD   SYSOUT=*                                              
+//****************IEBGENER UTILIT**************************            
+//****************COPIES SYSUT1 TO SYSUT2******************            
+//SYSUT1    DD   DSN=USER001.TEST.JCL1(AT1),DISP=SHR                 
+//SYSUT2    DD   DSN=USER001.TEST.PS5,DISP=SHR                         
+//SYSIN     DD   DUMMY          /*NO CNTL STMTS HENCE DUMMY NEEDED */  
+//                                                                     
+
+-----------------------------------------------------------------------------------------------------------------------------
+//USER001A  JOB  ACCT#,'SAMPLE 13',CLASS=A,MSGCLASS=H,NOTIFY=&SYSUID
+//STEP01    EXEC PGM=IEBGENER                                          
+//SYSPRINT  DD   SYSOUT=*                                              
+//****************IEBGENER UTILIT**************************            
+//****************COPIES SYSUT1 TO SYSUT2******************            
+//SYSUT1    DD   DSN=USER001.TEST.JCL1(AT1),DISP=SHR                 
+//SYSUT2    DD   DSN=USER001.TEST.PS5,DISP=MOD                         
+//SYSIN     DD   DUMMY          /*NO CNTL STMTS HENCE DUMMY NEEDED */  
+//                                                                     
+
+-----------------------------------------------------------------------------------------------------------------------------
+KT1 
+
+E0001 MOHANK   BANGALORE       ACC           11000      9999234560 
+E0002 MOHANK   BANGALORE       ACC           11000      5656565656 
+E0003 MOHANK   BANGALORE       ACC           11000      5656565656 
+E0004 MOHANK   BANGALORE       ACC           11000      6557575757 
+E0005 MOHANK   BANGALORE       ACC           11000      5575757577 
+E0006 MOHANK   BANGALORE       ACC           11000      8888888888 
+E0007 MOHANK   BANGALORE       ACC           11000      8897999999 
+E0008 MOHANK   BANGALORE       ACC           11000      5454545455 
+E0009 MOHANK   BANGALORE       ACC           11000      4545454545 
+E0010 MOHANK   BANGALORE       ACC           11000      4545454646 
+E0011 MOHANK   BANGALORE       ACC           11000      4545454545 
+E0012 MOHANK   BANGALORE       ACC           11000      4466666466 
+
+//USER001A  JOB  ACCT#,'SAMPLE 14  ',CLASS=A,MSGCLASS=H,NOTIFY=&SYSUID
+//STEP01    EXEC PGM=IEBGENER                                          
+//SYSPRINT  DD   SYSOUT=*                                              
+//SYSUT1    DD   DSN=USER001.TEST.JCL1(KT1),DISP=SHR                 
+//SYSUT2    DD   DSN=USER001.TEST.JCL1(KT2),DISP=SHR                 
+//SYSIN     DD   *                                                     
+         GENERATE MAXFLDS=2                                            
+         RECORD FIELD=(9,16,,10),FIELD=(5,46,,50)                      
+/*                                                                     
+//
+--------------------------------------------------------------------------------------------------------------------------                                                                     
+//USER001A  JOB  ACCT#,'SAMPLE 15 ',CLASS=A,MSGCLASS=H,NOTIFY=&SYSUID
+//STEP01    EXEC PGM=IEBGENER                                          
+//SYSPRINT  DD   SYSOUT=*                                              
+//SYSUT1    DD   DSN=USER001.TEST.JCL1(KT1),DISP=SHR                 
+//SYSUT2    DD   DSN=USER001.TEST.JCL1(KT2),DISP=SHR                 
+//SYSIN     DD   *                                                     
+         GENERATE MAXFLDS=3                                            
+         RECORD FIELD=(9,16,,10),FIELD=(5,46,,25),FIELD=(10,57,,50)    
+/*                                                                     
+//                                                                     
+----------------------------------------------------------------------------------------------------------------------------
+
+//USER001G JOB 43312,'SAMPLE 16  ',                            
+//             CLASS=A,MSGCLASS=X,TIME=(,03),NOTIFY=&SYSUID        
+//STEP1  EXEC  PGM=IEBGENER                                        
+//********************************************************         
+//*******          IEBGENER "COPIES" SYSUT1  TO SYSUT2   *         
+//********************************************************         
+//SYSUT1   DD  *                       INPUT DDNAME                
+LINE 1                                                             
+LINE 2                                                             
+LINE 3                                                             
+LINE 4                                                             
+//SYSUT2   DD  SYSOUT=*,OUTLIM=1000    OUTPUT DDNAME               
+//SYSPRINT DD  SYSOUT=*                IEBGENER MESSAGES           
+//SYSIN    DD  *                       CONTROL STMTS FOLLOW        
+   GENERATE MAXFLDS=2                                              
+   RECORD FIELD=(4,1,,3),FIELD=(1,6,,1)                            
+//**   LENGTH  START  ,  TARGET FIELD                              
+//**      4      1    ,    3                                       
+-----------------------------------------------------------------------------------------------------------------------------
+0001 MAHENDER REDDY HYDERABAD DEVELOPER INDIA   
+0002 RAGHAV RAJ     PUNE      LEAD      INDIA   
+0003 SHREYANSHREDDY MUMBAI    ARCHITECT INDIA   
+0004 VISHU          CHENNAI   MANAGER   INDIA   
+0001 MAHESH                                     
+0001 KRISHNAG
+
+//USER001A  JOB  ACCT#,'SAMPLE 17',CLASS=A,NOTIFY=&SYSUID       
+//STEP01    EXEC PGM=IEBGENER                                      
+//SYSPRINT  DD   SYSOUT=*                                          
+//****************IEBGENER UTILIT**************************        
+//****************COPIES SYSUT1 TO SYSUT2******************        
+//SYSUT1    DD   DSN=USER001.TEST.JCL1(AT1),DISP=SHR             
+//SYSUT2    DD   DSN=USER001.TEST.JCL1(AT2),DISP=SHR             
+//SYSIN     DD   *                                                 
+ GENERATE MAXFLDS=3,MAXLITS=2                                      
+ RECORD FIELD=(15,5,,1),                                           
+        FIELD=(2,'->',,16),                                        
+        FIELD=(10,30,,22)                                          
+/*                                                                 
+//         
+
+----------------------------------------------------------------------------------------------------------------------------
+//USER001B JOB ACCT#,'SAMPLE 18',CLASS=A,MSGCLASS=H,MSGLEVEL=(1,1), 
+//             NOTIFY=&SYSUID                                       
+//* EMPTY EXISTING DATASET                                          
+//STEP01   EXEC PGM=IEBGENER                                        
+//SYSPRINT DD  SYSOUT=*                                             
+//SYSUT1   DD  DUMMY,                                               
+//             DCB=(LRECL=80,BLKSIZE=0,RECFM=FB,DSORG=PS)           
+//SYSUT2   DD  DSN=USER001.TEST.PS5,DISP=OLD                        
+//SYSIN    DD    DUMMY                                              
+//        
+-----------------------------------------------------------------------------------------------------------------------------                                                                                                    
+//USER001A JOB ACCT#,'SAMPLE 19',CLASS=A,MSGCLASS=H,NOTIFY=&SYSUID 
+//CREATPDS EXEC PGM=IEBGENER                                         
+//SYSUT1 DD DSN=USER001.JCL.CNTL(KT1),DISP=SHR                    
+//SYSUT2 DD DSN=USER001.SEQ.PDS1,DISP=SHR                            
+//SYSPRINT DD SYSOUT=*                                               
+//SYSIN DD *                                                         
+         GENERATE MAXFLDS=2,MAXNAME=1                                
+         MEMBER NAME=MEM1                                            
+         RECORD FIELD=(6,7,,1),FIELD=(3,32,,10)                      
+/*                                                                   
+//   
+-----------------------------------------------------------------------------------------------------------------------------
+//USER001A JOB ACCT#,'SAMPLE 20',CLASS=A,MSGCLASS=H,NOTIFY=&SYSUID           
+//STEP01   EXEC PGM=IEBGENER                 
+//SYSPRINT DD SYSOUT=*                       
+//SYSUT1   DD DSN=USER001.SEQ.PS,DISP=SHR    
+//SYSUT2   DD DSN=USER001.SEQ.PDS1,DISP=SHR  
+//SYSIN    DD *                              
+GEN1   GENERATE MAXNAME=3,MAXGPS=2           
+MEM1   MEMBER  NAME=MEMBER1                  
+GRP1   RECORD IDENT=(8,'FIRSTMEM',1)         
+MEM2   MEMBER  NAME=MEMBER2                  
+GRP1   RECORD IDENT=(8,'SECNDMEM',1)         
+MEM3   MEMBER  NAME=MEMBER3                  
+/*                                           
+//  
+-----------------------------------------------------------------------------------------------------------------------------
+//USER001G JOB ACCT#,'SAMPLE 21 ',                           
+//             CLASS=A,MSGCLASS=H,NOTIFY=&SYSUID                 
+//STEP1    EXEC PGM=IEBCOPY                                      
+//SYSPRINT DD   SYSOUT=*                                         
+//DD1      DD   DSN=USER001.TEST.JCL1,DISP=SHR                 
+//DD2      DD   DSN=USER001.TEST.JCL2,DISP=(NEW,CATLG,DELETE), 
+//         UNIT=SYSDA,VOL=SER=MF1TT0,SPACE=(TRK,(5,4,20),RLSE),  
+//         DCB=(RECFM=FB,LRECL=80,BLKSIZE=800,DSORG=PO)          
+//SYSIN DD *                                                     
+  COPY INDD=DD1,OUTDD=DD2                                        
+/*                                                               
+//                                                               
+-----------------------------------------------------------------------------------------------------------------------------
+//USER001G JOB ACCT#,'SAMPLE 22',                               
+//             CLASS=A,MSGCLASS=H,NOTIFY=&SYSUID                     
+//STEP1    EXEC PGM=IEBCOPY                                          
+//SYSPRINT DD   SYSOUT=*                                             
+//DD1      DD   DSN=USER001.TEST.JCL1,DISP=SHR                     
+//DD2      DD   DSN=USER001.TEST.JCL2,DISP=SHR                     
+//SYSIN DD *                                                         
+  COPY INDD=DD1,OUTDD=DD2                                            
+/*                                                                   
+//STEP2    EXEC PGM=IEBCOPY                                          
+//SYSPRINT DD   SYSOUT=*                                             
+//DD1      DD   DSN=USER001.TEST.JCL1,DISP=SHR                     
+//DD2      DD   DSN=USER001.TEST.JCL3,DISP=SHR                     
+//SYSIN DD *                                                         
+  COPY INDD=DD1,OUTDD=DD2                                            
+/*                                                                   
+//   
+-----------------------------------------------------------------------------------------------------------------------------
+//USER001G JOB ACCT#,'SAMPLE 23 ',                   
+//             CLASS=A,MSGCLASS=X,NOTIFY=&SYSUID         
+//STEP1    EXEC PGM=IEBCOPY                              
+//SYSPRINT DD   SYSOUT=*                                 
+//DD1      DD   DSN=USER001.TEST.JCL1,DISP=SHR         
+//DD2      DD   DSN=USER001.TEST.JCL2,DISP=SHR         
+//SYSIN DD *                                             
+   COPY INDD=DD1,OUTDD=DD2                               
+   SELECT MEMBER=(AT1,AT2,AT5)                          
+//                                                                                                              
+-----------------------------------------------------------------------------------------------------------------------------
+//USER001G JOB ACCT#,'SAMPLE 24 ',                   
+//             CLASS=A,MSGCLASS=X,NOTIFY=&SYSUID         
+//STEP1    EXEC PGM=IEBCOPY                              
+//SYSPRINT DD   SYSOUT=*                                 
+//DD1      DD   DSN=USER001.TEST.JCL1,DISP=SHR         
+//DD2      DD   DSN=USER001.TEST.JCL2,DISP=SHR         
+//SYSIN DD *                                             
+   COPY INDD=DD1,OUTDD=DD2                               
+   EXCLUDE MEMBER=(AT1,AT2,AT5)                          
+//          
+-----------------------------------------------------------------------------------------------------------------------------
+//USER001C JOB 43312,'SAMPLE 25 ',                               
+//             CLASS=A,MSGCLASS=X,TIME=(,03),NOTIFY=&SYSUID           
+//COPY     EXEC PGM=IEBCOPY                                           
+//SYSPRINT DD   SYSOUT=*                                              
+//INDD     DD   DSN=USER001.TEST.JCL1,DISP=SHR                      
+//OUTDD    DD   DSN=USER001.TEST.JCL2,DISP=SHR                      
+//SYSIN    DD   *                                                     
+  COPY INDD=INDD,OUTDD=OUTDD                                          
+  SELECT MEMBER=((AT1,CURLEY,R))    COPIES MBR - RENAMES, REPLACES    
+/*
+//
+-----------------------------------------------------------------------------------------------------------------------------
+//USER001C JOB 43312,'SAMPLE 26      ',                              
+//             CLASS=A,MSGCLASS=X,TIME=(,03),NOTIFY=&SYSUID          
+//COPY     EXEC PGM=IEBCOPY                                          
+//SYSPRINT DD   SYSOUT=*                                             
+//INDD     DD   DSN=USER001.TEST.JCL1,DISP=SHR                     
+//OUTDD    DD   DSN=USER001.TEST.JCL2,DISP=SHR                     
+//SYSIN    DD   *                                                    
+  COPY INDD=INDD,OUTDD=OUTDD                                         
+  SELECT MEMBER=((AT1,CURLEY,R))    COPIES MBR - RENAMES, REPLACES   
+  SELECT MEMBER=(HEX)                                                
+  SELECT MEMBER=(IEBGEN1)                                            
+  SELECT MEMBER=((KT1,T))                                            
+  SELECT MEMBER=((KT2,,R))                                           
+/*                                                                   
+// 
+
+----------------------------------------------------------------------------------------------------------------------------
+//USER001C JOB 43312,'SAMPLE 27      ',                              
+//             CLASS=A,MSGCLASS=H,TIME=(,03),NOTIFY=&SYSUID          
+//*IEBCOPY TO COMPRESS THE PDS                                       
+//COPY     EXEC PGM=IEBCOPY                                          
+//SYSPRINT DD   SYSOUT=*                                             
+//INDD     DD   DSN=USER001.TEST.JCL1,DISP=SHR                     
+//SYSIN    DD   *                                                    
+  COPY INDD=INDD,OUTDD=INDD                                          
+/*                                                                   
+//                                                                                                              -----------------------------------------------------------------------------------------------------------------------------
+
+  

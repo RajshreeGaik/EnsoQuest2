@@ -43,7 +43,7 @@ def search_view(request, category):
 @login_required
 def quiz_view(request, quiz_id):
     quiz = get_object_or_404(Quiz, pk=quiz_id)
-    
+
     existing_submission = QuizSubmission.objects.filter(user=request.user, quiz=quiz).first()
     if existing_submission:
         messages.info(request, "You have already attempted this quiz.")
@@ -70,19 +70,39 @@ def quiz_view(request, quiz_id):
                         selected_choice=selected_choice
                     )
 
-        # Ensure score doesn't exceed total questions
         total_questions = quiz.question_set.count()
-        if score > total_questions:
-            messages.warning(request, "Score exceeded total marks and has been adjusted.")
-            score = total_questions
-
+        score = min(score, total_questions)
         submission.score = score
         submission.save()
+
+        # Check for auto-submission and set message
+        if request.POST.get("auto_submit") == "1":
+            messages.warning(request, "Your quiz was auto-submitted because you switched tabs or windows.")
+
         return redirect('quiz_result', submission_id=submission.id)
 
     return render(request, 'test.html', {'quiz': quiz})
 
+# View to show quiz result
+@login_required
+def quiz_result_view(request, submission_id):
+    submission = get_object_or_404(QuizSubmission, id=submission_id)
 
+    total_questions = submission.quiz.question_set.count()
+    correct_answers = QuizAnswer.objects.filter(
+        submission=submission,
+        selected_choice__is_correct=True
+    ).count()
+    all_answers = QuizAnswer.objects.filter(submission=submission)
+
+    context = {
+        'submission': submission,
+        'total_questions': total_questions,
+        'correct_answers': correct_answers,
+        'answers': all_answers,
+    }
+
+    return render(request, 'test-result.html', context)
 # View to show quiz result
 @login_required
 def quiz_result_view(request, submission_id):

@@ -2,115 +2,18 @@
 {% block title %}Resource - EnsoQuest{% endblock title %}
 {% block content %}
 {% load static %}
-
-<style>
-  body {
-    background-color: #f9f9f9;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-
-  .title {
-    color: #9b51e0;
-    font-weight: 700;
-    margin-bottom: 40px;
-  }
-
-  .upload-btn-container {
-    text-align: right;
-    margin-bottom: 30px;
-  }
-
-  /* ✅ Updated upload button to match standard rectangle style */
-  .btn-primary {
-    background-color: #9b51e0;
-    border-color: #9b51e0;
-    color: white;
-    padding: 0.45rem 1.5rem;
-    font-weight: 700;
-    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease;
-    box-shadow: 0 2px 8px rgba(155, 81, 224, 0.1);
-    text-decoration: none;
-    border-radius: 6px; /* changed from 999px to rectangle */
-  }
-
-  .btn-primary:hover {
-    background-color: #833dcf;
-    border-color: #833dcf;
-    color: white;
-    box-shadow: 0 6px 16px rgba(123, 57, 196, 0.2);
-  }
-
-  .square-card {
-    background: #ffffff;
-    border-left: 5px solid #b07ce1;
-    border-radius: 16px;
-    padding: 22px;
-    min-height: 300px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .square-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 28px rgba(155, 81, 224, 0.15);
-    border-left: 5px solid #833dcf;
-  }
-
-  .card-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #9b51e0;
-    margin-bottom: 10px;
-    text-align: center;
-  }
-
-  .card-text {
-    font-size: 0.95rem;
-    color: #444;
-    margin-bottom: 6px;
-  }
-
-  .info-label {
-    font-weight: 600;
-    color: #4a4a4a;
-  }
-
-  .description-text {
-    height: 4.5em;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .btn-outline-primary {
-    border: 2px solid #6a2dbf;
-    color: #6a2dbf;
-    border-radius: 999px;
-    font-weight: 600;
-    padding: 0.45rem 1.2rem;
-    transition: all 0.3s ease-in-out;
-  }
-
-  .btn-outline-primary:hover {
-    background-color: #9b51e0;
-    color: #fff;
-    border-color: #9b51e0;
-    box-shadow: 0 6px 16px rgba(152, 119, 199, 0.3);
-  }
-</style>
-
+<link rel="stylesheet" href="{% static 'css/resource_list.css' %}">
 <div class="container mt-5">
   <h1 class="mb-5 text-center title">Resources Library</h1>
 
   <!-- Upload Button Container -->
+  {% if user.is_staff %}
   <div class="upload-btn-container">
     <a href="{% url 'upload_resource' %}" class="btn btn-primary">
       + Upload Resource
     </a>
   </div>
-
+  {% endif %}
   <div class="row">
     {% for resource in resources %}
     <div class="col-md-4 mb-4">

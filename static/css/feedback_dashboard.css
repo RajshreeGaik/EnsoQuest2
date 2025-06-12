@@ -9,6 +9,7 @@ body {
     min-height: 100vh;
     width: 50%;   
     margin: 0 auto; 
+
 }
 
 
@@ -49,6 +50,7 @@ body {
     margin-bottom: 10px;
     border: 1px solid #eee;
     max-height: max-content;
+    border-left: 4px solid #9b51e0;
 }
 
 .feedback-dashboard-wrapper .list-group :hover{

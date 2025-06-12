@@ -4,9 +4,8 @@
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/create_session.css' %}">
 
-<h2 class="title">Create Session</h2>
 <div class="create-session-container">
-    
+    <h2>Create Session</h2>
     <form method="post">
         {% csrf_token %}
         

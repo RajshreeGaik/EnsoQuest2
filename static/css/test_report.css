@@ -1,0 +1,71 @@
+body {
+  background-color: #f9f9f9;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.chart-container {
+  max-width: 900px;
+  margin: 40px auto 30px;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s ease;
+}
+
+.chart-container:hover {
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Wrapper for scroll */
+.table-scroll {
+  max-height: 300px;
+  overflow-y: auto;
+  border-radius: 12px;
+  scrollbar-width: thin;
+  scrollbar-color: #9b51e0 #f1f1f1;
+}
+
+/* Table base */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+/* Sticky header */
+.table thead th {
+  position: sticky;
+  top: 0;
+  background-color: #9b51e0;
+  color: #ffffff;
+  text-align: center;
+  vertical-align: middle;
+  z-index: 1;
+  padding: 12px;
+}
+
+/* Table body */
+.table td {
+  vertical-align: middle;
+  text-align: center;
+  padding: 10px;
+}
+
+/* Row hover effect */
+.table tbody tr:hover {
+  background-color: #f2f0fa;
+}
+
+/* Primary button styling */
+.btn-primary {
+  background-color: #9b51e0;
+  border-color: #9b51e0;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #833dcf;
+  border-color: #833dcf;
+}

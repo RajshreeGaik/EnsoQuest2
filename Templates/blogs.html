@@ -2,27 +2,9 @@
 {% block title %}Blogs - EnsoQuest{% endblock title %}
 
 {% block content %}
-<style>
-  body {
-    background-color: #f9f9f9;
-  }
-
-  .btn-primary {
-    background-color: #9b51e0;
-    border-color: #9b51e0;
-  }
-
-  .btn-primary:hover {
-    background-color: #833dcf;
-    border-color: #833dcf;
-  }
-
-  .list-group-item:hover {
-    background-color: #f3e8ff !important;
-    cursor: pointer;
-  }
-</style>
-
+{% load static %}
+  
+  <link rel="stylesheet" href="{% static 'css/blogs.css' %}">
 <div class="container my-5">
   <h1 class="text-center fw-bold display-5 mb-5 title">Explore Blogs</h1>
 
@@ -36,7 +18,7 @@
 
       {% if user.is_authenticated %}
 
-      <a href="{% url 'create_blog' %}" class="btn btn-primary btn-sm">
+      <a href="{% url 'create_blog' %}" class="btn btn-primary ">
         + New Blog
       </a>
       {% endif %}

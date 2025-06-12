@@ -3,88 +3,8 @@
 {% block title %}Edit Blog - EnsoQuest{% endblock title %}
 
 {% block content %}
-<style>
-  body {
-    background-color: #f9f9f9;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
 
-  .blog-form-wrapper {
-    max-width: 700px;
-    margin: 60px auto;
-    padding: 40px;
-    background-color: #ffffff;
-    border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(155, 81, 224, 0.08);
-  }
-
-  .blog-form-wrapper h2 {
-    text-align: center;
-    font-weight: 700;
-    color: #9b51e0;
-    margin-bottom: 30px;
-  }
-
-  form p {
-    margin-bottom: 20px;
-  }
-
-  label {
-    font-weight: 600;
-    display: block;
-    margin-bottom: 6px;
-    color: #333;
-  }
-
-  input[type="text"],
-  input[type="url"],
-  textarea,
-  select {
-    width: 100%;
-    padding: 10px 15px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #fdfdfd;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  textarea {
-    resize: vertical;
-    min-height: 100px;
-  }
-
-  input:focus,
-  textarea:focus,
-  select:focus {
-    border-color: #9b51e0;
-    box-shadow: 0 0 4px rgba(155, 81, 224, 0.2);
-    outline: none;
-    background-color: #fff;
-  }
-
-  button[type="submit"] {
-    background-color: #9b51e0;
-    color: white;
-    border: none;
-    padding: 10px 30px;
-    font-weight: 600;
-    font-size: 15px;
-    border-radius: 999px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  button[type="submit"]:hover {
-    background-color: #7b39c4;
-    box-shadow: 0 6px 12px rgba(123, 57, 196, 0.6);
-  }
-
-  .text-center {
-    text-align: center;
-    margin-top: 30px;
-  }
-</style>
-
+<link rel="stylesheet" href="{% static 'css/edit_blog.css' %}">
 <div class="blog-form-wrapper">
   <h2>Edit Blog: {{ blog.title }}</h2>
   <form method="post">

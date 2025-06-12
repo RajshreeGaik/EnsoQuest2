@@ -15,9 +15,9 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-.feedback-form-wrapper h2,
-.feedback-form-wrapper h4 {
+.feedback-form-wrapper h2 {
     color: #9b51e0;
+    text-align: center;
 }
 
 .feedback-form-wrapper label {
@@ -58,3 +58,5 @@ select:focus {
   outline: none;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
+
+  

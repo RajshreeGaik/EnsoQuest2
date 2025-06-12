@@ -205,7 +205,13 @@ let hasSubmitted = false;
 function submitIfNotDone() {
   if (!hasSubmitted) {
     hasSubmitted = true;
-    alert("You switched windows or tabs! Your quiz will be submitted automatically.");
+    // Optional: alert("You switched tabs or windows! Your quiz is being submitted.");
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = "auto_submit";
+    input.value = "1";
+    quizForm.appendChild(input);
+
     calculateScore();
     quizForm.submit();
   }

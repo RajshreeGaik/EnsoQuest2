@@ -1,0 +1,36 @@
+   .result-card {
+        max-width: 400px;
+        margin: auto;
+    }
+
+    .result-card .card-body {
+        padding: 0 1.5rem;
+        padding-top: 1.5rem;
+    }
+
+    .questions {
+        user-select: none;
+    }
+
+    body {
+        background-color: #f9f9f9;
+    }
+
+.btn-outline-primary {
+  border: 2px solid #6a2dbf;
+  color: #6a2dbf;
+  box-shadow: 0 2px 6px rgba(106, 45, 191, 0.1);
+  font-weight: 600;
+
+}
+
+.btn-outline-primary:hover {
+  background-color: #9b51e0;
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(152, 119, 199, 0.3);
+}
+
+.btn-group{
+  margin: 1.5rem;
+  gap:5px;
+}

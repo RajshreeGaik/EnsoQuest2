@@ -65,8 +65,104 @@
 body {
     background-color: #f9f9f9;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-top: 60px; /* Account for navbar height */
+    padding-bottom: 50px; /* Account for footer height */
+    margin: 0; /* Remove default margin */
 }
 
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #e6e6e6;
+    color: #333;
+    text-align: center;
+    box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    padding: 4px 0;
+    margin: 0;
+    z-index: 1000;
+}
 
+nav.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background-color: rgba(249, 249, 249, 0.8);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-bottom: 2px solid #e6e6e6;
+    z-index: 9999;
+}
 
- 
+.content-wrapper {
+    padding-bottom: 50px; 
+
+}
+
+.form-control[type="search"] {
+  border: 2px solid #9b51e0;
+  border-radius: 999px; /* pill shape */
+  padding: 0.5rem 1.2rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(155, 81, 224, 0.08);
+}
+
+/* On focus */
+.form-control[type="search"]:focus {
+  border-color: #833dcf;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(155, 81, 224, 0.2);
+}
+
+.navbar .btn-search {
+    background-color: #fff;
+    color: #9b51e0;
+    border: 2px solid #9b51e0;
+    border-radius: 999px;
+    padding: 0.4rem 1.2rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.navbar .btn-search:hover {
+    background-color: #9b51e0;
+    color: #fff;
+    border-color: #9b51e0;
+}
+
+.navbar .btn-log, .form-inline .btn-log{
+    background-color: #9b51e0;
+    background: #9b51e0;
+    border-color: #9b51e0;
+    color: white;
+    font-weight: 500;
+}
+
+.navbar .btn-log:hover {
+    background-color: #833dcf;
+    border-color: #833dcf;
+    color: white;
+}
+
+  .bell-purple {
+    color: #9b51e0 !important;
+  }
+
+  .bg-purple {
+    background-color: #9b51e0 !important;
+    color: white !important;
+  }
+
+  .notification-badge {
+    top: 8px !important; /* adjust as per need */
+    right: -8px !important;
+    transform: none !important;
+  }
+
+  .profile-img-purple {
+  border: 2px solid #9b51e0;
+  border-radius: 50%;
+  
+}

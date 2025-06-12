@@ -46,3 +46,23 @@ body {
   margin-bottom: 5px;
   border: 1px solid #eee;
 }
+
+
+.feedback-fill-wrapper input[type="checkbox"]:checked,
+.feedback-fill-wrapper input[type="radio"]:checked {
+  accent-color: #9b51e0;
+}
+
+.feedback-fill-wrapper input:focus,
+.feedback-fill-wrapper textarea:focus,
+.feedback-fill-wrapper select:focus {
+  border-color: #9b51e0;
+  box-shadow: 0 0 0 0.2rem rgba(155, 81, 224, 0.25);
+  outline: none;
+}
+
+/* Applies to ALL checkboxes and radio buttons */
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: #9b51e0;
+}

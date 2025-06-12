@@ -6,7 +6,7 @@
 <div class="content-container">
     <h2>Attendance Report</h2>
     <div class="table-wrapper">
-    <table>
+     <table>
       <thead>
         <tr>
           <th>Session</th>
@@ -31,7 +31,7 @@
           </tr>
         {% endfor %}
       </tbody>
-    </table>
+     </table>
     </div>
     <hr>
 
@@ -68,9 +68,9 @@
           <tbody>
             {% for record in attendance_records %}
               <tr>
-                <td>{{ record.session.name }}</td>
-                <td>{{ record.date }}</td>
-                <td>{% if record.present %}Present{% else %}Absent{% endif %}</td>
+              <td data-label="Session">{{ record.session.name }}</td>
+              <td data-label="Date">{{ record.date }}</td>
+              <td data-label="Status">{% if record.present %}Present{% else %}Absent{% endif %}</td>
               </tr>
             {% endfor %}
           </tbody>
@@ -81,13 +81,13 @@
         <input type="hidden" name="end" value="{{ end_date }}">
         <input type="hidden" name="session" value="{{ selected_session }}">
         <input type="hidden" name="export" value="excel">
-        <button class=" btn-primary" type="submit">Export to Excel</button>
+        <button class=" btn-primary " type="submit">Export to Excel</button>
       </form>
 
     {% else %}
       <p>No attendance records found.</p>
     {% endif %}
 
-    <a class=" btn-secondary" href="{% url 'attendance:session_list' %}">Back to Sessions</a>
+    <a class=" btn-secondary" href="{% url 'attendance:session_list' %}">← Back to Sessions</a>
 </div>
 {% endblock %}
