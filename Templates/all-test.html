@@ -19,6 +19,12 @@
     {% endfor %}
   </div>
 {% endif %}
+  
+     {% if request.user.is_authenticated and request.user.is_staff %}
+     <div class="mb-3 text-end">
+     <a href="{% url 'add_quiz' %}" class="btn btn-primary mb-3">+ Add Test</a>
+     </div>
+     {% endif %}
 
   <div class="d-flex flex-wrap gap-2 mb-4">
     <a href="{% url 'all_quiz' %}" class="btn btn-outline-primary">All Tests</a>

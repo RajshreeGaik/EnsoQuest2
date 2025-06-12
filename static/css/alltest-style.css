@@ -93,3 +93,7 @@ body {
     color: #fff;
     border-color: #9b51e0;
 }
+
+.align-right{
+  align-self: flex-end;
+}

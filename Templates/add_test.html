@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/add_test.css' %}">
+
+<div class="add-quiz-wrapper">
+  <h2 class="text-center">Add New Test</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn-create">Add Test</button>
+  </form>
+</div>
+
+{% endblock %}

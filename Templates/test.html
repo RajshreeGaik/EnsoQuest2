@@ -3,76 +3,7 @@
 {% block title %}{{ quiz.title }} - EnsoQuest{% endblock title %}
 
 {% block content %}
-<style>
-  
-  .questions {
-    user-select: none;
-  }
-
-  body {
-    background-color: #f9f9f9;
-  }
-
-  #timer {
-    position: fixed;
-    top: 80px;
-    right: 30px;
-    background: linear-gradient(135deg, #9b51e0, #7f41c5);
-    color: white;
-    padding: 12px 30px;
-    font-size: 1.2rem;
-    font-weight: 500;
-    border-radius: 40px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    transition: all 0.3s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-width: 120px;
-    text-align: center;
-    letter-spacing: 1px;
-    animation: fadeIn 0.5s ease-out;
-  }
-
-  #timer::before {
-    content: "⏱️";
-    margin-right: 10px;
-    font-size: 1.4rem;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-  @media (max-width: 576px) {
-    #timer {
-      top: 15px;
-      right: 10px;
-      font-size: 1rem;
-      padding: 8px 18px;
-    }
-  }
-  .btn-primary {
-  background-color: #9b51e0;
-  border-color: #9b51e0;
-}
-
-.btn-primary:hover {
-  background-color: #833dcf;
-  border-color: #833dcf;
-}
-
-
-
-
-</style>
+<link rel="stylesheet" href="{% static 'css/test.css' %}">
 
 <span class="fs-5" id="timer">10:00</span>
 

@@ -1,0 +1,54 @@
+/* Only target form inside add-quiz-wrapper */
+body{
+  background-color: #f9f9f9;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.add-quiz-wrapper {
+  max-width: 600px;
+  margin: 100px auto 40px;
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.add-quiz-wrapper form input,
+.add-quiz-wrapper form select,
+.add-quiz-wrapper form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.add-quiz-wrapper form input:focus,
+.add-quiz-wrapper form select:focus,
+.add-quiz-wrapper form textarea:focus {
+  border-color: #9b51e0;
+  box-shadow: 0 0 5px rgba(155, 81, 224, 0.5);
+  outline: none;
+}
+
+/* Center and style the Create Quiz button */
+.add-quiz-wrapper .btn-create {
+  display: block;
+  margin: 0 auto;
+  background-color: #9b51e0;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.add-quiz-wrapper .btn-create:hover {
+  background-color: #7b3bb5;
+}
+
+h2{
+    color: #9b51e0;
+}

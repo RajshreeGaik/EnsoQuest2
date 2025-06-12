@@ -8,7 +8,9 @@
     <h2 class="title">Attendance</h2>
 
     {% if user.is_staff %}
-        <a href="{% url 'attendance:create_session' %}" class="create-session-btn">+ Create New Session</a>
+        <div class="mb-3 text-end">
+        <a href="{% url 'attendance:create_session' %}" class="btn btn-primary">+ Create New Session</a>
+        </div>
     {% endif %}
 
     <div class="session-cards">

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.contrib import messages
@@ -10,6 +10,7 @@ import openpyxl
 from openpyxl.utils import get_column_letter
 from openpyxl import Workbook
 from django.utils.timezone import is_aware, make_naive, get_current_timezone
+from .forms import QuizForm
 
 
 # View to show all quizzes
@@ -83,26 +84,24 @@ def quiz_view(request, quiz_id):
 
     return render(request, 'test.html', {'quiz': quiz})
 
-# View to show quiz result
+# quiz/views.py
+def is_superuser_or_staff(user):
+    return user.is_superuser or user.is_staff
+
 @login_required
-def quiz_result_view(request, submission_id):
-    submission = get_object_or_404(QuizSubmission, id=submission_id)
+@user_passes_test(is_superuser_or_staff)
+def add_quiz_view(request):
+    if request.method == 'POST':
+        form = QuizForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Quiz created and questions imported successfully!")
+            return redirect('all_quiz')  # Or your quiz list page
+    else:
+        form = QuizForm()
 
-    total_questions = submission.quiz.question_set.count()
-    correct_answers = QuizAnswer.objects.filter(
-        submission=submission,
-        selected_choice__is_correct=True
-    ).count()
-    all_answers = QuizAnswer.objects.filter(submission=submission)
+    return render(request, 'add_test.html', {'form': form})
 
-    context = {
-        'submission': submission,
-        'total_questions': total_questions,
-        'correct_answers': correct_answers,
-        'answers': all_answers,
-    }
-
-    return render(request, 'test-result.html', context)
 # View to show quiz result
 @login_required
 def quiz_result_view(request, submission_id):
