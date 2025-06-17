@@ -20,33 +20,27 @@
   }
 
   .btn-secondary {
-    background-color: #ede3f7;
-    color: #9b51e0;
-    border: 1px solid #9b51e0;
-    border-radius: 999px;
-    padding: 6px 16px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    text-decoration: none;
-  }
-
-  .btn-secondary:hover,
-.btn-secondary.liked {
-  background-color: #fce4ec;
+  font-size: 13px;
   color: #d81b60;
-  box-shadow: 0 0 0 0.2rem rgba(155, 81, 224, 0.25);
+  text-decoration: none;
+  background-color: #fce4ec;
+  padding: 6px 12px;
+  border-radius: 20px;
+  display: inline-block;
+  transition: background-color 0.3s ease, color 0.3s ease;
   position: relative;
 }
 
-/* Add heart before text when liked */
-.btn-secondary.liked::before {
-  content: "❤️ ";
+/* Add heart before text */
+.btn-secondary::before {
+  /*content: "❤️ ";*/
   margin-right: 4px;
 }
 
-/* Hover effect similar to .btn-like */
+/* Hover effect */
 .btn-secondary:hover {
   background-color: #f8bbd0;
+  text-decoration: none;
 }
 
 
