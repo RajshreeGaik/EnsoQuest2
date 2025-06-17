@@ -139,14 +139,29 @@
     }
 
     .like-link {
-        font-size: 13px;
-        color: #28a745;
-        text-decoration: none;
-    }
+  font-size: 13px;
+  color: #d81b60;
+  text-decoration: none;
+  background-color: #fce4ec;
+  padding: 6px 12px;
+  border-radius: 20px;
+  display: inline-block;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  position: relative;
+}
 
-    .like-link:hover {
-        text-decoration: underline;
-    }
+/* Add heart before text */
+.like-link::before {
+  content: "❤️ ";
+  margin-right: 4px;
+}
+
+/* Hover effect */
+.like-link:hover {
+  background-color: #f8bbd0;
+  text-decoration: none;
+}
+
 
     .more-comments {
         margin-top: 10px;
