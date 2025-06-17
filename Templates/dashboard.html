@@ -89,7 +89,7 @@
             <div class="col-sm-12 col-md-12 mb-3">
                 <h2 class="mb-3 text-center">Inbox</h2>
                 <div class="table-wrapper">
-                <table class="table">
+                <table class="table align-middle">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -101,8 +101,9 @@
                     </thead>
                     <tbody>
                         {% for message in messages %}
-                        <tr class="table-{% if not message.is_read %}active{% endif %}">
-                            <th scope="row">{{forloop.counter}}</th>
+                        <tr>
+                        {% comment %} <tr class="table-{% if not message.is_read %}active{% endif %}"> {% endcomment %}
+                            <td scope="row">{{forloop.counter}}</td>
                             <td><a href="{% url 'profile' message.user.username %}">@{{message.user.username}}</a></td>
                             <td>{{message.subject}}</td>
                             <td>{{message.created_at}}</td>
