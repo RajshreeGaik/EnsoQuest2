@@ -1,102 +1,122 @@
-  .edit-container {
+body {
     background-color: #f9f9f9;
-    padding: 40px 20px;
-    margin: 2rem auto;
-    border-radius: 16px;
-    max-width: 700px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
+.edit-container {
+  background-color: #fff;
+  padding: 40px 20px;
+  margin: 60px auto;
+  border-radius: 16px;
+  max-width: 600px;
+  box-shadow: 0 10px 25px rgba(155, 81, 224, 0.08);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-  .edit-container h2 {
-    font-size: 2rem;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 1.5rem;
-    color: #3b176f;
-    position: relative;
-  }
+.edit-container h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #9b51e0;
+  position: relative;
+}
 
-  .edit-container h2::after {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 50%;
-    width: 60px;
-    height: 3px;
-    background-color: #9b51e0;
-    transform: translateX(-50%);
-    border-radius: 2px;
-  }
+.edit-container h2::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  width: 60px;
+  height: 3px;
+  background-color: #9b51e0;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
 
-  .edit-container form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    align-items: center;
-  }
+.edit-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
-  .edit-container form p {
-    width: 100%;
-    max-width: 500px;
-    margin: 0 auto;
-    text-align: left;
-  }
+.edit-container form p {
+  margin-bottom: 20px;
+}
 
-  .edit-container form label {
-    font-weight: 600;
-    color: #333;
-    display: block;
-    margin-bottom: 6px;
-    text-align: left;
-  }
+.edit-container form label {
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 6px;
+}
 
-  .edit-container input[type="text"],
-  .edit-container textarea {
-    width: 100%;
-    padding: 12px 14px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #fff;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    font-family: inherit;
-  }
+.edit-container input[type="text"],
+.edit-container textarea {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #fdfdfd;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-family: inherit;
+}
 
-  .edit-container input[type="text"]:focus,
-  .edit-container textarea:focus {
-    outline: none;
-    border-color: #9b51e0;
-    box-shadow: 0 0 5px rgba(155, 81, 224, 0.2);
-  }
+.edit-container textarea {
+  resize: vertical;
+  min-height: 100px;
+}
 
-  .edit-container button {
-    background-color: #9b51e0;
-    color: #fff;
-    padding: 10px 26px;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    margin-top: 1rem;
-  }
+.edit-container input[type="text"]:focus,
+.edit-container textarea:focus {
+  outline: none;
+  border-color: #9b51e0;
+  box-shadow: 0 0 4px rgba(155, 81, 224, 0.2);
+  background-color: #fff;
+}
 
-  .edit-container button:hover {
-    background-color: #833dcf;
-    box-shadow: 0 6px 12px rgba(131, 61, 207, 0.3);
-  }
+/* Button Row to match attendance-button-row layout */
+.edit-button-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+}
 
-  .edit-container .back-link {
-    display: block;
-    text-align: center;
-    margin-top: 1.5rem;
-    color: #9b51e0;
-    text-decoration: none;
-    font-weight: 500;
-  }
+/* Primary button */
+.edit-container .btn-primary {
+  padding: 8px 0;
+  font-size: 17px;
+  font-weight: 600;
+  background-color: #9b51e0;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  width: 150px;
+}
 
-  .edit-container .back-link:hover {
-    text-decoration: underline;
-  }
+.edit-container .btn-primary:hover {
+  background-color: #7a3dbe;
+  box-shadow: 0 6px 12px rgba(122, 61, 190, 0.6);
+}
+
+/* Secondary link-style button */
+.edit-container .btn-secondary {
+  text-decoration: none;
+  background-color: #f9f9f9;
+  color: #9b51e0;
+  font-weight: 500;
+  border: 2px solid #9b51e0;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.edit-container .btn-secondary:hover {
+  background-color: #9b51e0;
+  color: #fff;
+  text-decoration: none;
+}

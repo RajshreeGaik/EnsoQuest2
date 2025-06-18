@@ -1,20 +1,21 @@
 {% extends 'index.html' %}
-{% block title %} edit question- EnsoQuest  {% endblock %}
+{% block title %} edit question - EnsoQuest {% endblock %}
 {% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/edit_form.css' %}">
 
-<h2 class="title">{{ heading }}</h2>
 <div class="edit-container">
   
-
   <form method="post">
+    <h2>{{ heading }}</h2>
+
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Save Changes</button>
+
+    <div class="edit-button-row">
+      <a href="{{ back_url }}" class="btn-secondary">← Back</a>
+      <button type="submit" class="btn-primary">Save Changes</button>
+    </div>
   </form>
-
-  <a href="{{ back_url }}" class="back-link">← Back</a>
 </div>
-
 {% endblock %}

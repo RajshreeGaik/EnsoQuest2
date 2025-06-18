@@ -1,158 +1,200 @@
-    body {
-        background-color: #f5f5f5;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+body {
+    background-color: #f5f5f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-    .main-card {
-        max-width: 700px;
-        margin: 2rem auto;
-        padding: 2rem;
-        background: #ffffff;
-        border-radius: 12px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
+.main-card {
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
 
-    .question-title {
-        font-size: 2rem;
-        font-weight: 700;
-        color: #3b176f;
-        margin-bottom: 0.5rem;
-    }
+.question-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #3b176f;
+    margin-bottom: 0.5rem;
+}
 
-    .question-meta {
-        color: #777;
-        font-size: 0.95rem;
-        font-style: italic;
-        margin-bottom: 1.5rem;
-    }
+.question-meta {
+    color: #777;
+    font-size: 0.95rem;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+}
 
-    .question-content {
-        font-size: 1.1rem;
-        color: #333;
-        margin-bottom: 1.5rem;
-    }
+.question-content {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
 
-    .button-group {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-    }
+.button-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-top: 30px;
+}
 
-    .btn {
-        padding: 8px 16px;
-        border-radius: 6px;
-        font-size: 0.9rem;
-        text-decoration: none;
-        display: inline-block;
-        border: none;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        font-weight: 600;
-    }
+.btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    text-decoration: none;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
 
-    .btn-edit,
-    .btn-submit {
-        background-color: #9b51e0;
-        color: white;
-    }
+.btn-edit,
+.btn-submit {
+    background-color: #9b51e0;
+    color: white;
+}
 
-    .btn-edit:hover,
-    .btn-submit:hover {
-        background-color: #7a3dbe;
-        box-shadow: 0 6px 12px rgba(122, 61, 190, 0.6);
-    }
+.btn-edit:hover,
+.btn-submit:hover {
+    background-color: #7a3dbe;
+    color: #fff;
+    box-shadow: 0 6px 12px rgba(122, 61, 190, 0.6);
+}
 
-    .btn-like {
-        background-color: #fce4ec;
-        color: #d81b60;
-    }
+.btn-like {
+    background-color: #fce4ec;
+    color: #d81b60;
+}
 
-    .btn-like::before {
-        content: "❤️ ";
-    }
+.btn-like::before {
+    content: "❤️ ";
+}
 
-    .btn-like:hover {
-        background-color: #f8bbd0;
-    }
+.btn-like:hover {
+    background-color: #f8bbd0;
+}
 
-    .btn-delete {
-        background-color: #ffebee;
-        color: #c62828;
-    }
+.btn-delete {
+    background-color: #ffebee;
+    color: #c62828;
+}
 
-    .btn-delete::before {
-        content: "🗑️ ";
-    }
+.btn-delete::before {
+    content: "🗑️ ";
+}
 
-    .btn-delete:hover {
-        background-color: #b71c1c;
-        color: white;
-    }
+.btn-delete:hover {
+    background-color: #b71c1c;
+    color: white;
+}
 
-    .btn-secondary {
-        text-decoration: none;
-        background-color: #f9f9f9;
-        color: #9b51e0;
-        font-weight: 500;
-        border: 2px solid #9b51e0;
-        padding: 8px 16px;
-        border-radius: 9999px;
-        transition: all 0.3s ease;
-        display: inline-block;
-        margin-top: 2rem;
-    }
+.btn-secondary {
+    text-decoration: none;
+    background-color: #f9f9f9;
+    color: #9b51e0;
+    font-weight: 500;
+    border: 2px solid #9b51e0;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
 
-    .btn-secondary:hover {
-        background-color: #9b51e0;
-        color: #fff;
-        text-decoration: none;
-    }
+.btn-secondary:hover {
+    background-color: #9b51e0;
+    color: #fff;
+    text-decoration: none;
+}
 
-    .add-comment-form h4 {
-        margin-top: 2rem;
-        margin-bottom: 1rem;
-        color: #3b176f;
-    }
+.add-comment-form h4 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: #3b176f;
+}
 
-    .textarea {
-        width: 100%;
-        height: 100px;
-        padding: 10px;
-        border-radius: 6px;
-        border: 1px solid #ccc;
-        font-size: 1rem;
-        resize: vertical;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+.textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    resize: vertical;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-    .add-comment-form button {
-        margin-top: 1rem;
-        width: 100%;
-    }
+.comment {
+    background: #fff;
+    padding: 1rem 1.25rem;
+    border-radius: 6px;
+    border-left: 4px solid #9b51e0;
+    margin-bottom: 1rem;
+}
 
-    .comment {
-        background: #fff;
-        padding: 1rem 1.25rem;
-        border-radius: 6px;
-        border-left: 4px solid #9b51e0;
-        margin-bottom: 1rem;
-    }
+.comment-user {
+    font-weight: 700;
+    color: #9b51e0;
+    margin-bottom: 0.25rem;
+}
 
-    .comment-user {
-        font-weight: 700;
-        color: #9b51e0;
-        margin-bottom: 0.25rem;
-    }
+.comment-actions {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
 
-    .comment-actions {
-        margin-top: 0.5rem;
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-    }
+textarea.form-control:focus {
+    border-color: #9b51e0;
+    box-shadow: 0 0 0 0.2rem rgba(155, 81, 224, 0.25);
+    outline: none;
+}
 
-    textarea.form-control:focus {
-        border-color: #9b51e0;
-        box-shadow: 0 0 0 0.2rem rgba(155, 81, 224, 0.25);
-        outline: none;
-    }
+/* ✅ Updated: Side-by-side alignment for Submit & Back buttons */
+.form-button-row {
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.form-button-row .btn-submit {
+    background-color: #9b51e0;
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    width: auto;
+}
+
+.form-button-row .btn-submit:hover {
+    background-color: #7a3dbe;
+    box-shadow: 0 6px 12px rgba(122, 61, 190, 0.6);
+}
+
+.form-button-row .btn-secondary {
+    background-color: #f9f9f9;
+    color: #9b51e0;
+    font-weight: 500;
+    border: 2px solid #9b51e0;
+    padding: 10px 24px;
+    border-radius: 9999px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.form-button-row .btn-secondary:hover {
+    background-color: #9b51e0;
+    color: white;
+    text-decoration: none;
+}

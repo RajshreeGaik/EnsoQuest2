@@ -49,15 +49,18 @@
     </div>
 
         <div class="add-comment-form">
-        <h4>Add a Comment</h4>
-        <form method="post">
-            {% csrf_token %}
-            {{ comment_form.content.errors }}
-            <textarea name="{{ comment_form.content.name }}" class="form-control" rows="4" required></textarea>
-            <button type="submit" class="btn btn-submit">Submit</button>
-        </form>
-    </div>
+    <h4>Add a Comment</h4>
+    <form method="post">
+        {% csrf_token %}
+        {{ comment_form.content.errors }}
+        <textarea name="{{ comment_form.content.name }}" class="form-control" rows="4" required></textarea>
 
-    <a href="{% url 'forum:question_list' %}" class="btn-secondary">← Back to Questions</a>
+        <div class="form-button-row">
+            <button type="submit" class="btn btn-submit">Submit</button>
+            <a href="{% url 'forum:question_list' %}" class="btn btn-secondary">← Back to Questions</a>
+        </div>
+    </form>
+</div>
+
 </div>
 {% endblock %}
