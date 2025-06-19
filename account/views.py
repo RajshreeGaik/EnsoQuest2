@@ -139,9 +139,12 @@ def profile_view(request, username):
     labels = []
     scores = []
 
+
     for submission in submissions[:6]:
-        labels.append(submission.quiz.title[:15])  # truncate for better chart display
-        scores.append(submission.score)
+        total_questions = submission.quiz.question_set.count()
+        percentage = (submission.score / total_questions) * 100 if total_questions > 0 else 0
+        labels.append(submission.quiz.title[:15]) 
+        scores.append(round(percentage, 2))  
 
     graph_data = {
         'labels': labels,
