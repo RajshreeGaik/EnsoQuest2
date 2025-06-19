@@ -5,18 +5,23 @@
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/question_form.css' %}">
 
+<!-- Wrapper added to allow full layout and background control -->
+<div class="page-wrapper" style="min-height: 100vh; display: flex; flex-direction: column; background-color: #f9f9f9;">
 
-<div class="question-form-scope">
-  
-  <div class="container">
-    
-    <form method="post">
-      <h1 >Ask a Question</h1>
-      {% csrf_token %}
-      {{ form.as_p }}
-      <div class="button-row">
-  <button type="submit" class="btn-primary">Submit</button>
-  <a href="#" class="back-link">Back</a>
+  <!-- Main form content -->
+  <div class="question-form-scope" style="flex: 1;">
+    <div class="container">
+      <form method="post">
+        <h1>Ask a Question</h1>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="button-row">
+          <a href="{% url 'forum:question_list' %}" class="back-link">Back</a>
+          <button type="submit" class="btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
 </div>
- </form>
 {% endblock content %}
