@@ -145,10 +145,15 @@
         }
       },
       plugins: {
-        tooltip: {
-          enabled: true,
-          mode: 'nearest'
-        },
+  tooltip: {
+    enabled: true,
+    callbacks: {
+      label: function(context) {
+        const score = context.parsed.y;
+        return `Test Score: ${score}%`;
+      }
+    }
+  },
         legend: {
           display: true,
           position: 'top',
