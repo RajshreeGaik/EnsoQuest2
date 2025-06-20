@@ -159,6 +159,7 @@ def quiz_report_view(request, quiz_id):
 @login_required
 def export_quiz_report_excel(request, quiz_id):
     quiz = get_object_or_404(Quiz, id=quiz_id)
+    total_marks = quiz.question_set.count()
     submissions = QuizSubmission.objects.filter(quiz=quiz).order_by('-score', 'submitted_at')
 
     ranked_data = []
@@ -172,8 +173,11 @@ def export_quiz_report_excel(request, quiz_id):
         submitted_at = sub.submitted_at
         if is_aware(submitted_at):
             submitted_at = make_naive(submitted_at, get_current_timezone())
+          
+        score_display = f"{sub.score} / {total_marks}"
 
-        ranked_data.append([current_rank, sub.user.username, sub.score, submitted_at])
+
+        ranked_data.append([current_rank, sub.user.username, score_display, submitted_at])
         last_score = sub.score
 
     wb = openpyxl.Workbook()

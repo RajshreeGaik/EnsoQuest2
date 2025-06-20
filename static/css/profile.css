@@ -42,6 +42,18 @@ body {
   color: #fff;
 }
 
+.btn-primary {
+  background-color: #9b51e0;
+  border-color: #9b51e0;
+  color: white;
+  
+}
+
+.btn-primary:hover {
+  background-color: #833dcf;
+  border-color: #833dcf;
+}
+
 /* ========== Profile Card ========== */
 .profile-card {
   background-color: #fff;
@@ -168,4 +180,8 @@ h4,
   .graph-container {
     margin-top: 20px;
   }
+}
+.export-btn-container {
+  text-align: left;
+  margin-top: 1rem;
 }

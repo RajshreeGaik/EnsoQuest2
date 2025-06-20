@@ -5,7 +5,8 @@ from django.contrib.auth.models import User, auth
 from.models import Profile
 from quiz.models import QuizSubmission
 import json 
-
+from openpyxl import Workbook
+from django.http import HttpResponse
 
 def register(request):
     if request.user.is_authenticated:
@@ -158,3 +159,42 @@ def profile_view(request, username):
     }
 
     return render(request, 'profile.html', context)
+
+
+@login_required
+def export_profile_submissions_excel(request, username):
+    from account.models import Profile
+    profile = get_object_or_404(Profile, user__username=username)
+
+    # Ensure only the user or superuser can export
+    if request.user != profile.user and not request.user.is_superuser:
+        return HttpResponse("Unauthorized", status=403)
+
+    submissions = QuizSubmission.objects.filter(user=profile.user).order_by('-submitted_at')
+
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Test Submissions"
+
+    # Header
+    ws.append(["#", "Test", "Marks", "Date", "Time Ago"])
+
+    for i, submission in enumerate(submissions, start=1):
+        quiz = submission.quiz
+        total_questions = quiz.question_set.count()
+        ws.append([
+            i,
+            quiz.title,
+            f"{submission.score}/{total_questions}",
+            submission.submitted_at.strftime('%B %d, %Y'),
+            submission.submitted_at.strftime('%Y-%m-%d %H:%M:%S')
+        ])
+
+    # Response
+    response = HttpResponse(
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    )
+    filename = f"{username}_submissions.xlsx"
+    response['Content-Disposition'] = f'attachment; filename={filename}'
+    wb.save(response)
+    return response

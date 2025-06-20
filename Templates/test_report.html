@@ -28,7 +28,7 @@
         <tr>
           <td>#{{ entry.rank }}</td>
           <td><a href="{% url 'profile' entry.submission.user.username %}">{{entry.submission.user.get_full_name|default:entry.submission.user.username }}</a></td>
-          <td>{{ entry.submission.score }}</td>
+          <td>{{ entry.submission.score }}/{{entry.submission.quiz.question_set.all|length}}</td>
           <td>{{ entry.submission.submitted_at|date:"Y-m-d H:i" }}</td>
         </tr>
         {% endfor %}
@@ -37,7 +37,7 @@
   </div>
 
 
-<a href="{% url 'quiz_report_export' quiz.id %}" class="btn btn-primary">Export Report</a>
+<a href="{% url 'quiz_report_export' quiz.id %}" class="btn btn-primary my-2px">Export Report</a>
   
 </div>
 
